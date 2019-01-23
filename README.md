@@ -1,2 +1,2 @@
 # circles
-Social Messaging Application
+Messaging App
