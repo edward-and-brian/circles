@@ -11,3 +11,7 @@ There are currently tens, if not hundreds, of messaging apps available on the Ap
 In our experience, people tend to default towards using a plain and simple messaging application, such as Ios's built in Messages, Facebook's Messenger, or WhatsApp, even though applications like Discord and Slack can heavily improve quality of life when trying to follow conversations, especially in groups. In fact, there are tons of very useful tools that could improve one's messaging experience. 
 
 The goal of Circles is to create one such messaging app that has a fair balance between functionality and ease of use. It will be a challenge to find the perfect balance
+
+#### Presentation
+
+Click [here](https://docs.google.com/presentation/d/1bxpeO-LLAAk8F4oIHTKn61O68NCJuq0Zdir2WLXRdac/edit?usp=sharing) to find our presentation!
