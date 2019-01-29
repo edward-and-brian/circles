@@ -1,0 +1,13 @@
+----- 1/28/19 -----
+Spent most of today stressing out and discussing the database structure, as well as the multiple facets and difficulties in making a full messaging mobile application.
+
+Brian
+- research Pub / Sub functionality
+- research notification structure (note: would we need a notifications table)
+- become familiar with Rust
+- make ERD and upload to GitHub
+
+Eddie
+- iOS file system - caching chats locally (how??)
+- look into cognito - make sure it's free
+- become familiar with Ionic - build something
