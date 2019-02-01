@@ -11,3 +11,22 @@ Eddie
 - iOS file system - caching chats locally (how??)
 - look into cognito - make sure it's free
 - become familiar with Ionic - build something
+
+
+----- 1/31/19 -----
+Spent most of today implementing the first draft of our mock-ups using moqup.com. During this time, we made decisions on many of our flows and general application ideas. We decided that messages will not be stored on the phone for our MVP (most likely) and also discussed what information will be retrieved on startup.
+
+Some decisions that we made since the last meeting: we will be using Go for our backend, Brian is in love with GraphQL so we will be using it, Eddie was researching Ionic but is on the verge of deciding to use React Native.
+
+Brian
+- research backend architecture (microservice vs. monolithic)
+- research notification structure (note: would we need a notifications table)
+- research long-polling, open-socket, firebase, and bananas
+
+Eddie
+- decide (don't be cheap) between Ionic and React Native
+- look into Cognito - make sure it's free
+
+Next time we will begin setup for backend.
+
+
