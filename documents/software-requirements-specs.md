@@ -118,32 +118,36 @@ CSCI Circles is composed of the following CSCs:
 
 #### 5.3  Functional Requirements by CSC
 
-5.3.1    iOS Application shall provide users with the ability to purchase products that are available
+5.3.1    Mobile Application shall allow users to view their current chats, in order of recent activity.
 
-5.3.2    iOS Application shall provide sellers with the ability to sell products that they have
+5.3.2    Mobile Application shall allow users to view a chat's circles upon hovering the chat
 
-5.3.3    iOS Application shall display a variety of important information to the user
+5.3.3    Mobile Application shall provide to the user a view of a circle's messages upon request
 
-5.3.4    iOS Application shall allow users to make bug reports or otherwise contact with admins
+5.3.4    Mobile Application shall allow users to edit notification settings for given chats and circles
 
-5.3.5    iOS Application shall send notifications to users dependent on their notification settings
+5.3.5    Mobile Application shall send notifications to users dependent on their notification settings
 
-5.3.6    Serverless backend shall provide endpoints for the front end to complete various functions
+5.3.6    Server shall provide an API with which the mobile appliation can retrieve various data
 
-5.3.7    Serverless backend shall manage data in the database securely and effectively
+5.3.7    Server shall manage data in the database securely and effectively
 
-5.3.8    Serverless backend shall interact with AWS services to integrate their functionality
+5.3.8    Server shall properly authenticate users when processing a request
+
+5.3.9    Server shall handle message sending and receiving in a secure and effective manner
 
 ------
 
 #### 5.4  Performance Requirements by CSC
 
-5.4.1    iOS Application shall run seamlessly while executing copious amounts of functionality
+5.4.1    Mobile Application shall run seamlessly while retrieving various data
 
-5.4.2    iOS Application shall provide users with a aesthetically pleasing and smooth experience
+5.4.2    Mobile Application shall retrieve a user's initial list of chats within 1 second of startup
 
-5.4.3    Serverless backend shall perform functions and return their returns without error
+5.4.2    Mobile Application shall retrieve a chat's list of circles before the user can choose it's circles
 
-5.4.4    Serverless backend shall complete all endpoints in a timely manner
+5.4.3    Server shall retrieve the proper data that is requested
 
-5.4.5    Serverless backend shall gracefully handle unavoidalbe errors (credit card expiration)
+5.4.4    Server shall handle requests in a timely manner
+
+5.4.5    Server shall gracefully handle unavoidable server errors
