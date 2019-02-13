@@ -12,107 +12,62 @@ CSCI Circles is composed of the following CSCs:
 
 ------
 
-5.2.1	iOS Application CSC -- with various functionalities for both Buyers and Sellers on the app
+5.2.1	Mobile Application CSC -- with various functionalities for the user, revolving around sending
+		messages
 
-5.2.1.1		Landing page CSU -- initial page loaded on app startup
+5.2.1.1		Landing page CSU -- intitial page to collect information from user
 
-5.2.1.1.1			Loading animation module -- elaborately designed loading animation
+5.2.1.1.1			login/sign-up buttons -- intoduction to the application, from where users can either
+				login with an existing circles account or create an account
 
-5.2.1.1.2			login/sign-up buttons -- allows users to begin the sign up or login process
+5.2.1.2		Login/sign-up flow CSU -- prompt the user to create an account with circles, which uses
+			their cell phone number as a primary key
 
-5.2.1.2		Login/sign-up flow CSU -- general flow for users logging in to the app
+5.2.1.2.1			Input screen module -- users inputs cell phone number to receive text with
+				verification code to log in with
 
-5.2.1.2.1			Input screen module -- users input username, password, etc information
+5.2.1.3		Chats page CSU -- Displays all open and existing chats that the user has
 
-5.2.1.3		Browse/Main page CSU -- contains entire catalog of listings, along with other specific filters
+5.2.1.3.1 		Chats module -- All chats are displayed (both group and individual conversations)
 
-5.2.1.3.1 		Featured module -- displays featured products with images
+5.2.1.3.2 		New chat module -- button used to start a new conversation with either a group or an
+				individual. This will be a new page.
 
-5.2.1.3.2 		Brands module -- displays all brands and allows you to filter by each
+5.2.1.3.3 		Search module -- Allows users to search through their chats and circles
 
-5.2.1.3.3 		Trending module -- displays all trending products that are listed
+5.2.1.4		New chat page CSU -- Allows the user to create a new chat
 
-5.2.1.3.4 		Highest Offers module -- displays the highest offers currently made
+5.2.1.4.1 		Search users module -- search for users to chat with and add them to the chat that you're
+				creating
 
-5.2.1.3.5 		Categories module -- displays all Categories and allows you to filter by each
+5.2.1.4.1 		Chat avatar module -- Allow the user to select a photo to set as the avatar of that chat
 
-5.2.1.3.6 		Shop all module -- displays all products listed
+5.2.1.4.2 		Chat name module -- If it's a groupchat, a name and an avatar for the chat would be
+				required. In this module, you would provide the name of the chat
 
-5.2.1.4		Product page CSU -- contains all information and functionality for a given product
+5.2.1.5		Circle page CSU -- The page that shows the contents of a specific circle
 
-5.2.1.4.1 		Product info module -- displays prices, sizes, images, and etc info on the product
+5.2.1.5.1			Messages module -- displays all of the messages within that circle, which you can read by
+				scrolling through the ScrollView
 
-5.2.1.4.1 		Buy now module -- allows the user to purchase the given object
+5.2.1.5.2			Text input module -- Text box through which you can type your new message to send to
+				that circle
 
-5.2.1.4.2 		Sell module -- allows sellers to list the given product for sale
+5.2.1.5.3			Header module -- Displays the title of the current circle, as well as the group chat to which
+				it belongs and the avatar of that chat as well.
 
-5.2.1.5		Purchase/offer flow CSU -- show and retrieve necessary purchase info up until purchase 
-
-5.2.1.5.1			Purchase info module -- displays costs, and other information to user
-
-5.2.1.5.2			User input module -- takes in shipping address, and card info from user
-
-5.2.1.5.3			Make offer module -- user creates new offer with the given information
-
-5.2.1.5.4			Buy now module -- user completes purchase with the given information
-
-5.2.1.6		Listing flow CSU -- seller creates a new listing for the product with the given info
-
-5.2.1.6.1			Information input module -- takes in input for the seller's new listing
-
-5.2.1.7		Notifications page CSU -- displays user's notifications
-
-5.2.1.7.1			List all module -- lists all notifications for the given user, and whether they are new or not
-
-5.2.1.8		Search/filter page CSU -- allows user to search for or filter through products
-
-5.2.1.8.1			Search module -- takes in a string to search through products
-
-5.2.1.8.2			Filter module -- takes in multiple filter options to filter through products
-
-5.2.1.8.3			List desired output module -- displays products for the given search or filter
-
-5.2.1.9		User page CSU -- allows user to search for or filter through products
-
-5.2.1.9.1			Settings module -- allows user to view and edit their settings	
-
-5.2.1.9.1			Profile module -- allows user to view and edit their profile information	
-
-5.2.1.9.1			My orders module -- allows user to see all of their orders, and any info regarding them
-
-5.2.1.9.2			My listings module -- allows user to see all of their listings, and any info regarding them
-
-5.2.1.9.3			My offers module -- allows user to see their standing offers for products
-
-5.2.1.9.4			My favorites module -- allows users to see and pick favorite products
+5.2.1.6		Profile settings CSU -- Page for user to check and change their user information and settings
 
 ------
 
-5.2.2	Serverless backend CSC -- hosted on AWS for scalability, reliability, and variety of functionality
+5.2.2	Server CSC -- Monolithic application hosted on Docker (Linux)
 
-5.2.2.1		AWS built-in functionality CSU -- AWS's built in systems
+5.2.2.1		Postgres Database -- contains user, chat, circle, and message data
 
-5.2.2.1.1			AWS Cognito module -- AWS's built in user management system
+5.2.2.2		GraphQL API -- interfaces with database to allow mobile application to pull data and trigger 		
+			server-side functions
 
-5.2.2.1.2			AWS RDS module -- AWS's built in database hosting system
-
-5.2.2.1.3			AWS Elasticache module -- AWS's built in cache hosting system
-
-5.2.2.1.4			AWS S3 buckets module -- AWS's built in miscellaneous storage system
-
-5.2.2.1.5			AWS SNS module -- AWS's built in micro-service communication system
-
-5.2.2.1.6			AWS Lambda module -- AWS's built in backend interfacing system
-
-5.2.2.2		Golang backend CSU -- provides backend requests to front-end through AWS Lambda
-
-5.2.2.2.1			Inventory service module -- provides all functionality for our inventory system
-
-5.2.2.2.2			Shipping service module -- provides all functionality for our shipping system
-
-5.2.2.2.3			User service module -- provides all functionality for our user system
-
-5.2.2.2.4			Analytics service module -- provides all functionality for our analytics system
+5.2.2.3		User Authentication -- authenticates requests from users against data in database
 
 ------
 
