@@ -30,3 +30,17 @@ Eddie
 Next time we will begin setup for backend.
 
 
+----- 2/5/19 -----
+Continued mock-ups using moqup.com. During this time, we made decisions on many of our flows and general application ideas, and talked about possible future directions to take with Circles.
+
+
+----- 2/12/19 -----
+Completed our Software Requirements Specification. Then, we began to layout or code base and asked for advice from colleagues.
+
+Brian
+- look into GraphQL more and try to play around with it
+
+Eddie
+- look into Apollo GraphQL and typescript for react-natice
+
+Next time we will begin setup for backend.
