@@ -13,8 +13,10 @@ import CircleScreen from './CircleScreen';
 
 interface Props {}
 
-export default class App extends Component<Props> {
+class App extends Component<Props> {
   render() {
     return <CircleScreen />;
   }
 }
+
+export default App;
