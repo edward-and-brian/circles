@@ -44,3 +44,15 @@ Eddie
 - look into Apollo GraphQL and typescript for react-natice
 
 Next time we will begin setup for backend.
+
+----- 2/21/19 -----
+Initiated the front end application (react-native with typescript). Also set up file structure and began setting up app navigation using react-navigation.
+
+Found great examples (with go-graphql, postgres/sqlx, go) on GitHub to learn how to properly structure a backend with such a stack.
+
+Brian
+- take what you learned from examples, documentation, and experiments and create a draft of the backend.
+
+Eddie
+- set up react navigation
+- create two pages and navigate between.
