@@ -56,3 +56,10 @@ Brian
 Eddie
 - set up react navigation
 - create two pages and navigate between.
+
+----- 2/26/19 -----
+Eddie explained Front End file structure to Brian. Brian explained Backend file structure to Eddie. 
+
+Eddie
+- Stop slacking and actually begin to work on components
+- Find ways around not having endpoints
