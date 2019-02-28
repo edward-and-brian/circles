@@ -1,0 +1,40 @@
+
+
+This is a GREAT job, and I can see that there are a lot of things you
+have thought through with this project..
+
+You can ALWAYS specify more.  Try to think in terms of "if someone else
+were to code this project, what would they need to know about the way it
+operates?  What information could I provide them so they can be successful
+in the implementation?
+
+Try to be as specific and detailed as possible.  For example, requirement
+5.3.4 what are the settings?  You can make a bullet list and use a "will"
+statement underneath 5.3.4 to say what they are:
+
+5.3.4 Mobile Application shall allow users to edit notification settings
+      for given chats and circles.
+      Notification settings will include but are not limited to:
+        * setting 1
+        * setting 2
+          ....
+        * setting N
+
+Watch out for "weasel words" like "properly" in 5.3.8 or "effectively"
+in 5.3.7, or even "securely" in 5.3.7.  Those are VERY hard to prove,
+because they are a subjective judgement not a measurable value.
+
+Otherwise, nice work!  Make a few additions and changes and you'll be
+good to go!
+
+So far for the semester:
+Proposal:      5.0  out of  5.0  points
+Requirements: 14.0  out of 15.0  points
+Homework 1:    3.34 out of  3.34 points
+Homework 2:    3.34 out of  3.34 points
+Particip.:     1.5  out of  1.5  points
+              27.18 out of 28.18 points = 96.45% which is an A
+
+Keep it up!
+		      
+
