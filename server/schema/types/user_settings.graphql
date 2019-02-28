@@ -1,0 +1,5 @@
+type UserSettings {
+  id: ID!
+  userID: ID!
+  createdAt: Time
+}

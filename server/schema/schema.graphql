@@ -1,0 +1,29 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  user(in: UserInput): User
+  circle(in: CircleInput): Circle
+  chat(in: ChatInput): Chat
+  messages(in: MessagesInput): [Message]
+}
+
+type Mutation {
+  createUser(in: UserInput): User
+  updateUser(in: UserInput): User
+  deleteUser(in: UserInput): User
+
+  createCircle(in: CircleInput): Circle
+  updateCircle(in: CircleInput): Circle
+  deleteCircle(in: CircleInput): Circle
+
+  createChat(in: ChatInput): Chat
+  updateChat(in: ChatInput): Chat
+  deleteChat(in: ChatInput): Chat
+
+  createMessages(in: MessagesInput): Chat
+  updateMessages(in: MessagesInput): Chat
+  deleteMessages(in: MessagesInput): Chat
+}

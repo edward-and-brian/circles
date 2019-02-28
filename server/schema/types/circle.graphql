@@ -1,0 +1,13 @@
+type Circle {
+  id: ID!
+  chatID: ID!
+  name: String!
+  createdAt: Time!
+  messages: [Message]
+}
+
+input CircleInput {
+  id: ID
+  chatID: ID
+  name: String
+}

@@ -1,0 +1,12 @@
+type Message {
+  id: ID!
+  chatID: ID!
+  circleID: ID!
+  senderID: ID!
+  content: String!
+  createdAt: Time!
+}
+
+input MessagesInput {
+  circleID: ID
+}
