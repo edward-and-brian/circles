@@ -1,9 +1,13 @@
-import React, { PureComponent } from "react";
-import CircleNavbarView from "./Views";
+import React, { PureComponent } from 'react';
+import CircleNavbarView from './Views';
 
-class CircleNavbar extends PureComponent {
+export interface Props {
+  onPressBack(): void;
+}
+
+class CircleNavbar extends PureComponent<Props> {
   render() {
-    return <CircleNavbarView />;
+    return <CircleNavbarView {...this.props} />;
   }
 }
 

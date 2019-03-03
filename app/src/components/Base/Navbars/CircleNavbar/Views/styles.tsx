@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors, Scaled } from '../../../../../themes';
+import { Colors, Scaled, Fonts } from '../../../../../themes';
 
 export default StyleSheet.create({
   container: {
@@ -16,21 +16,21 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   backArrow: {
-    backgroundColor: Colors.black,
-    width: 30,
-    height: 30,
+    width: Scaled.screen.width * 0.065,
+    height: Scaled.screen.width * 0.065,
   },
   titleContainer: {
     flex: 9,
     justifyContent: 'center',
-    paddingLeft: Scaled.screen.width * 0.05,
   },
   chatTitle: {
     fontSize: Scaled.fontSize.h11,
+    fontFamily: Fonts.medium,
     color: Colors.gray,
   },
   circleTitle: {
     fontSize: Scaled.fontSize.h6,
+    fontFamily: Fonts.medium,
   },
   avatarContainer: {
     flex: 2,

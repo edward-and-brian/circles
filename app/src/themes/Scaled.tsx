@@ -4,7 +4,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const NORMALIZED_FONTS = SCREEN_WIDTH * 0.024;
 const isXGen = SCREEN_HEIGHT > 800;
 
-const Scaled = {
+export default {
   screen: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
@@ -27,5 +27,3 @@ const Scaled = {
   isXGen,
   navBarOffset: isXGen ? SCREEN_WIDTH * 0.12 : SCREEN_WIDTH * 0.05,
 };
-
-export default Scaled;

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '../../../themes/';
+import { Colors, Fonts } from '../../../themes/';
 
 export default StyleSheet.create({
   container: {
@@ -11,5 +11,25 @@ export default StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
+  },
+  light: {
+    fontSize: 25,
+    fontFamily: Fonts.light,
+  },
+  book: {
+    fontSize: 25,
+    fontFamily: Fonts.book,
+  },
+  medium: {
+    fontSize: 25,
+    fontFamily: Fonts.medium,
+  },
+  heavy: {
+    fontSize: 25,
+    fontFamily: Fonts.heavy,
+  },
+  black: {
+    fontSize: 25,
+    fontFamily: Fonts.black,
   },
 });

@@ -9,13 +9,16 @@
  */
 
 import React, { Component } from 'react';
-import CircleScreen from './CircleScreen';
+import { createAppContainer } from 'react-navigation';
+import Routes from '../Routes';
+
+const AppContainer = createAppContainer(Routes);
 
 interface Props {}
 
 class App extends Component<Props> {
   render() {
-    return <CircleScreen />;
+    return <AppContainer />;
   }
 }
 

@@ -1,10 +1,19 @@
-import React, { PureComponent } from "react";
-import CircleScreenView from "./Views";
+import React, { PureComponent } from 'react';
+import { NavigationScreenProp, withNavigation } from 'react-navigation';
+import CircleScreenView from './Views';
 
-class CircleScreen extends PureComponent {
+export interface Props {
+  navigation: NavigationScreenProp<any, any>;
+}
+
+class CircleScreen extends PureComponent<Props> {
+  onPressBack = (): void => {
+    this.props.navigation.goBack();
+  };
+
   render() {
-    return <CircleScreenView />;
+    return <CircleScreenView onPressBack={this.onPressBack} />;
   }
 }
 
-export default CircleScreen;
+export default withNavigation(CircleScreen);
