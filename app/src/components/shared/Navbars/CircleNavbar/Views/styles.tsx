@@ -3,7 +3,6 @@ import { Colors, Scaled, Fonts } from '../../../../../themes';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
     paddingTop: Scaled.navBarOffset,
     shadowOffset: { width: 0.5, height: 1 },
@@ -31,8 +30,5 @@ export default StyleSheet.create({
   circleTitle: {
     fontSize: Scaled.fontSize.h6,
     fontFamily: Fonts.medium,
-  },
-  avatarContainer: {
-    flex: 2,
   },
 });

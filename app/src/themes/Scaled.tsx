@@ -26,4 +26,5 @@ export default {
   },
   isXGen,
   navBarOffset: isXGen ? SCREEN_WIDTH * 0.12 : SCREEN_WIDTH * 0.05,
+  navBarHeight: isXGen ? SCREEN_WIDTH * 0.28 : SCREEN_WIDTH * 0.20,
 };

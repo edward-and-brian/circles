@@ -1,19 +1,14 @@
 import React, { PureComponent } from 'react';
-import { NavigationScreenProp, withNavigation } from 'react-navigation';
+import NavigationService from '../../navigation/NavigationService';
 import ChatsScreenView from './Views';
-
-export interface Props {
-  navigation: NavigationScreenProp<any, any>;
-}
-
-class ChatsScreen extends PureComponent<Props> {
-  onPressChat = (): void => {
-    this.props.navigation.navigate('circle');
-  };
+class ChatsScreen extends PureComponent {
+  onPressChat() {
+    NavigationService.navigate('circle');
+  }
 
   render() {
     return <ChatsScreenView onPressChat={this.onPressChat} />;
   }
 }
 
-export default withNavigation(ChatsScreen);
+export default ChatsScreen;

@@ -22,6 +22,7 @@ class ChatsScreenView extends PureComponent<Props> {
                 <Text style={styles.chatName}>{chat}</Text>
               </TouchableOpacity>
             ))}
+            <View style={styles.spacer} />
           </ScrollView>
         </View>
       </View>

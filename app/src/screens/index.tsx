@@ -9,16 +9,26 @@
  */
 
 import React, { Component } from 'react';
-import { createAppContainer } from 'react-navigation';
-import Routes from '../Routes';
+import {
+  createAppContainer,
+  NavigationContainerComponent,
+} from 'react-navigation';
+
+import NavigationService from '../navigation/NavigationService';
+import Routes from '../navigation/Routes';
 
 const AppContainer = createAppContainer(Routes);
 
-interface Props {}
-
-class App extends Component<Props> {
+class App extends Component {
   render() {
-    return <AppContainer />;
+    return (
+      <AppContainer
+        ref={navigatorRef => {
+          navigatorRef = navigatorRef as NavigationContainerComponent;
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
+    );
   }
 }
 

@@ -30,4 +30,7 @@ export default StyleSheet.create({
     fontSize: Scaled.fontSize.h4,
     fontFamily: Fonts.heavy,
   },
+  spacer: {
+    height: Scaled.screen.height * 0.03,
+  }
 });

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors, Fonts } from '../../../themes/';
+import { Colors, Fonts, Scaled } from '../../../themes/';
 
 export default StyleSheet.create({
   container: {
@@ -7,10 +7,10 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
   },
   conversationContainer: {
-    flex: 10,
-  },
-  footerContainer: {
     flex: 1,
+  },
+  headerContainer: {
+    height: Scaled.navBarHeight,
   },
   light: {
     fontSize: 25,
