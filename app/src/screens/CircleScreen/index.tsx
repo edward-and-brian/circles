@@ -9,16 +9,25 @@ import NavigationService from '../../navigation/NavigationService';
 import CircleScreenView from './Views';
 import { Scaled } from '../../themes';
 
-const textInputHeight = Scaled.screen.height * 0.055;
+const textInputHeight = Scaled.screen.height * (Scaled.isXGen ? 0.053 : 0.065);
 const heightDefault =
-  textInputHeight + (Scaled.isXGen ? Scaled.screen.height * 0.025 : 0);
+  textInputHeight + Scaled.screen.height * (Scaled.isXGen ? 0.02 : 0);
 let footerHeight = new Animated.Value(heightDefault);
 
 export interface Props {}
+interface State {
+  message: string;
+}
 
-class CircleScreen extends PureComponent<Props> {
+class CircleScreen extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {
+      message: '',
+    };
+
+    this.onMessageChange = this.onMessageChange.bind(this);
   }
 
   keyboardWillShowListener!: EmitterSubscription;
@@ -59,11 +68,17 @@ class CircleScreen extends PureComponent<Props> {
     NavigationService.back();
   }
 
+  onMessageChange(newMessage: string) {
+    this.setState({ message: newMessage });
+  }
+
   render() {
     return (
       <CircleScreenView
         onPressBack={this.onPressBack}
         footerHeight={footerHeight}
+        message={this.state.message}
+        onMessageChange={this.onMessageChange}
       />
     );
   }

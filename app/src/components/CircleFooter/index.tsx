@@ -4,10 +4,12 @@ import { Animated } from 'react-native';
 
 export interface Props {
   height: Animated.Value;
+  message: string;
+  onMessageChange(newMessage: string): void;
 }
 
 interface State {
-  message: string;
+  renderSendArrow: boolean;
 }
 
 class CircleFooter extends PureComponent<Props, State> {
@@ -15,12 +17,25 @@ class CircleFooter extends PureComponent<Props, State> {
     super(props);
 
     this.state = {
-      message: '',
+      renderSendArrow: false,
     };
   }
 
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    if (!!nextProps.message !== prevState.renderSendArrow) {
+      console.log('flop');
+      return { renderSendArrow: !prevState.renderSendArrow };
+    }
+    return null;
+  }
+
   render() {
-    return <CircleFooterView {...this.props} message={this.state.message} />;
+    return (
+      <CircleFooterView
+        {...this.props}
+        renderSendArrow={this.state.renderSendArrow}
+      />
+    );
   }
 }
 

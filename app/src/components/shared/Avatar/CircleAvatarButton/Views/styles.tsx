@@ -11,6 +11,6 @@ export default StyleSheet.create({
     height: Scaled.screen.height * 0.055,
     width: Scaled.screen.height * 0.055,
     borderRadius: 10000,
-    backgroundColor: 'steelblue',
+    backgroundColor: Colors.yellow,
   },
 });
