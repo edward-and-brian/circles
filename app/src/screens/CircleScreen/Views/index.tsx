@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { ScrollView, View, Text, Animated } from 'react-native';
+import CircleMessageWindow from '../../../components/CircleMessageWindow';
 import CircleNavbar from '../../../components/shared/Navbars/CircleNavbar/';
 import CircleFooter from '../../../components/CircleFooter';
 import styles from './styles';
@@ -19,13 +20,7 @@ class CircleScreenView extends PureComponent<Props> {
           onPressBack={this.props.onPressBack}
           style={styles.headerContainer}
         />
-        <ScrollView style={styles.conversationContainer}>
-          <Text style={styles.light}>Circle CIRCLES circles</Text>
-          <Text style={styles.book}>Circle CIRCLES circles</Text>
-          <Text style={styles.medium}>Circle CIRCLES circles</Text>
-          <Text style={styles.heavy}>Circle CIRCLES circles</Text>
-          <Text style={styles.black}>Circle CIRCLES circles</Text>
-        </ScrollView>
+        <CircleMessageWindow />
         <CircleFooter
           height={this.props.footerHeight}
           message={this.props.message}

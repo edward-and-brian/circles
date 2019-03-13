@@ -10,7 +10,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
   },
   arrowContainer: {
-    flex: 2,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -19,7 +19,7 @@ export default StyleSheet.create({
     height: Scaled.screen.width * 0.065,
   },
   titleContainer: {
-    flex: 9,
+    flex: 5,
     justifyContent: 'center',
   },
   chatTitle: {
@@ -30,5 +30,9 @@ export default StyleSheet.create({
   circleTitle: {
     fontSize: Scaled.fontSize.h6,
     fontFamily: Fonts.medium,
+  },
+  avatarContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });

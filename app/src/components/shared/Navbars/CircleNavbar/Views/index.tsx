@@ -35,7 +35,9 @@ class CircleNavbarView extends PureComponent<Props> {
           <Text style={styles.chatTitle}>The Come Back Kids</Text>
           <Text style={styles.circleTitle}>Kill the Birds</Text>
         </View>
-        <CircleAvatarButton />
+        <View style={styles.avatarContainer}>
+          <CircleAvatarButton />
+        </View>
       </View>
     );
   }

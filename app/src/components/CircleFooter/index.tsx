@@ -23,7 +23,6 @@ class CircleFooter extends PureComponent<Props, State> {
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
     if (!!nextProps.message !== prevState.renderSendArrow) {
-      console.log('flop');
       return { renderSendArrow: !prevState.renderSendArrow };
     }
     return null;
