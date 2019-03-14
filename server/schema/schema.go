@@ -5,6 +5,8 @@ import (
 	"bytes"
 )
 
+// GetRootSchema reads the .graphql schema files from the generated _bindata.go file, concatenating the
+// files together into one string.
 func GetRootSchema() string {
 	buf := bytes.Buffer{}
 	for _, name := range AssetNames() {
