@@ -1,0 +1,21 @@
+type User {
+  id: ID!
+  name: String!
+  phoneNumber: String!
+  displayName: String!
+  createdAt: Time!
+  chats: [Chat]!
+}
+
+input updateUserInput {
+  id: ID!
+  name: String!
+  phoneNumber: String!
+  displayName: String!
+}
+
+input createUserInput {
+  name: String!
+  phoneNumber: String!
+  displayName: String!
+}

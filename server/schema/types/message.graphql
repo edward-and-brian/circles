@@ -1,0 +1,7 @@
+type Message {
+  id: ID!
+  circleID: ID!
+  senderID: ID!
+  content: String!
+  createdAt: Time!
+}

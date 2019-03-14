@@ -1,0 +1,6 @@
+type Chat {
+  id: ID!
+  name: String!
+  createdAt: Time!
+  circles: [Circle]!
+}
