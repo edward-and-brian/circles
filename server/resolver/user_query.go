@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-// User ...
+// User retrieves the user specified by id
 func (r *Resolver) User(ctx context.Context, args *IDArgs) (*UserResolver, error) {
 	var (
 		err  error
@@ -28,7 +28,7 @@ func (r *Resolver) User(ctx context.Context, args *IDArgs) (*UserResolver, error
 	return &UserResolver{user, ctx}, err
 }
 
-// Users ...
+// Users retrieves all users
 func (r *Resolver) Users(ctx context.Context) ([]*UserResolver, error) {
 	var (
 		err           error

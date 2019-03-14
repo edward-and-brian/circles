@@ -9,7 +9,7 @@ import (
 	"github.com/rs/xid"
 )
 
-// CreateUser ...
+// CreateUser creates a new User with the given data
 func (r *Resolver) CreateUser(ctx context.Context, args *struct{ Input *types.User }) (*UserResolver, error) {
 	var (
 		err error
@@ -35,7 +35,7 @@ func (r *Resolver) CreateUser(ctx context.Context, args *struct{ Input *types.Us
 	return &UserResolver{user, ctx}, nil
 }
 
-// UpdateUser ...
+// UpdateUser updates the user specified by ID with the given data
 func (r *Resolver) UpdateUser(ctx context.Context, args *struct{ Input *types.User }) (*UserResolver, error) {
 	var (
 		err error
@@ -60,7 +60,7 @@ func (r *Resolver) UpdateUser(ctx context.Context, args *struct{ Input *types.Us
 	return &UserResolver{user, ctx}, nil
 }
 
-// DeleteUser                                                                                                                                                                                                                        leteUser ...
+// DeleteUser deletes the user specified by ID                                                                                                                                                                                                      leteUser ...
 func (r *Resolver) DeleteUser(ctx context.Context, args *IDArgs) (*UserResolver, error) {
 	var (
 		err  error
