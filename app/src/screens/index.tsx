@@ -9,13 +9,26 @@
  */
 
 import React, { Component } from 'react';
-import CircleScreen from './CircleScreen';
+import {
+  createAppContainer,
+  NavigationContainerComponent,
+} from 'react-navigation';
 
-interface Props {}
+import NavigationService from '../navigation/NavigationService';
+import Routes from '../navigation/Routes';
 
-class App extends Component<Props> {
+const AppContainer = createAppContainer(Routes);
+
+class App extends Component {
   render() {
-    return <CircleScreen />;
+    return (
+      <AppContainer
+        ref={navigatorRef => {
+          navigatorRef = navigatorRef as NavigationContainerComponent;
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
+    );
   }
 }
 

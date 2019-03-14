@@ -1,15 +1,31 @@
 import React, { PureComponent } from 'react';
-import { View, Text } from 'react-native';
-import CircleNavbar from '../../../components/Base/Navbars/CircleNavbar';
+import { ScrollView, View, Text, Animated } from 'react-native';
+import CircleMessageWindow from '../../../components/CircleMessageWindow';
+import CircleNavbar from '../../../components/shared/Navbars/CircleNavbar/';
+import CircleFooter from '../../../components/CircleFooter';
 import styles from './styles';
 
-class CircleScreenView extends PureComponent {
+export interface Props {
+  onPressBack(): void;
+  footerHeight: Animated.Value;
+  message: string;
+  onMessageChange(newMessage: string): void;
+}
+
+class CircleScreenView extends PureComponent<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <CircleNavbar />
-        <View style={styles.conversationContainer} />
-        <View style={styles.footerContainer} />
+        <CircleNavbar
+          onPressBack={this.props.onPressBack}
+          style={styles.headerContainer}
+        />
+        <CircleMessageWindow />
+        <CircleFooter
+          height={this.props.footerHeight}
+          message={this.props.message}
+          onMessageChange={this.props.onMessageChange}
+        />
       </View>
     );
   }
