@@ -25,8 +25,7 @@ func (h *GraphQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ctx := r.Context()
-	response := h.Schema.Exec(ctx, params.Query, params.OperationName, params.Variables)
+	response := h.Schema.Exec(context.Background(), params.Query, params.OperationName, params.Variables)
 	responseJSON, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -35,11 +34,4 @@ func (h *GraphQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(responseJSON)
-}
-
-// AddContext adds the context to the given http handler
-func AddContext(ctx context.Context, h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		h.ServeHTTP(w, r.WithContext(ctx))
-	})
 }

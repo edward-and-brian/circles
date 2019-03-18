@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net/http"
 	"time"
@@ -15,17 +14,12 @@ import (
 )
 
 func main() {
-	db, err := store.OpenDB()
-	if err != nil {
-		log.Fatalf("Unable to connect to db: %s \n", err)
-	}
-
-	ctx := context.WithValue(context.Background(), resolver.DBkey, db)
-	schema := graphql.MustParseSchema(schema.GetRootSchema(), resolver.GetRootResolver(), graphql.UseFieldResolvers())
+	resolver := &resolver.Resolver{Store: &store.SqliteStore{}}
+	schema := graphql.MustParseSchema(schema.GetRootSchema(), resolver)
 
 	mux := http.NewServeMux()
 	mux.Handle("/", &handler.GraphiQL{})
-	mux.Handle("/query", handler.AddContext(ctx, &handler.GraphQL{Schema: schema}))
+	mux.Handle("/query", &handler.GraphQL{Schema: schema})
 
 	s := &http.Server{
 		Addr:              ":3000",

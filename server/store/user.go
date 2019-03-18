@@ -6,13 +6,13 @@ import (
 )
 
 // AllUsers finds all User entries in the db
-func (ss *SqlxStore) AllUsers() ([]*types.User, error) {
+func (db *SqliteStore) AllUsers() ([]*types.User, error) {
 	var (
 		users   []*types.User
 		userSQL = `SELECT * FROM users ORDER BY id ASC`
 	)
 
-	if err := ss.Select(&users, userSQL); err != nil {
+	if err := db.Select(&users, userSQL); err != nil {
 		return nil, err
 	}
 
@@ -20,12 +20,12 @@ func (ss *SqlxStore) AllUsers() ([]*types.User, error) {
 }
 
 // CreateUser creates a User entry in the db
-func (ss *SqlxStore) CreateUser(u *types.User) error {
+func (db *SqliteStore) CreateUser(u *types.User) error {
 	userSQL := `
 	INSERT INTO users (id, name, phone_number, display_name) 
 	VALUES (:id, :name, :phone_number, :display_name)`
 
-	if r, err := ss.NamedExec(userSQL, u); err != nil {
+	if r, err := db.NamedExec(userSQL, u); err != nil {
 		return err
 
 	} else if count, err := r.RowsAffected(); err != nil {
@@ -39,12 +39,12 @@ func (ss *SqlxStore) CreateUser(u *types.User) error {
 }
 
 // DeleteUser deletes a User entry in the db
-func (ss *SqlxStore) DeleteUser(id *string) error {
+func (db *SqliteStore) DeleteUser(id *string) error {
 	userSQL := `
 	DELETE FROM users
 	WHERE id=$id`
 
-	if count, err := ss.MustExec(userSQL, id).RowsAffected(); err != nil {
+	if count, err := db.MustExec(userSQL, id).RowsAffected(); err != nil {
 		return err
 
 	} else if count == 0 {
@@ -54,13 +54,13 @@ func (ss *SqlxStore) DeleteUser(id *string) error {
 }
 
 // FindUser finds a User entry in the db
-func (ss *SqlxStore) FindUser(id *string) (*types.User, error) {
+func (db *SqliteStore) FindUser(id *string) (*types.User, error) {
 	var (
 		user    = &types.User{}
 		userSQL = `SELECT * FROM users WHERE id=$1`
 	)
 
-	if err := ss.Get(user, userSQL, *id); err != nil {
+	if err := db.Get(user, userSQL, *id); err != nil {
 		return nil, err
 	}
 
@@ -68,7 +68,7 @@ func (ss *SqlxStore) FindUser(id *string) (*types.User, error) {
 }
 
 // UpdateUser updates a User entry in the db
-func (ss *SqlxStore) UpdateUser(user *types.User) error {
+func (ss *SqliteStore) UpdateUser(user *types.User) error {
 	userSQL := `
 	UPDATE users 
 	SET name=:name, 

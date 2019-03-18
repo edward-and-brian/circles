@@ -1,55 +1,41 @@
 package resolver
 
 import (
-	"circles/server/store"
 	"circles/server/types"
 	"context"
-	"fmt"
 )
 
 // User retrieves the user specified by id
 func (r *Resolver) User(ctx context.Context, args *IDArgs) (*UserResolver, error) {
-	var (
-		err  error
-		db   *store.SqlxStore
-		user *types.User
-	)
+	var user *types.User
 
-	if v := ctx.Value(DBkey); v != nil {
-		db = v.(*store.SqlxStore)
-	} else {
-		return nil, fmt.Errorf("ctx.db is nil")
-	}
+	if err := r.Store.Open(); err != nil {
+		return nil, err
 
-	if user, err = db.FindUser(&args.ID); err != nil {
+	} else if user, err = r.Store.FindUser(&args.ID); err != nil {
 		return nil, err
 	}
 
-	return &UserResolver{user, ctx}, err
+	return &UserResolver{user, r.Store}, nil
 }
 
 // Users retrieves all users
 func (r *Resolver) Users(ctx context.Context) ([]*UserResolver, error) {
 	var (
-		err           error
-		db            *store.SqlxStore
 		users         []*types.User
 		usersResolver []*UserResolver
 	)
 
-	if v := ctx.Value(DBkey); v != nil {
-		db = v.(*store.SqlxStore)
-	} else {
-		return nil, fmt.Errorf("ctx.db is nil")
-	}
+	if err := r.Store.Open(); err != nil {
+		return nil, err
 
-	if users, err = db.AllUsers(); err != nil {
+	} else if users, err = r.Store.AllUsers(); err != nil {
 		return nil, err
 	}
 
 	for _, u := range users {
-		usersResolver = append(usersResolver, &UserResolver{u, ctx})
+		usersResolver = append(usersResolver, &UserResolver{u, r.Store})
 	}
 
-	return usersResolver, err
+	return usersResolver, nil
 }

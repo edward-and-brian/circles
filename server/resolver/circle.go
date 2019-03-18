@@ -31,7 +31,7 @@ func (r *CircleResolver) CreatedAt() (graphql.Time, error) {
 }
 
 func (r *CircleResolver) Messages(ctx context.Context) []*MessageResolver {
-	// db := ctx.Value("db").(*store.SqlxStore)
+	// db := ctx.Value("db").(*store.SqliteStore)
 	// db.getCircleMessages(r.ci.ID)
 
 	l := make([]*MessageResolver, len(r.ci.Messages))
