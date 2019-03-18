@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS chats;
 CREATE TABLE chats
 (
     id          TEXT    NOT NULL    PRIMARY KEY,

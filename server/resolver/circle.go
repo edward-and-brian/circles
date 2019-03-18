@@ -2,43 +2,28 @@ package resolver
 
 import (
 	"context"
-	"time"
 
+	"circles/server/model"
+	"circles/server/store"
 	"circles/server/types"
-
-	graphql "github.com/graph-gophers/graphql-go"
 )
 
-type CircleResolver struct {
-	ci *types.Circle
+// Circle retrieves the chat specified by id
+func (r *Resolver) Circle(ctx context.Context, args *IDArgs) (*model.CircleModel, error) {
+	return model.FindCircle(ctx, &store.GeneralStore{}, args.ID)
 }
 
-func (r *CircleResolver) ID() graphql.ID {
-	return graphql.ID(r.ci.ID)
+// CreateCircle creates a new Circle with the given data
+func (r *Resolver) CreateCircle(ctx context.Context, args *struct{ Input *types.Circle }) (*model.CircleModel, error) {
+	return model.CreateCircle(ctx, &store.GeneralStore{}, args.Input)
 }
 
-func (r *CircleResolver) ChatID() graphql.ID {
-	return graphql.ID(r.ci.ChatID)
+// DeleteCircle deletes the Circle specified by ID
+func (r *Resolver) DeleteCircle(ctx context.Context, args *IDArgs) (*model.CircleModel, error) {
+	return model.DeleteCircle(ctx, &store.GeneralStore{}, args.ID)
 }
 
-func (r *CircleResolver) Name() string {
-	return r.ci.Name
-}
-
-func (r *CircleResolver) CreatedAt() (graphql.Time, error) {
-	t, err := time.Parse(time.RFC3339, r.ci.CreatedAt)
-	return graphql.Time{Time: t}, err
-}
-
-func (r *CircleResolver) Messages(ctx context.Context) []*MessageResolver {
-	// db := ctx.Value("db").(*store.SqliteStore)
-	// db.getCircleMessages(r.ci.ID)
-
-	l := make([]*MessageResolver, len(r.ci.Messages))
-	for i := range l {
-		l[i] = &MessageResolver{
-			m: r.ci.Messages[i],
-		}
-	}
-	return l
+// UpdateCircle updates the Circle specified by ID with the given data
+func (r *Resolver) UpdateCircle(ctx context.Context, args *struct{ Input *types.Circle }) (*model.CircleModel, error) {
+	return model.UpdateCircle(ctx, &store.GeneralStore{}, args.Input)
 }

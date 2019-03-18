@@ -8,15 +8,12 @@ import (
 	"circles/server/handler"
 	"circles/server/resolver"
 	"circles/server/schema"
-	"circles/server/store"
 
 	graphql "github.com/graph-gophers/graphql-go"
 )
 
 func main() {
-	resolver := &resolver.Resolver{Store: &store.SqliteStore{}}
-	schema := graphql.MustParseSchema(schema.GetRootSchema(), resolver)
-
+	schema := graphql.MustParseSchema(schema.GetRootSchema(), resolver.GetRootResolver())
 	mux := http.NewServeMux()
 	mux.Handle("/", &handler.GraphiQL{})
 	mux.Handle("/query", &handler.GraphQL{Schema: schema})

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS user_settings;
 CREATE TABLE user_settings
 (
     id          TEXT    NOT NULL    PRIMARY KEY,

@@ -1,27 +1,28 @@
 package store
 
 import (
-	"log"
-
 	"github.com/jmoiron/sqlx"
 	// sqlite necessary
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// SqliteStore defines an implementation of model store interfaces
-type SqliteStore struct {
-	*sqlx.DB
+// GeneralStore is a struct used to allow dependency injection of different stores
+type GeneralStore struct {
+	sqlite *sqlx.DB
 }
 
-// Open opens a new session with SQLite
-func (ss *SqliteStore) Open() (err error) {
-	ss.DB, err = sqlx.Open("sqlite3", "circles.db")
+// OpenSQLite opens a new session with SQLite
+func (gs *GeneralStore) OpenSQLite() error {
+	if gs.sqlite == nil {
+		if db, err := sqlx.Open("sqlite3", "circles.db"); err != nil {
+			return err
 
-	if err != nil {
-		log.Fatal(err)
+		} else if err = db.Ping(); err != nil {
+			return err
 
-	} else if err = ss.DB.Ping(); err != nil {
-		log.Fatal(err)
+		} else {
+			gs.sqlite = db
+		}
 	}
 
 	return nil

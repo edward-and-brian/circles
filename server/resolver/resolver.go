@@ -1,24 +1,14 @@
 package resolver
 
-import "circles/server/types"
+// Resolver is the entry point for all top-level operations.
+type Resolver struct{}
 
-type store interface {
-	Open() error
-
-	AllUsers() ([]*types.User, error)
-	CreateUser(u *types.User) error
-	DeleteUser(id *string) error
-	FindUser(id *string) (*types.User, error)
-	UpdateUser(user *types.User) error
-
-	AllUserChats(id *string) ([]*types.Chat, error)
-	CreateChat(ch *types.Chat) error
-	DeleteChat(id *string) error
-	FindChat(id *string) (*types.Chat, error)
-	UpdateChat(chat *types.Chat) error
+// GetRootResolver returns a new empty resolver struct
+func GetRootResolver() *Resolver {
+	return &Resolver{}
 }
 
-// Resolver is the entry point for all top-level operations.
-type Resolver struct {
-	Store store
+// IDArgs is used as an argument for multipe resolver functions
+type IDArgs struct {
+	ID string
 }

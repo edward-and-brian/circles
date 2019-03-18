@@ -2,36 +2,33 @@ package resolver
 
 import (
 	"context"
-	"time"
 
+	"circles/server/model"
+	"circles/server/store"
 	"circles/server/types"
-
-	graphql "github.com/graph-gophers/graphql-go"
 )
 
-// ChatResolver is the resolvable struct for the Chat struct
-type ChatResolver struct {
-	ch    *types.Chat
-	store store
+// ChatAddUser retrieves the chat specified by id
+func (r *Resolver) ChatAddUser(ctx context.Context, args *struct{ UserID, ChatID string }) (*model.ChatModel, error) {
+	return model.AddUserToChat(ctx, &store.GeneralStore{}, args.UserID, args.ChatID)
 }
 
-// ID field resolver
-func (r *ChatResolver) ID() graphql.ID {
-	return graphql.ID(r.ch.ID)
+// Chat retrieves the chat specified by id
+func (r *Resolver) Chat(ctx context.Context, args *IDArgs) (*model.ChatModel, error) {
+	return model.FindChat(ctx, &store.GeneralStore{}, args.ID)
 }
 
-// Name field resolver
-func (r *ChatResolver) Name() string {
-	return r.ch.Name
+// CreateChat creates a new Chat with the given data
+func (r *Resolver) CreateChat(ctx context.Context, args *struct{ Input *types.Chat }) (*model.ChatModel, error) {
+	return model.CreateChat(ctx, &store.GeneralStore{}, args.Input)
 }
 
-// CreatedAt field resolver
-func (r *ChatResolver) CreatedAt() (graphql.Time, error) {
-	t, err := time.Parse(time.RFC3339, r.ch.CreatedAt)
-	return graphql.Time{Time: t}, err
+// DeleteChat deletes the Chat specified by ID
+func (r *Resolver) DeleteChat(ctx context.Context, args *IDArgs) (*model.ChatModel, error) {
+	return model.DeleteChat(ctx, &store.GeneralStore{}, args.ID)
 }
 
-// Circles field resolver
-func (r *ChatResolver) Circles(ctx context.Context) []*CircleResolver {
-	return []*CircleResolver{}
+// UpdateChat updates the Chat specified by ID with the given data
+func (r *Resolver) UpdateChat(ctx context.Context, args *struct{ Input *types.Chat }) (*model.ChatModel, error) {
+	return model.UpdateChat(ctx, &store.GeneralStore{}, args.Input)
 }

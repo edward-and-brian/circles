@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS circles;
 CREATE TABLE circles
 (
     id          TEXT    NOT NULL    PRIMARY KEY,

@@ -5,3 +5,14 @@ type Message {
   content: String!
   createdAt: Time!
 }
+
+input createMessageInput {
+  circleID: ID!
+  senderID: ID!
+  content: String!
+}
+
+input updateMessageInput {
+  id: ID!
+  content: String!
+}

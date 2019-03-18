@@ -5,3 +5,13 @@ type Circle {
   createdAt: Time!
   messages: [Message]!
 }
+
+input createCircleInput {
+  chatID: ID!
+  name: String!
+}
+
+input updateCircleInput {
+  id: ID!
+  name: String!
+}

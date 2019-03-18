@@ -7,14 +7,14 @@ type User {
   chats: [Chat]!
 }
 
-input updateUserInput {
-  id: ID!
+input createUserInput {
   name: String!
   phoneNumber: String!
   displayName: String!
 }
 
-input createUserInput {
+input updateUserInput {
+  id: ID!
   name: String!
   phoneNumber: String!
   displayName: String!

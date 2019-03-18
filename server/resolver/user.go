@@ -1,47 +1,33 @@
 package resolver
 
 import (
-	"context"
-	"time"
-
+	"circles/server/model"
+	"circles/server/store"
 	"circles/server/types"
-
-	graphql "github.com/graph-gophers/graphql-go"
+	"context"
 )
 
-// UserResolver is the resolvable struct for the User struct
-type UserResolver struct {
-	u     *types.User
-	store store
+// CreateUser creates a new User with the given data
+func (r *Resolver) CreateUser(ctx context.Context, args *struct{ Input *types.User }) (*model.UserModel, error) {
+	return model.CreateUser(ctx, &store.GeneralStore{}, args.Input)
 }
 
-// ID field resolver
-func (r *UserResolver) ID() graphql.ID {
-	return graphql.ID(r.u.ID)
+// DeleteUser deletes the user specified by ID
+func (r *Resolver) DeleteUser(ctx context.Context, args *IDArgs) (*model.UserModel, error) {
+	return model.DeleteUser(ctx, &store.GeneralStore{}, args.ID)
 }
 
-// Name field resolver
-func (r *UserResolver) Name() string {
-	return r.u.Name
+// UpdateUser updates the user specified by ID with the given data
+func (r *Resolver) UpdateUser(ctx context.Context, args *struct{ Input *types.User }) (*model.UserModel, error) {
+	return model.UpdateUser(ctx, &store.GeneralStore{}, args.Input)
 }
 
-// PhoneNumber field resolver
-func (r *UserResolver) PhoneNumber() string {
-	return r.u.PhoneNumber
+// User retrieves the user specified by id
+func (r *Resolver) User(ctx context.Context, args *IDArgs) (*model.UserModel, error) {
+	return model.FindUser(ctx, &store.GeneralStore{}, args.ID)
 }
 
-// DisplayName field resolver
-func (r *UserResolver) DisplayName() string {
-	return r.u.DisplayName
-}
-
-// CreatedAt field resolver
-func (r *UserResolver) CreatedAt() (graphql.Time, error) {
-	t, err := time.Parse(time.RFC3339, r.u.CreatedAt)
-	return graphql.Time{Time: t}, err
-}
-
-// Chats field resolver
-func (r *UserResolver) Chats(ctx context.Context) ([]*ChatResolver, error) {
-	return nil, nil
+// Users retrieves all users
+func (r *Resolver) Users(ctx context.Context) ([]*model.UserModel, error) {
+	return model.AllUsers(ctx, &store.GeneralStore{})
 }

@@ -1,45 +1,28 @@
 package resolver
 
 import (
-	"time"
-
+	"circles/server/model"
+	"circles/server/store"
 	"circles/server/types"
-
-	graphql "github.com/graph-gophers/graphql-go"
+	"context"
 )
 
-// MessageResolver ...
-type MessageResolver struct {
-	m *types.Message
+// CreateMessage creates a new Message with the given data
+func (r *Resolver) CreateMessage(ctx context.Context, args *struct{ Input *types.Message }) (*model.MessageModel, error) {
+	return model.CreateMessage(ctx, &store.GeneralStore{}, args.Input)
 }
 
-// ID field resolver
-func (r *MessageResolver) ID() graphql.ID {
-	return graphql.ID(r.m.ID)
+// DeleteMessage deletes the user specified by ID
+func (r *Resolver) DeleteMessage(ctx context.Context, args *IDArgs) (*model.MessageModel, error) {
+	return model.DeleteMessage(ctx, &store.GeneralStore{}, args.ID)
 }
 
-// ChatID field resolver
-func (r *MessageResolver) ChatID() graphql.ID {
-	return graphql.ID(r.m.ChatID)
+// Message retrieves the user specified by id
+func (r *Resolver) Message(ctx context.Context, args *IDArgs) (*model.MessageModel, error) {
+	return model.FindMessage(ctx, &store.GeneralStore{}, args.ID)
 }
 
-// CircleID field resolver
-func (r *MessageResolver) CircleID() graphql.ID {
-	return graphql.ID(r.m.CircleID)
-}
-
-// SenderID field resolver
-func (r *MessageResolver) SenderID() graphql.ID {
-	return graphql.ID(r.m.SenderID)
-}
-
-// Content field resolver
-func (r *MessageResolver) Content() string {
-	return r.m.Content
-}
-
-// CreatedAt field resolver
-func (r *MessageResolver) CreatedAt() (graphql.Time, error) {
-	t, err := time.Parse(time.RFC3339, r.m.CreatedAt)
-	return graphql.Time{Time: t}, err
+// UpdateMessage updates the user specified by ID with the given data
+func (r *Resolver) UpdateMessage(ctx context.Context, args *struct{ Input *types.Message }) (*model.MessageModel, error) {
+	return model.UpdateMessage(ctx, &store.GeneralStore{}, args.Input)
 }

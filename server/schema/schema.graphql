@@ -7,9 +7,11 @@ type Query {
   User(id: ID!): User
   Users(): [User]!
 
-  # circle(id: String): Circle
+  Chat(id: ID!): Chat
 
-  # chat(id: String): Chat
+  Circle(id: ID!): Circle
+
+  Message(id: ID!): Message
 }
 
 type Mutation {
@@ -17,17 +19,18 @@ type Mutation {
   updateUser(input: updateUserInput!): User
   deleteUser(id: ID!): User
 
-  # createCircle(chatID: String!, name: String!): Circle
-  # updateCircle(id: String!, name: String): Circle
-  # deleteCircle(id: String!): Circle
+  createChat(input: createChatInput!): Chat
+  updateChat(input: updateChatInput!): Chat
+  deleteChat(id: ID!): Chat
+  chatAddUser(chatID: ID!, userID: ID!): Chat
 
-  # createChat(name: String!): Chat
-  # updateChat(id: String!, name: String): Chat
-  # deleteChat(id: String!): Chat
+  createCircle(input: createCircleInput!): Circle
+  updateCircle(input: updateCircleInput!): Circle
+  deleteCircle(id: ID!): Circle
 
-  # createMessages(circleID: String!, content: String!, senderID: String!): Message
-  # updateMessages(id: String!, content: String): Message
-  # deleteMessages(id: String!): Message
+  createMessage(input: createMessageInput!): Message
+  updateMessage(input: updateMessageInput!): Message
+  deleteMessage(id: ID!): Message
 }
 
 scalar Time
