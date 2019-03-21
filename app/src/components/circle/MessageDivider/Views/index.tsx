@@ -6,7 +6,7 @@ export interface Props {
   label: string;
 }
 
-class CircleMessageWindow extends PureComponent<Props> {
+class MessageWindow extends PureComponent<Props> {
   render() {
     return (
       <View style={styles.container}>
@@ -18,4 +18,4 @@ class CircleMessageWindow extends PureComponent<Props> {
   }
 }
 
-export default CircleMessageWindow;
+export default MessageWindow;

@@ -6,8 +6,8 @@ import {
   View,
   SectionListData,
 } from 'react-native';
-import CircleMessageDivider from '../../CircleMessageDivider';
-import CircleMessage from '../../CircleMessage';
+import CircleMessageDivider from '../../MessageDivider';
+import CircleMessage from '../../Message';
 import styles from './styles';
 
 interface Message {
@@ -40,7 +40,7 @@ const renderSectionHeader = ({
   return <CircleMessageDivider label={title} />;
 };
 
-class CircleMessageWindowView extends PureComponent<Props> {
+class MessageWindowView extends PureComponent<Props> {
   render() {
     return (
       <SectionList
@@ -55,4 +55,4 @@ class CircleMessageWindowView extends PureComponent<Props> {
   }
 }
 
-export default CircleMessageWindowView;
+export default MessageWindowView;

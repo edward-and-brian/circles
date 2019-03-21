@@ -7,7 +7,7 @@ import {
   Image,
 } from 'react-native';
 import styles from './styles';
-import { Images } from '../../../themes';
+import { Images } from '../../../../themes';
 
 export interface Props {
   height: Animated.Value;
@@ -16,7 +16,7 @@ export interface Props {
   onMessageChange(newMessage: string): void;
 }
 
-class CircleFooterView extends PureComponent<Props> {
+class FooterView extends PureComponent<Props> {
   renderMessageInput() {
     return (
       <View style={styles.inputContainer}>
@@ -54,4 +54,4 @@ class CircleFooterView extends PureComponent<Props> {
   }
 }
 
-export default CircleFooterView;
+export default FooterView;

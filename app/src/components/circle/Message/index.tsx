@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import CircleMessageView from './Views';
+import MessageView from './Views';
 
 export interface Props {
   messageGroup: {
@@ -14,10 +14,10 @@ export interface Props {
 
 interface State {}
 
-class CircleMessage extends PureComponent<Props, State> {
+class Message extends PureComponent<Props, State> {
   render() {
-    return <CircleMessageView {...this.props} />;
+    return <MessageView {...this.props} />;
   }
 }
 
-export default CircleMessage;
+export default Message;

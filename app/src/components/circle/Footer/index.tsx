@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import CircleFooterView from './Views';
+import FooterView from './Views';
 import { Animated } from 'react-native';
 
 export interface Props {
@@ -12,7 +12,7 @@ interface State {
   renderSendArrow: boolean;
 }
 
-class CircleFooter extends PureComponent<Props, State> {
+class Footer extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -22,7 +22,7 @@ class CircleFooter extends PureComponent<Props, State> {
   }
 
   static getDerivedStateFromProps(nextProps: Props, prevState: State) {
-    if (!!nextProps.message !== prevState.renderSendArrow) {
+    if (!!nextProps.message !== prevState.renderSendArrow) { 
       return { renderSendArrow: !prevState.renderSendArrow };
     }
     return null;
@@ -30,7 +30,7 @@ class CircleFooter extends PureComponent<Props, State> {
 
   render() {
     return (
-      <CircleFooterView
+      <FooterView
         {...this.props}
         renderSendArrow={this.state.renderSendArrow}
       />
@@ -38,4 +38,4 @@ class CircleFooter extends PureComponent<Props, State> {
   }
 }
 
-export default CircleFooter;
+export default Footer;

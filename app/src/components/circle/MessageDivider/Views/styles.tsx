@@ -1,12 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { Colors, Fonts, Scaled } from '../../../themes/';
+import { Colors, Fonts, Scaled } from '../../../../themes/';
 
 export default StyleSheet.create({
   container: {
     height: Scaled.screen.width * 0.06,
     flexDirection: 'row',
     alignItems: 'center',
-    // backgroundColor: 'lightpink'
   },
   leftSpacer: {
     flex: 6,

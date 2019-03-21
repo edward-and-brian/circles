@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors, Scaled, Fonts } from '../../../themes';
+import { Colors, Scaled, Fonts } from '../../../../themes';
 
 const textInputHeight = Scaled.screen.width * 0.075;
 

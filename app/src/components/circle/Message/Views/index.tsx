@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { View, Text } from 'react-native';
 import moment from 'moment';
-import CircleAvatarButton from '../../shared/Avatar/CircleAvatarButton';
-import { Scaled } from '../../../themes';
+import AvatarButton from '../../../shared/Button/AvatarButton';
+import { Scaled } from '../../../../themes';
 import styles from './styles';
 
 export interface Props {
@@ -16,14 +16,14 @@ export interface Props {
   };
 }
 
-class CircleMessageView extends PureComponent<Props> {
+class MessageView extends PureComponent<Props> {
   render() {
     const { messageGroup } = this.props;
 
     return (
       <View style={styles.container}>
         <View style={styles.avatarContainer}>
-          <CircleAvatarButton
+          <AvatarButton
             color={messageGroup.user.avatar}
             diameter={Scaled.screen.width * 0.105}
           />
@@ -49,4 +49,4 @@ class CircleMessageView extends PureComponent<Props> {
   }
 }
 
-export default CircleMessageView;
+export default MessageView;

@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { ScrollView, View, Text, Animated } from 'react-native';
-import CircleMessageWindow from '../../../components/CircleMessageWindow';
+import CircleMessageWindow from '../../../components/circle/MessageWindow';
 import CircleNavbar from '../../../components/shared/Navbars/CircleNavbar/';
-import CircleFooter from '../../../components/CircleFooter';
+import CircleFooter from '../../../components/circle/Footer';
 import styles from './styles';
 
 export interface Props {

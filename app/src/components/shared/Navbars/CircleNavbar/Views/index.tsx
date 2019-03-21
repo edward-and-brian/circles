@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { NavigationScreenProp } from 'react-navigation';
 import {
   View,
   Text,
@@ -8,8 +7,8 @@ import {
   ViewStyle,
   StyleProp,
 } from 'react-native';
-import CircleAvatarButton from '../../../Avatar/CircleAvatarButton';
-import { Images } from '../../../../../themes';
+import AvatarButton from '../../../Button/AvatarButton';
+import { Images, Scaled } from '../../../../../themes';
 import styles from './styles';
 
 export interface Props {
@@ -36,7 +35,7 @@ class CircleNavbarView extends PureComponent<Props> {
           <Text style={styles.circleTitle}>Kill the Birds</Text>
         </View>
         <View style={styles.avatarContainer}>
-          <CircleAvatarButton />
+          <AvatarButton diameter={Scaled.screen.height * 0.055} />
         </View>
       </View>
     );
