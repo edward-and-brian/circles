@@ -14,6 +14,7 @@ type GeneralStore struct {
 // OpenSQLite opens a new session with SQLite
 func (gs *GeneralStore) OpenSQLite() (err error) {
 	gs.sqlite, err = sqlx.Connect("sqlite3", "circles.db")
+	return err
 }
 
 // // SQLiteUpdateTableEntry is the generalized update function for sqlite entries
