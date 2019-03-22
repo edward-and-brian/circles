@@ -62,13 +62,40 @@ func FindUser(ctx context.Context, gs generalStore, id string) (*UserModel, erro
 	return &UserModel{user, gs}, nil
 }
 
+// UpdateUserInput ...
+type UpdateUserInput struct {
+	ID          string
+	Name        *string
+	PhoneNumber *string
+	DisplayName *string
+}
+
 // UpdateUser updates the user specified by ID with the given data and returns it as a UserModel
-func UpdateUser(ctx context.Context, gs generalStore, user *types.User) (*UserModel, error) {
-	if err := gs.UpdateUser(ctx, user); err != nil {
+func UpdateUser(ctx context.Context, gs generalStore, input *UpdateUserInput) (*UserModel, error) {
+	var (
+		user *types.User
+		err  error
+	)
+
+	if user, err = gs.FindUser(ctx, input.ID); err != nil {
+		return nil, err
+	}
+
+	if input.Name != nil {
+		user.Name = *input.Name
+	}
+
+	if input.PhoneNumber != nil {
+		user.PhoneNumber = *input.PhoneNumber
+	}
+
+	if input.DisplayName != nil {
+		user.DisplayName = *input.DisplayName
+	}
+
+	if err = gs.UpdateUser(ctx, user); err != nil {
 		return nil, err
 
-	} else if user, err = gs.FindUser(ctx, user.ID); err != nil {
-		return nil, err
 	}
 
 	return &UserModel{user, gs}, nil
