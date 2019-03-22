@@ -72,15 +72,21 @@ type UpdateUserInput struct {
 
 // UpdateUser updates the user specified by ID with the given data and returns it as a UserModel
 func UpdateUser(ctx context.Context, gs generalStore, input *UpdateUserInput) (*UserModel, error) {
-	var (
-		user *types.User
-		err  error
-	)
-
-	if user, err = gs.FindUser(ctx, input.ID); err != nil {
+	user, err := gs.FindUser(ctx, input.ID)
+	if err != nil {
 		return nil, err
 	}
 
+	updateFields(input, user)
+
+	if err = gs.UpdateUser(ctx, user); err != nil {
+		return nil, err
+	}
+
+	return &UserModel{user, gs}, nil
+}
+
+func updateFields(input *UpdateUserInput, user *types.User) {
 	if input.Name != nil {
 		user.Name = *input.Name
 	}
@@ -92,13 +98,6 @@ func UpdateUser(ctx context.Context, gs generalStore, input *UpdateUserInput) (*
 	if input.DisplayName != nil {
 		user.DisplayName = *input.DisplayName
 	}
-
-	if err = gs.UpdateUser(ctx, user); err != nil {
-		return nil, err
-
-	}
-
-	return &UserModel{user, gs}, nil
 }
 
 // UserModel is the resolvable struct for the User struct
