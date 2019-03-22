@@ -77,16 +77,6 @@ func UpdateUser(ctx context.Context, gs generalStore, input *UpdateUserInput) (*
 		return nil, err
 	}
 
-	updateFields(input, user)
-
-	if err = gs.UpdateUser(ctx, user); err != nil {
-		return nil, err
-	}
-
-	return &UserModel{user, gs}, nil
-}
-
-func updateFields(input *UpdateUserInput, user *types.User) {
 	if input.Name != nil {
 		user.Name = *input.Name
 	}
@@ -98,6 +88,12 @@ func updateFields(input *UpdateUserInput, user *types.User) {
 	if input.DisplayName != nil {
 		user.DisplayName = *input.DisplayName
 	}
+
+	if err = gs.UpdateUser(ctx, user); err != nil {
+		return nil, err
+	}
+
+	return &UserModel{user, gs}, nil
 }
 
 // UserModel is the resolvable struct for the User struct

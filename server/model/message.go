@@ -47,16 +47,28 @@ func FindMessage(ctx context.Context, gs generalStore, id string) (*MessageModel
 	return &MessageModel{circle, gs}, nil
 }
 
-// UpdateMessage updates the Message specified by ID with the given data and returns it as a MessageModel
-func UpdateMessage(ctx context.Context, gs generalStore, circle *types.Message) (*MessageModel, error) {
-	if err := gs.UpdateMessage(ctx, circle); err != nil {
-		return nil, err
+// UpdateMessageInput ...
+type UpdateMessageInput struct {
+	ID      string
+	Content *string
+}
 
-	} else if circle, err = gs.FindMessage(ctx, circle.ID); err != nil {
+// UpdateMessage updates the message specified by ID with the given data and returns it as a MessageModel
+func UpdateMessage(ctx context.Context, gs generalStore, input *UpdateMessageInput) (*MessageModel, error) {
+	message, err := gs.FindMessage(ctx, input.ID)
+	if err != nil {
 		return nil, err
 	}
 
-	return &MessageModel{circle, gs}, nil
+	if input.Content != nil {
+		message.Content = *input.Content
+	}
+
+	if err = gs.UpdateMessage(ctx, message); err != nil {
+		return nil, err
+	}
+
+	return &MessageModel{message, gs}, nil
 }
 
 // CircleMessages retrieves all Messages for a Message

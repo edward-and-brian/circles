@@ -62,12 +62,24 @@ func FindChat(ctx context.Context, gs generalStore, id string) (*ChatModel, erro
 	return &ChatModel{chat, gs}, nil
 }
 
-// UpdateChat updates the Chat specified by ID with the given data and returns it as a ChatModel
-func UpdateChat(ctx context.Context, gs generalStore, chat *types.Chat) (*ChatModel, error) {
-	if err := gs.UpdateChat(ctx, chat); err != nil {
-		return nil, err
+// UpdateChatInput ...
+type UpdateChatInput struct {
+	ID   string
+	Name *string
+}
 
-	} else if chat, err = gs.FindChat(ctx, chat.ID); err != nil {
+// UpdateChat updates the chat specified by ID with the given data and returns it as a ChatModel
+func UpdateChat(ctx context.Context, gs generalStore, input *UpdateChatInput) (*ChatModel, error) {
+	chat, err := gs.FindChat(ctx, input.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	if input.Name != nil {
+		chat.Name = *input.Name
+	}
+
+	if err = gs.UpdateChat(ctx, chat); err != nil {
 		return nil, err
 	}
 

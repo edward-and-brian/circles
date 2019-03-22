@@ -23,6 +23,6 @@ func (r *Resolver) Message(ctx context.Context, args *IDArgs) (*model.MessageMod
 }
 
 // UpdateMessage updates the user specified by ID with the given data
-func (r *Resolver) UpdateMessage(ctx context.Context, args *struct{ Input *types.Message }) (*model.MessageModel, error) {
+func (r *Resolver) UpdateMessage(ctx context.Context, args *struct{ Input *model.UpdateMessageInput }) (*model.MessageModel, error) {
 	return model.UpdateMessage(ctx, &store.GeneralStore{}, args.Input)
 }
