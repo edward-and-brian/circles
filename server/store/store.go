@@ -1,8 +1,6 @@
 package store
 
 import (
-	"context"
-
 	"github.com/jmoiron/sqlx"
 	// sqlite necessary
 	_ "github.com/mattn/go-sqlite3"
@@ -14,20 +12,8 @@ type GeneralStore struct {
 }
 
 // OpenSQLite opens a new session with SQLite
-func (gs *GeneralStore) OpenSQLite(ctx context.Context) error {
-	if gs.sqlite == nil {
-		if db, err := sqlx.Open("sqlite3", "circles.db"); err != nil {
-			return err
-
-		} else if err = db.Ping(); err != nil {
-			return err
-
-		} else {
-			gs.sqlite = db
-		}
-	}
-
-	return nil
+func (gs *GeneralStore) OpenSQLite() (err error) {
+	gs.sqlite, err = sqlx.Connect("sqlite3", "circles.db")
 }
 
 // // SQLiteUpdateTableEntry is the generalized update function for sqlite entries
@@ -39,7 +25,7 @@ func (gs *GeneralStore) OpenSQLite(ctx context.Context) error {
 
 // 	updateSQL := fmt.Sprintf("UPDATE %v SET %v WHERE id=%v", table, setFields, id)
 
-// 	if err := gs.OpenSQLite(ctx); err != nil {
+// 	if err := gs.OpenSQLite(); err != nil {
 // 		return err
 
 // 	} else if count, err := gs.sqlite.MustExec(updateSQL).RowsAffected(); err != nil {

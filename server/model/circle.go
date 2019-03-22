@@ -7,13 +7,10 @@ import (
 	"circles/server/types"
 
 	graphql "github.com/graph-gophers/graphql-go"
-	"github.com/rs/xid"
 )
 
 // CreateCircle creates a new Circle with the given data and returns it as a CircleModel
 func CreateCircle(ctx context.Context, gs generalStore, circle *types.Circle) (*CircleModel, error) {
-	circle.ID = xid.New().String()
-
 	if err := gs.CreateCircle(ctx, circle); err != nil {
 		return nil, err
 

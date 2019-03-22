@@ -7,15 +7,13 @@ import (
 	"circles/server/types"
 
 	graphql "github.com/graph-gophers/graphql-go"
-	"github.com/rs/xid"
 )
 
 // AddUserToChat adds a User to an existing Chat
 func AddUserToChat(ctx context.Context, gs generalStore, uid, chid string) (*ChatModel, error) {
 	var chat *types.Chat
-	id := xid.New().String()
 
-	if err := gs.AddUserToChat(ctx, id, uid, chid); err != nil {
+	if err := gs.AddUserToChat(ctx, uid, chid); err != nil {
 		return nil, err
 
 	} else if chat, err = gs.FindChat(ctx, chid); err != nil {
@@ -26,14 +24,18 @@ func AddUserToChat(ctx context.Context, gs generalStore, uid, chid string) (*Cha
 }
 
 // CreateChat creates a new Chat with the given data and returns it as a ChatModel
-func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat) (*ChatModel, error) {
-	chat.ID = xid.New().String()
-
+func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs []string) (*ChatModel, error) {
 	if err := gs.CreateChat(ctx, chat); err != nil {
 		return nil, err
 
 	} else if chat, err = gs.FindChat(ctx, chat.ID); err != nil {
 		return nil, err
+	}
+
+	for _, uid := range userIDs {
+		if err := gs.AddUserToChat(ctx, chat.ID, uid); err != nil {
+			return nil, err
+		}
 	}
 
 	return &ChatModel{chat, gs}, nil

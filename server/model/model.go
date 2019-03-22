@@ -14,7 +14,7 @@ type generalStore interface {
 
 // chatStore is an interface for database interaction by the ChatModel
 type chatStore interface {
-	AddUserToChat(context.Context, string, string, string) error
+	AddUserToChat(context.Context, string, string) error
 	AllChatsByUserID(context.Context, string) ([]*types.Chat, error)
 	CreateChat(context.Context, *types.Chat) error
 	DeleteChat(context.Context, string) error

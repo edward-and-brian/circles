@@ -7,21 +7,18 @@ import (
 	"circles/server/types"
 
 	graphql "github.com/graph-gophers/graphql-go"
-	"github.com/rs/xid"
 )
 
 // CreateMessage creates a new Message with the given data and returns it as a MessageModel
-func CreateMessage(ctx context.Context, gs generalStore, circle *types.Message) (*MessageModel, error) {
-	circle.ID = xid.New().String()
-
-	if err := gs.CreateMessage(ctx, circle); err != nil {
+func CreateMessage(ctx context.Context, gs generalStore, message *types.Message) (*MessageModel, error) {
+	if err := gs.CreateMessage(ctx, message); err != nil {
 		return nil, err
 
-	} else if circle, err = gs.FindMessage(ctx, circle.ID); err != nil {
+	} else if message, err = gs.FindMessage(ctx, message.ID); err != nil {
 		return nil, err
 	}
 
-	return &MessageModel{circle, gs}, nil
+	return &MessageModel{message, gs}, nil
 }
 
 // DeleteMessage deletes the Message specified by ID and returns it as a MessageModel

@@ -18,9 +18,15 @@ func (r *Resolver) Chat(ctx context.Context, args *IDArgs) (*model.ChatModel, er
 	return model.FindChat(ctx, &store.GeneralStore{}, args.ID)
 }
 
+// CreateChatInput ...
+type CreateChatInput struct {
+	Chat    *types.Chat
+	UserIDs []string
+}
+
 // CreateChat creates a new Chat with the given data
-func (r *Resolver) CreateChat(ctx context.Context, args *struct{ Input *types.Chat }) (*model.ChatModel, error) {
-	return model.CreateChat(ctx, &store.GeneralStore{}, args.Input)
+func (r *Resolver) CreateChat(ctx context.Context, args *CreateChatInput) (*model.ChatModel, error) {
+	return model.CreateChat(ctx, &store.GeneralStore{}, args.Chat, args.UserIDs)
 }
 
 // DeleteChat deletes the Chat specified by ID

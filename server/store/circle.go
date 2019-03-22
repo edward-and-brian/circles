@@ -5,6 +5,8 @@ import (
 	"fmt"
 
 	"circles/server/types"
+
+	"github.com/rs/xid"
 )
 
 // AllCirclesByChatID finds all Circle entries for a given Chat in the db
@@ -14,7 +16,7 @@ func (gs *GeneralStore) AllCirclesByChatID(ctx context.Context, chid string) ([]
 		circleSQL = `SELECT * FROM circles ORDER BY id ASC`
 	)
 
-	if err := gs.OpenSQLite(ctx); err != nil {
+	if err := gs.OpenSQLite(); err != nil {
 		return nil, err
 
 	} else if err = gs.sqlite.Select(&circles, circleSQL); err != nil {
@@ -25,15 +27,17 @@ func (gs *GeneralStore) AllCirclesByChatID(ctx context.Context, chid string) ([]
 }
 
 // CreateCircle creates a Circle entry in the db
-func (gs *GeneralStore) CreateCircle(ctx context.Context, u *types.Circle) error {
+func (gs *GeneralStore) CreateCircle(ctx context.Context, circle *types.Circle) error {
+	circle.ID = xid.New().String()
+
 	circleSQL := `
 	INSERT INTO circles (id, chat_id, name)
 	VALUES (:id, :chat_id, :name)`
 
-	if err := gs.OpenSQLite(ctx); err != nil {
+	if err := gs.OpenSQLite(); err != nil {
 		return err
 
-	} else if r, err := gs.sqlite.NamedExec(circleSQL, u); err != nil {
+	} else if r, err := gs.sqlite.NamedExec(circleSQL, circle); err != nil {
 		return err
 
 	} else if count, err := r.RowsAffected(); err != nil {
@@ -50,7 +54,7 @@ func (gs *GeneralStore) CreateCircle(ctx context.Context, u *types.Circle) error
 func (gs *GeneralStore) DeleteCircle(ctx context.Context, id string) error {
 	circleSQL := `DELETE FROM circles WHERE id=$id`
 
-	if err := gs.OpenSQLite(ctx); err != nil {
+	if err := gs.OpenSQLite(); err != nil {
 		return err
 
 	} else if count, err := gs.sqlite.MustExec(circleSQL, id).RowsAffected(); err != nil {
@@ -69,7 +73,7 @@ func (gs *GeneralStore) FindCircle(ctx context.Context, id string) (*types.Circl
 		circleSQL = `SELECT * FROM circles WHERE id=$1`
 	)
 
-	if err := gs.OpenSQLite(ctx); err != nil {
+	if err := gs.OpenSQLite(); err != nil {
 		return nil, err
 
 	} else if err = gs.sqlite.Get(circle, circleSQL, id); err != nil {
@@ -83,7 +87,7 @@ func (gs *GeneralStore) FindCircle(ctx context.Context, id string) (*types.Circl
 func (gs *GeneralStore) UpdateCircle(ctx context.Context, circle *types.Circle) error {
 	circleSQL := `UPDATE circles SET name=:name WHERE id=:id`
 
-	if err := gs.OpenSQLite(ctx); err != nil {
+	if err := gs.OpenSQLite(); err != nil {
 		return err
 
 	} else if r, err := gs.sqlite.NamedExec(circleSQL, circle); err != nil {
