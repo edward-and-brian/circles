@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import ChatsNavbar from '../../../components/shared/Navbars/ChatNavbar';
 import styles from './styles';
 
 export interface Props {
@@ -9,7 +10,7 @@ class ChatsScreenView extends PureComponent<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.navbarContainer} />
+        <ChatsNavbar />
         <View style={styles.searchContainer} />
         <View style={styles.chatsContainer}>
           <ScrollView>

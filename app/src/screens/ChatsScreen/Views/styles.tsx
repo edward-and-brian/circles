@@ -6,10 +6,6 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
   },
-  navbarContainer: {
-    flex: 2,
-    backgroundColor: Colors.red,
-  },
   searchContainer: {
     flex: 1,
     backgroundColor: Colors.green,
@@ -32,5 +28,5 @@ export default StyleSheet.create({
   },
   spacer: {
     height: Scaled.screen.height * 0.03,
-  }
+  },
 });

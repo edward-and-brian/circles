@@ -10,6 +10,6 @@ export default StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    height: Scaled.navBarHeight,
+    height: Scaled.navbarHeight,
   },
 });
