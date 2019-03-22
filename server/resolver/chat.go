@@ -29,6 +29,6 @@ func (r *Resolver) DeleteChat(ctx context.Context, args *IDArgs) (*model.ChatMod
 }
 
 // UpdateChat updates the Chat specified by ID with the given data
-func (r *Resolver) UpdateChat(ctx context.Context, args *struct{ Input *types.Chat }) (*model.ChatModel, error) {
+func (r *Resolver) UpdateChat(ctx context.Context, args *struct{ Input *model.UpdateChatInput }) (*model.ChatModel, error) {
 	return model.UpdateChat(ctx, &store.GeneralStore{}, args.Input)
 }

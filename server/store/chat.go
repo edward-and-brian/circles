@@ -19,7 +19,7 @@ func (gs *GeneralStore) AddUserToChat(ctx context.Context, id, uid, chid string)
 	INSERT INTO user_chats (id, user_id, chat_id)
 	VALUES (:id, :user_id, :chat_id)`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if r, err := gs.sqlite.NamedExec(chatSQL, userChatEntry); err != nil {
@@ -50,7 +50,7 @@ func (gs *GeneralStore) AllChatsByUserID(ctx context.Context, uid string) ([]*ty
 		ORDER BY created_at ASC`
 	)
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return nil, err
 
 	} else if err = gs.sqlite.Select(&chats, chatSQL, uid); err != nil {
@@ -66,7 +66,7 @@ func (gs *GeneralStore) CreateChat(ctx context.Context, u *types.Chat) error {
 	INSERT INTO chats (id, name)
 	VALUES (:id, :name)`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if r, err := gs.sqlite.NamedExec(chatSQL, u); err != nil {
@@ -86,7 +86,7 @@ func (gs *GeneralStore) CreateChat(ctx context.Context, u *types.Chat) error {
 func (gs *GeneralStore) DeleteChat(ctx context.Context, id string) error {
 	chatSQL := `DELETE FROM chats WHERE id=$id`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if count, err := gs.sqlite.MustExec(chatSQL, id).RowsAffected(); err != nil {
@@ -105,7 +105,7 @@ func (gs *GeneralStore) FindChat(ctx context.Context, id string) (*types.Chat, e
 		chatSQL = `SELECT * FROM chats WHERE id=$1`
 	)
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return nil, err
 
 	} else if err = gs.sqlite.Get(chat, chatSQL, id); err != nil {
@@ -119,7 +119,7 @@ func (gs *GeneralStore) FindChat(ctx context.Context, id string) (*types.Chat, e
 func (gs *GeneralStore) UpdateChat(ctx context.Context, chat *types.Chat) error {
 	chatSQL := `UPDATE chats SET name=:name WHERE id=:id`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if r, err := gs.sqlite.NamedExec(chatSQL, chat); err != nil {
