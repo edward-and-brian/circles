@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import NavigationService from '../../navigation/NavigationService';
 import ChatsScreenView from './Views';
+
 class ChatsScreen extends PureComponent {
   onPressChat() {
     NavigationService.navigate('circle');
