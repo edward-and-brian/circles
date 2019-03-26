@@ -48,7 +48,8 @@ class FooterView extends PureComponent<Props> {
     return (
       <Animated.View style={[styles.container, { height: this.props.height }]}>
         {this.renderMessageInput()}
-        {this.props.renderSendArrow && this.renderSendArrow()}
+        {this.renderSendArrow()}
+        {/* {this.props.renderSendArrow && this.renderSendArrow()} */}
       </Animated.View>
     );
   }
