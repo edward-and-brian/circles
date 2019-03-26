@@ -13,5 +13,5 @@ input createCircleInput {
 
 input updateCircleInput {
   id: ID!
-  name: String!
+  name: String
 }

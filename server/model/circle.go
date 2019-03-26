@@ -47,12 +47,24 @@ func FindCircle(ctx context.Context, gs generalStore, id string) (*CircleModel, 
 	return &CircleModel{circle, gs}, nil
 }
 
-// UpdateCircle updates the Circle specified by ID with the given data and returns it as a CircleModel
-func UpdateCircle(ctx context.Context, gs generalStore, circle *types.Circle) (*CircleModel, error) {
-	if err := gs.UpdateCircle(ctx, circle); err != nil {
-		return nil, err
+// UpdateCircleInput ...
+type UpdateCircleInput struct {
+	ID   string
+	Name *string
+}
 
-	} else if circle, err = gs.FindCircle(ctx, circle.ID); err != nil {
+// UpdateCircle updates the circle specified by ID with the given data and returns it as a CircleModel
+func UpdateCircle(ctx context.Context, gs generalStore, input *UpdateCircleInput) (*CircleModel, error) {
+	circle, err := gs.FindCircle(ctx, input.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	if input.Name != nil {
+		circle.Name = *input.Name
+	}
+
+	if err = gs.UpdateCircle(ctx, circle); err != nil {
 		return nil, err
 	}
 

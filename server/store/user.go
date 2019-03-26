@@ -14,7 +14,7 @@ func (gs *GeneralStore) AllUsers(ctx context.Context) ([]*types.User, error) {
 		userSQL = `SELECT * FROM users ORDER BY id ASC`
 	)
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return nil, err
 
 	} else if err = gs.sqlite.Select(&users, userSQL); err != nil {
@@ -30,7 +30,7 @@ func (gs *GeneralStore) CreateUser(ctx context.Context, user *types.User) error 
 	INSERT INTO users (id, name, phone_number, display_name) 
 	VALUES (:id, :name, :phone_number, :display_name)`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if r, err := gs.sqlite.NamedExec(userSQL, user); err != nil {
@@ -52,7 +52,7 @@ func (gs *GeneralStore) DeleteUser(ctx context.Context, id string) error {
 	DELETE FROM users
 	WHERE id=$id`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if count, err := gs.sqlite.MustExec(userSQL, id).RowsAffected(); err != nil {
@@ -71,7 +71,7 @@ func (gs *GeneralStore) FindUser(ctx context.Context, id string) (*types.User, e
 		userSQL = `SELECT * FROM users WHERE id=$1`
 	)
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return nil, err
 
 	} else if err = gs.sqlite.Get(user, userSQL, id); err != nil {
@@ -90,7 +90,7 @@ func (gs *GeneralStore) UpdateUser(ctx context.Context, user *types.User) error 
 		display_name=:display_name 
 	WHERE id=:id`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if r, err := gs.sqlite.NamedExec(userSQL, user); err != nil {

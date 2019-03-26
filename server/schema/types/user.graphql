@@ -15,7 +15,7 @@ input createUserInput {
 
 input updateUserInput {
   id: ID!
-  name: String!
-  phoneNumber: String!
-  displayName: String!
+  name: String
+  phoneNumber: String
+  displayName: String
 }
