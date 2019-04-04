@@ -10,6 +10,21 @@ import (
 	"github.com/rs/xid"
 )
 
+// AllCircles retrieves all circles and returns them as CircleModels
+func AllCircles(ctx context.Context, gs generalStore) ([]*CircleModel, error) {
+	circles, err := gs.AllCircles(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var circleModels []*CircleModel
+	for _, circle := range circles {
+		circleModels = append(circleModels, &CircleModel{circle, gs})
+	}
+
+	return circleModels, nil
+}
+
 // CreateCircle creates a new Circle with the given data and returns it as a CircleModel
 func CreateCircle(ctx context.Context, gs generalStore, circle *types.Circle) (*CircleModel, error) {
 	circle.ID = xid.New().String()
@@ -26,7 +41,7 @@ func CreateCircle(ctx context.Context, gs generalStore, circle *types.Circle) (*
 
 // DeleteCircle deletes the Circle specified by ID and returns it as a CircleModel
 func DeleteCircle(ctx context.Context, gs generalStore, id string) (*CircleModel, error) {
-	Circle, err := gs.FindCircle(ctx, id)
+	circle, err := gs.FindCircle(ctx, id)
 	if err != nil {
 		return nil, err
 
@@ -34,7 +49,7 @@ func DeleteCircle(ctx context.Context, gs generalStore, id string) (*CircleModel
 		return nil, err
 	}
 
-	return &CircleModel{Circle, gs}, nil
+	return &CircleModel{circle, gs}, nil
 }
 
 // FindCircle retrieves the Circle specified by id

@@ -6,6 +6,8 @@ import (
 )
 
 type generalStore interface {
+	BeginTransaction(ctx context.Context) error
+	EndTransaction(ctx context.Context) error
 	chatStore
 	circleStore
 	messageStore
@@ -14,37 +16,41 @@ type generalStore interface {
 
 // chatStore is an interface for database interaction by the ChatModel
 type chatStore interface {
-	AddUserToChat(context.Context, string, string, string) error
-	AllChatsByUserID(context.Context, string) ([]*types.Chat, error)
-	CreateChat(context.Context, *types.Chat) error
-	DeleteChat(context.Context, string) error
-	FindChat(context.Context, string) (*types.Chat, error)
-	UpdateChat(context.Context, *types.Chat) error
+	AllChats(ctx context.Context) ([]*types.Chat, error)
+	AllChatsByUserMembership(ctx context.Context, uid string) ([]*types.Chat, error)
+	CreateChat(ctx context.Context, chat *types.Chat, uids []string) error
+	CreateMembership(ctx context.Context, uid string, chid string) error
+	DeleteChat(ctx context.Context, id string) error
+	FindChat(ctx context.Context, id string) (*types.Chat, error)
+	UpdateChat(ctx context.Context, chat *types.Chat) error
 }
 
 // circleStore is an interface for database interaction by the CircleModel
 type circleStore interface {
-	AllCirclesByChatID(context.Context, string) ([]*types.Circle, error)
-	CreateCircle(context.Context, *types.Circle) error
-	DeleteCircle(context.Context, string) error
-	FindCircle(context.Context, string) (*types.Circle, error)
-	UpdateCircle(context.Context, *types.Circle) error
+	AllCircles(ctx context.Context) ([]*types.Circle, error)
+	AllCirclesByChatID(ctx context.Context, chid string) ([]*types.Circle, error)
+	CreateCircle(ctx context.Context, circle *types.Circle) error
+	DeleteCircle(ctx context.Context, id string) error
+	FindCircle(ctx context.Context, id string) (*types.Circle, error)
+	UpdateCircle(ctx context.Context, circle *types.Circle) error
 }
 
 // MessageStore is an interface for database interaction by the MessageModel
 type messageStore interface {
-	AllMessagesByCircleID(context.Context, string) ([]*types.Message, error)
-	CreateMessage(context.Context, *types.Message) error
-	DeleteMessage(context.Context, string) error
-	FindMessage(context.Context, string) (*types.Message, error)
-	UpdateMessage(context.Context, *types.Message) error
+	AllMessages(ctx context.Context) ([]*types.Message, error)
+	AllMessagesByCircleID(ctx context.Context, id string) ([]*types.Message, error)
+	CreateMessage(ctx context.Context, message *types.Message) error
+	DeleteMessage(ctx context.Context, id string) error
+	FindMessage(ctx context.Context, id string) (*types.Message, error)
+	UpdateMessage(ctx context.Context, message *types.Message) error
 }
 
 // userStore is an interface for database interaction by the UserModel
 type userStore interface {
-	AllUsers(context.Context) ([]*types.User, error)
-	CreateUser(context.Context, *types.User) error
-	DeleteUser(context.Context, string) error
-	FindUser(context.Context, string) (*types.User, error)
-	UpdateUser(context.Context, *types.User) error
+	AllUsers(ctx context.Context) ([]*types.User, error)
+	AllUsersByChatMembership(ctx context.Context, chid string) ([]*types.User, error)
+	CreateUser(ctx context.Context, user *types.User) error
+	DeleteUser(ctx context.Context, id string) error
+	FindUser(ctx context.Context, id string) (*types.User, error)
+	UpdateUser(ctx context.Context, user *types.User) error
 }

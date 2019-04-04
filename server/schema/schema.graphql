@@ -5,31 +5,34 @@ schema {
 
 type Query {
   User(id: ID!): User
-  Users(): [User]!
+  Users(): [User!]!
 
   Chat(id: ID!): Chat
+  Chats(): [Chat!]!
 
   Circle(id: ID!): Circle
+  Circles(): [Circle!]!
 
   Message(id: ID!): Message
+  Messages(): [Message!]!
 }
 
 type Mutation {
-  createUser(input: createUserInput!): User
-  updateUser(input: updateUserInput!): User
+  createUser(user: createUserInput!): User
+  updateUser(user: updateUserInput!): User
   deleteUser(id: ID!): User
 
-  createChat(input: createChatInput!): Chat
-  updateChat(input: updateChatInput!): Chat
+  createChat(chat: createChatInput!, userIDs: [ID!]!): Chat
+  updateChat(chat: updateChatInput!): Chat
   deleteChat(id: ID!): Chat
   chatAddUser(chatID: ID!, userID: ID!): Chat
 
-  createCircle(input: createCircleInput!): Circle
-  updateCircle(input: updateCircleInput!): Circle
+  createCircle(circle: createCircleInput!): Circle
+  updateCircle(circle: updateCircleInput!): Circle
   deleteCircle(id: ID!): Circle
 
-  createMessage(input: createMessageInput!): Message
-  updateMessage(input: updateMessageInput!): Message
+  createMessage(message: createMessageInput!): Message
+  updateMessage(message: updateMessageInput!): Message
   deleteMessage(id: ID!): Message
 }
 

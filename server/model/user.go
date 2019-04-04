@@ -25,6 +25,21 @@ func AllUsers(ctx context.Context, gs generalStore) ([]*UserModel, error) {
 	return userModels, nil
 }
 
+// ChatUsers retrieves all Chats for a User
+func ChatUsers(ctx context.Context, gs generalStore, chid string) ([]*UserModel, error) {
+	users, err := gs.AllUsersByChatMembership(ctx, chid)
+	if err != nil {
+		return nil, err
+	}
+
+	var userModels []*UserModel
+	for _, u := range users {
+		userModels = append(userModels, &UserModel{u, gs})
+	}
+
+	return userModels, nil
+}
+
 // CreateUser creates a new User with the given data and returns it as a UserModel
 func CreateUser(ctx context.Context, gs generalStore, user *types.User) (*UserModel, error) {
 	user.ID = xid.New().String()
@@ -45,7 +60,7 @@ func DeleteUser(ctx context.Context, gs generalStore, id string) (*UserModel, er
 	if err != nil {
 		return nil, err
 
-	} else if err = gs.DeleteUser(ctx, id); err != nil {
+	} else if err := gs.DeleteUser(ctx, id); err != nil {
 		return nil, err
 	}
 
