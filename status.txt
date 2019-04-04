@@ -63,3 +63,37 @@ Eddie explained Front End file structure to Brian. Brian explained Backend file 
 Eddie
 - Stop slacking and actually begin to work on components
 - Find ways around not having endpoints
+
+
+
+Important shit to remember -
+Front End:
+- Finish front end
+	+ Message input component
+	+ Circles within a chat component
+		+ modal for creating new circle
+	+ Search component + create chat button component
+	+ create chat flow
+	+ new user sign up flow
+	+ login flow (when you login, store user id in async)
+- Apollo hookup
+	1. Create user endpoint
+	2. Login
+	3. Create chat with user id
+	4. Create circle within chat
+	5. Send message
+- Notifications (get phone id)
+- Instant Messaging - see if Apollo has solution for that
+- Make sure app doesn't look like poop on Android
+
+Backend:
+- Add logger & testing
+- Implement message group
+- Notifications & front end solution to that
+- Read receipts and unread messages
+- Other necessary functionality at Eddie's discretion
+- Open sockets / Apollo solution to IM
+- Find out what the fuck GraphQL loaders are (cache)
+- Search (two types)
+- Lettuce(Redis) messaging
+- User authentication platform
