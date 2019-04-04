@@ -14,7 +14,7 @@ func (gs *GeneralStore) AllMessagesByCircleID(ctx context.Context, ciid string) 
 		messageSQL = `SELECT * FROM messages ORDER BY id ASC`
 	)
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return nil, err
 
 	} else if err = gs.sqlite.Select(&messages, messageSQL); err != nil {
@@ -30,7 +30,7 @@ func (gs *GeneralStore) CreateMessage(ctx context.Context, u *types.Message) err
 	INSERT INTO messages (id, circle_id, sender_id, content)
 	VALUES (:id, :circle_id, :sender_id, :content)`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if r, err := gs.sqlite.NamedExec(messageSQL, u); err != nil {
@@ -50,7 +50,7 @@ func (gs *GeneralStore) CreateMessage(ctx context.Context, u *types.Message) err
 func (gs *GeneralStore) DeleteMessage(ctx context.Context, id string) error {
 	messageSQL := `DELETE FROM messages WHERE id=$id`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if count, err := gs.sqlite.MustExec(messageSQL, id).RowsAffected(); err != nil {
@@ -69,7 +69,7 @@ func (gs *GeneralStore) FindMessage(ctx context.Context, id string) (*types.Mess
 		messageSQL = `SELECT * FROM messages WHERE id=$1`
 	)
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return nil, err
 
 	} else if err = gs.sqlite.Get(message, messageSQL, id); err != nil {
@@ -83,7 +83,7 @@ func (gs *GeneralStore) FindMessage(ctx context.Context, id string) (*types.Mess
 func (gs *GeneralStore) UpdateMessage(ctx context.Context, message *types.Message) error {
 	messageSQL := `UPDATE messages SET content=:content WHERE id=:id`
 
-	if err := gs.OpenSQLite(); err != nil {
+	if err := gs.OpenSQLite(ctx); err != nil {
 		return err
 
 	} else if r, err := gs.sqlite.NamedExec(messageSQL, message); err != nil {

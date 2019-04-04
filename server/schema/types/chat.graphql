@@ -11,5 +11,5 @@ input createChatInput {
 
 input updateChatInput {
   id: ID!
-  name: String!
+  name: String
 }

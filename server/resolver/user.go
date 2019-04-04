@@ -18,7 +18,7 @@ func (r *Resolver) DeleteUser(ctx context.Context, args *IDArgs) (*model.UserMod
 }
 
 // UpdateUser updates the user specified by ID with the given data
-func (r *Resolver) UpdateUser(ctx context.Context, args *struct{ Input *types.User }) (*model.UserModel, error) {
+func (r *Resolver) UpdateUser(ctx context.Context, args *struct{ Input *model.UpdateUserInput }) (*model.UserModel, error) {
 	return model.UpdateUser(ctx, &store.GeneralStore{}, args.Input)
 }
 

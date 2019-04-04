@@ -24,6 +24,6 @@ func (r *Resolver) DeleteCircle(ctx context.Context, args *IDArgs) (*model.Circl
 }
 
 // UpdateCircle updates the Circle specified by ID with the given data
-func (r *Resolver) UpdateCircle(ctx context.Context, args *struct{ Input *types.Circle }) (*model.CircleModel, error) {
+func (r *Resolver) UpdateCircle(ctx context.Context, args *struct{ Input *model.UpdateCircleInput }) (*model.CircleModel, error) {
 	return model.UpdateCircle(ctx, &store.GeneralStore{}, args.Input)
 }

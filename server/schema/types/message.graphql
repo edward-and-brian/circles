@@ -14,5 +14,5 @@ input createMessageInput {
 
 input updateMessageInput {
   id: ID!
-  content: String!
+  content: String
 }
