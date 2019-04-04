@@ -5,6 +5,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 export interface Props {
   onPressBack(): void;
   style?: StyleProp<ViewStyle>;
+  circleName: string;
 }
 
 class CircleNavbar extends PureComponent<Props> {

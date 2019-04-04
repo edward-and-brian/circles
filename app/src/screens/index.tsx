@@ -16,18 +16,25 @@ import {
 
 import NavigationService from '../navigation/NavigationService';
 import Routes from '../navigation/Routes';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
 
 const AppContainer = createAppContainer(Routes);
+const client = new ApolloClient({
+  uri: 'http://localhost:3000/query',
+});
 
 class App extends Component {
   render() {
     return (
-      <AppContainer
-        ref={navigatorRef => {
-          navigatorRef = navigatorRef as NavigationContainerComponent;
-          NavigationService.setTopLevelNavigator(navigatorRef);
-        }}
-      />
+      <ApolloProvider client={client}>
+        <AppContainer
+          ref={navigatorRef => {
+            navigatorRef = navigatorRef as NavigationContainerComponent;
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+        />
+      </ApolloProvider>
     );
   }
 }

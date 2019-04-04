@@ -14,6 +14,7 @@ import styles from './styles';
 export interface Props {
   onPressBack(): void;
   style?: StyleProp<ViewStyle>;
+  circleName: string;
 }
 
 class CircleNavbarView extends PureComponent<Props> {
@@ -31,7 +32,7 @@ class CircleNavbarView extends PureComponent<Props> {
           />
         </TouchableOpacity>
         <View style={styles.titleContainer}>
-          <Text style={styles.chatTitle}>The Come Back Kids</Text>
+          <Text style={styles.chatTitle}>{this.props.circleName}</Text>
           <Text style={styles.circleTitle}>Kill the Birds</Text>
         </View>
         <View style={styles.avatarContainer}>
