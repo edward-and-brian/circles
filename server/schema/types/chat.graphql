@@ -3,6 +3,7 @@ type Chat {
   name: String!
   createdAt: Time!
   circles: [Circle]!
+  users: [User]!
 }
 
 input createChatInput {
