@@ -25,6 +25,6 @@ export default {
     h13: NORMALIZED_FONTS,
   },
   isXGen,
-  navBarOffset: isXGen ? SCREEN_WIDTH * 0.12 : SCREEN_WIDTH * 0.05,
-  navBarHeight: isXGen ? SCREEN_WIDTH * 0.28 : SCREEN_WIDTH * 0.20,
+  navbarOffset: isXGen ? SCREEN_WIDTH * 0.12 : SCREEN_WIDTH * 0.05,
+  navbarHeight: isXGen ? SCREEN_WIDTH * 0.28 : SCREEN_WIDTH * 0.2,
 };

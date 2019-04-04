@@ -4,7 +4,7 @@ import { Colors, Scaled, Fonts } from '../../../../../themes';
 export default StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingTop: Scaled.navBarOffset,
+    paddingTop: Scaled.navbarOffset,
     shadowOffset: { width: 0.5, height: 1 },
     shadowOpacity: 0.8,
     backgroundColor: Colors.white,
