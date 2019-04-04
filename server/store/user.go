@@ -7,18 +7,46 @@ import (
 	"circles/server/types"
 )
 
+var (
+	usersTable = table("users")
+
+	allUsersByChatIDSQL = `
+	SELECT * 
+	FROM users
+	WHERE id IN (
+		SELECT user_id 
+		FROM memberships
+		WHERE chat_id = $1
+	)
+	ORDER BY created_at ASC`
+
+	createUserSQL = `
+	INSERT INTO users (id, name, phone_number, display_name) 
+	VALUES (:id, :name, :phone_number, :display_name)`
+
+	udpateUserSQL = `
+	UPDATE users 
+	SET name=:name, 
+		phone_number=:phone_number,
+		display_name=:display_name 
+	WHERE id=:id`
+)
+
 // AllUsers finds all User entries in the db
 func (gs *GeneralStore) AllUsers(ctx context.Context) ([]*types.User, error) {
-	var (
-		users   []*types.User
-		userSQL = `SELECT * FROM users ORDER BY id ASC`
-	)
+	var users []*types.User
+	if err := gs.findAllEntity(ctx, &users, usersTable); err != nil {
+		return nil, fmt.Errorf("error with AllUsers: %v", err.Error())
+	}
 
-	if err := gs.OpenSQLite(); err != nil {
-		return nil, err
+	return users, nil
+}
 
-	} else if err = gs.sqlite.Select(&users, userSQL); err != nil {
-		return nil, err
+// AllUsersByChatMembership finds all User entries for a given Chat in the db
+func (gs *GeneralStore) AllUsersByChatMembership(ctx context.Context, chid string) ([]*types.User, error) {
+	var users []*types.User
+	if err := gs.sqlite.Select(&users, allUsersByChatIDSQL, chid); err != nil {
+		return nil, fmt.Errorf("error with AllUsersByChatMembership: %v", err.Error())
 	}
 
 	return users, nil
@@ -26,21 +54,8 @@ func (gs *GeneralStore) AllUsers(ctx context.Context) ([]*types.User, error) {
 
 // CreateUser creates a User entry in the db
 func (gs *GeneralStore) CreateUser(ctx context.Context, user *types.User) error {
-	userSQL := `
-	INSERT INTO users (id, name, phone_number, display_name) 
-	VALUES (:id, :name, :phone_number, :display_name)`
-
-	if err := gs.OpenSQLite(); err != nil {
-		return err
-
-	} else if r, err := gs.sqlite.NamedExec(userSQL, user); err != nil {
-		return err
-
-	} else if count, err := r.RowsAffected(); err != nil {
-		return err
-
-	} else if count == 0 {
-		return fmt.Errorf("CreateUser error: user was not created")
+	if err := gs.createEntity(ctx, user, createUserSQL); err != nil {
+		return fmt.Errorf("error with CreateUser: %v", err.Error())
 	}
 
 	return nil
@@ -48,34 +63,18 @@ func (gs *GeneralStore) CreateUser(ctx context.Context, user *types.User) error 
 
 // DeleteUser deletes a User entry in the db
 func (gs *GeneralStore) DeleteUser(ctx context.Context, id string) error {
-	userSQL := `
-	DELETE FROM users
-	WHERE id=$id`
-
-	if err := gs.OpenSQLite(); err != nil {
-		return err
-
-	} else if count, err := gs.sqlite.MustExec(userSQL, id).RowsAffected(); err != nil {
-		return err
-
-	} else if count == 0 {
-		return fmt.Errorf("DeleteUser error: user was not deleted")
+	if err := gs.deleteEntity(ctx, usersTable, id); err != nil {
+		return fmt.Errorf("error with DeleteUser: %v", err.Error())
 	}
+
 	return nil
 }
 
 // FindUser finds a User entry in the db
 func (gs *GeneralStore) FindUser(ctx context.Context, id string) (*types.User, error) {
-	var (
-		user    = &types.User{}
-		userSQL = `SELECT * FROM users WHERE id=$1`
-	)
-
-	if err := gs.OpenSQLite(); err != nil {
-		return nil, err
-
-	} else if err = gs.sqlite.Get(user, userSQL, id); err != nil {
-		return nil, err
+	user := &types.User{}
+	if err := gs.findEntity(ctx, user, usersTable, id); err != nil {
+		return nil, fmt.Errorf("error with FindUser: %v", err.Error())
 	}
 
 	return user, nil
@@ -83,24 +82,8 @@ func (gs *GeneralStore) FindUser(ctx context.Context, id string) (*types.User, e
 
 // UpdateUser updates a User entry in the db
 func (gs *GeneralStore) UpdateUser(ctx context.Context, user *types.User) error {
-	userSQL := `
-	UPDATE users 
-	SET name=:name, 
-		phone_number=:phone_number,
-		display_name=:display_name 
-	WHERE id=:id`
-
-	if err := gs.OpenSQLite(); err != nil {
-		return err
-
-	} else if r, err := gs.sqlite.NamedExec(userSQL, user); err != nil {
-		return err
-
-	} else if count, err := r.RowsAffected(); err != nil {
-		return err
-
-	} else if count == 0 {
-		return fmt.Errorf("UpdateUser error: user was not updated")
+	if err := gs.updateEntity(ctx, user, udpateUserSQL); err != nil {
+		return fmt.Errorf("error with UpdateUser: %v", err.Error())
 	}
 
 	return nil
