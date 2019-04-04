@@ -7,13 +7,14 @@ import (
 	"circles/server/types"
 
 	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/rs/xid"
 )
 
 // AddUserToChat adds a User to an existing Chat
 func AddUserToChat(ctx context.Context, gs generalStore, uid, chid string) (*ChatModel, error) {
 	var chat *types.Chat
 
-	if err := gs.AddUserToChat(ctx, uid, chid); err != nil {
+	if err := gs.CreateMembership(ctx, uid, chid); err != nil {
 		return nil, err
 
 	} else if chat, err = gs.FindChat(ctx, chid); err != nil {
@@ -23,17 +24,41 @@ func AddUserToChat(ctx context.Context, gs generalStore, uid, chid string) (*Cha
 	return &ChatModel{chat, gs}, nil
 }
 
+// AllChats retrieves all users and returns them as ChatModels
+func AllChats(ctx context.Context, gs generalStore) ([]*ChatModel, error) {
+	chats, err := gs.AllChats(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var chatModels []*ChatModel
+	for _, chat := range chats {
+		chatModels = append(chatModels, &ChatModel{chat, gs})
+	}
+
+	return chatModels, nil
+}
+
 // CreateChat creates a new Chat with the given data and returns it as a ChatModel
 func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs []string) (*ChatModel, error) {
-	if err := gs.CreateChat(ctx, chat); err != nil {
+	chat.ID = xid.New().String()
+
+	gs.BeginTransaction(ctx)
+	defer gs.EndTransaction(ctx)
+
+	if err := gs.CreateChat(ctx, chat, userIDs); err != nil {
 		return nil, err
 
 	} else if chat, err = gs.FindChat(ctx, chat.ID); err != nil {
 		return nil, err
 	}
 
+	if _, err := gs.FindChat(ctx, chat.ID); err != nil {
+		return nil, err
+	}
+
 	for _, uid := range userIDs {
-		if err := gs.AddUserToChat(ctx, chat.ID, uid); err != nil {
+		if err := gs.CreateMembership(ctx, uid, chat.ID); err != nil {
 			return nil, err
 		}
 	}
@@ -43,15 +68,15 @@ func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs 
 
 // DeleteChat deletes the Chat specified by ID and returns it as a ChatModel
 func DeleteChat(ctx context.Context, gs generalStore, id string) (*ChatModel, error) {
-	Chat, err := gs.FindChat(ctx, id)
+	chat, err := gs.FindChat(ctx, id)
 	if err != nil {
 		return nil, err
 
-	} else if err = gs.DeleteChat(ctx, id); err != nil {
+	} else if err := gs.DeleteChat(ctx, id); err != nil {
 		return nil, err
 	}
 
-	return &ChatModel{Chat, gs}, nil
+	return &ChatModel{chat, gs}, nil
 }
 
 // FindChat retrieves the Chat specified by id
@@ -90,7 +115,7 @@ func UpdateChat(ctx context.Context, gs generalStore, input *UpdateChatInput) (*
 
 // UserChats retrieves all Chats for a User
 func UserChats(ctx context.Context, gs generalStore, uid string) ([]*ChatModel, error) {
-	chats, err := gs.AllChatsByUserID(ctx, uid)
+	chats, err := gs.AllChatsByUserMembership(ctx, uid)
 	if err != nil {
 		return nil, err
 	}
@@ -128,4 +153,9 @@ func (r *ChatModel) CreatedAt() (graphql.Time, error) {
 // Circles field resolver
 func (r *ChatModel) Circles(ctx context.Context) ([]*CircleModel, error) {
 	return ChatCircles(ctx, r.store, r.Chat.ID)
+}
+
+// Users field resolver
+func (r *ChatModel) Users(ctx context.Context) ([]*UserModel, error) {
+	return ChatUsers(ctx, r.store, r.Chat.ID)
 }

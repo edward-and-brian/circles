@@ -7,10 +7,28 @@ import (
 	"circles/server/types"
 
 	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/rs/xid"
 )
+
+// AllMessages retrieves all messages and returns them as MessageModels
+func AllMessages(ctx context.Context, gs generalStore) ([]*MessageModel, error) {
+	messages, err := gs.AllMessages(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var messageModels []*MessageModel
+	for _, message := range messages {
+		messageModels = append(messageModels, &MessageModel{message, gs})
+	}
+
+	return messageModels, nil
+}
 
 // CreateMessage creates a new Message with the given data and returns it as a MessageModel
 func CreateMessage(ctx context.Context, gs generalStore, message *types.Message) (*MessageModel, error) {
+	message.ID = xid.New().String()
+
 	if err := gs.CreateMessage(ctx, message); err != nil {
 		return nil, err
 
