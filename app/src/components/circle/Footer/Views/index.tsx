@@ -10,10 +10,10 @@ import styles from './styles';
 import { Images } from '../../../../themes';
 
 export interface Props {
-  height: Animated.Value;
+  keyboardPadding: Animated.Value;
   message: string;
   renderSendArrow: boolean;
-  onMessageChange(newMessage: string): void;
+  onMessageChange(event: any): void;
 }
 
 class FooterView extends PureComponent<Props> {
@@ -46,10 +46,14 @@ class FooterView extends PureComponent<Props> {
   }
   render() {
     return (
-      <Animated.View style={[styles.container, { height: this.props.height }]}>
+      <Animated.View
+        style={[
+          styles.container,
+          { paddingBottom: this.props.keyboardPadding },
+        ]}
+      >
         {this.renderMessageInput()}
-        {this.renderSendArrow()}
-        {/* {this.props.renderSendArrow && this.renderSendArrow()} */}
+        {this.props.renderSendArrow && this.renderSendArrow()}
       </Animated.View>
     );
   }

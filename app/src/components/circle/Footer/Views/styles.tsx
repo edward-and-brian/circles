@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Colors, Scaled, Fonts } from '../../../../themes';
 
 const arrowDiameter = Scaled.screen.width * 0.08;
+const inputAndArrowPadding = Scaled.screen.width * 0.02;
 
 export default StyleSheet.create({
   container: {
@@ -9,16 +10,17 @@ export default StyleSheet.create({
     shadowOffset: { width: -0.5, height: -1 },
     shadowOpacity: 0.8,
     backgroundColor: Colors.white,
-    paddingTop: Scaled.screen.width * 0.02,
+    alignItems: 'flex-end',
   },
   inputContainer: {
     flex: 8,
     alignItems: 'center',
+    paddingVertical: inputAndArrowPadding,
   },
   messageInput: {
     height: arrowDiameter,
     width: '95%',
-    paddingHorizontal: Scaled.screen.width * 0.023,
+    paddingHorizontal: inputAndArrowPadding,
     fontFamily: Fonts.book,
     fontSize: Scaled.fontSize.h10,
     borderColor: Colors.gray,
@@ -33,6 +35,7 @@ export default StyleSheet.create({
     borderRadius: arrowDiameter / 2,
     marginRight: '2.5%',
     backgroundColor: Colors.blue,
+    marginBottom: inputAndArrowPadding,
   },
   sendArrow: {
     height: '60%',

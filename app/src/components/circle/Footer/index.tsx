@@ -9,17 +9,14 @@ import {
 import { Scaled } from '../../../themes';
 
 const { height } = Scaled.screen;
-const textInputHeight = height * (Scaled.isXGen ? 0.053 : 0.065);
-const heightDefault = textInputHeight + height * (Scaled.isXGen ? 0.02 : 0);
-let footerHeight = new Animated.Value(heightDefault);
+const defaultKeyboardPadding = height * (Scaled.isXGen ? 0.02 : 0); // Accounts for X-Gen iPhones
+let keyboardPadding = new Animated.Value(defaultKeyboardPadding);
 
-export interface Props {
-  message: string;
-  onMessageChange(newMessage: string): void;
-}
+export interface Props {}
 
 interface State {
   renderSendArrow: boolean;
+  message: string;
 }
 
 class Footer extends PureComponent<Props, State> {
@@ -28,8 +25,12 @@ class Footer extends PureComponent<Props, State> {
 
     this.state = {
       renderSendArrow: false,
+      message: '',
     };
+
+    this.onMessageChange = this.onMessageChange.bind(this);
   }
+
   keyboardWillShowListener!: EmitterSubscription;
   keyboardWillHideListener!: EmitterSubscription;
 
@@ -51,32 +52,30 @@ class Footer extends PureComponent<Props, State> {
 
   keyboardWillShow(event: KeyboardEvent) {
     const keyboardHeight = event.endCoordinates.height;
-    Animated.timing(footerHeight, {
-      toValue: keyboardHeight + textInputHeight,
+    Animated.timing(keyboardPadding, {
+      toValue: keyboardHeight,
       duration: 250,
     }).start();
   }
 
   keyboardWillHide() {
-    Animated.timing(footerHeight, {
-      toValue: heightDefault,
+    Animated.timing(keyboardPadding, {
+      toValue: defaultKeyboardPadding,
       duration: 250,
     }).start();
   }
 
-  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
-    if (!!nextProps.message !== prevState.renderSendArrow) {
-      return { renderSendArrow: !prevState.renderSendArrow };
-    }
-    return null;
+  onMessageChange(newMessage: string) {
+    this.setState({ message: newMessage });
   }
 
   render() {
     return (
       <FooterView
-        {...this.props}
-        height={footerHeight}
-        renderSendArrow={this.state.renderSendArrow}
+        message={this.state.message}
+        onMessageChange={this.onMessageChange}
+        keyboardPadding={keyboardPadding}
+        renderSendArrow={!!this.state.message}
       />
     );
   }

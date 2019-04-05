@@ -7,8 +7,6 @@ import styles from './styles';
 
 export interface Props {
   onPressBack(): void;
-  message: string;
-  onMessageChange(newMessage: string): void;
 }
 
 class CircleScreenView extends PureComponent<Props> {
@@ -20,10 +18,7 @@ class CircleScreenView extends PureComponent<Props> {
           style={styles.headerContainer}
         />
         <CircleMessageWindow />
-        <CircleFooter
-          message={this.props.message}
-          onMessageChange={this.props.onMessageChange}
-        />
+        <CircleFooter />
       </View>
     );
   }
