@@ -11,6 +11,7 @@ import { Scaled } from '../../../themes';
 const { height } = Scaled.screen;
 const defaultKeyboardPadding = height * (Scaled.isXGen ? 0.02 : 0); // Accounts for X-Gen iPhones
 let keyboardPadding = new Animated.Value(defaultKeyboardPadding);
+let previousLineHeight: number = 0;
 
 export interface Props {}
 
@@ -68,6 +69,7 @@ class Footer extends PureComponent<Props, State> {
   onMessageChange(newMessage: string) {
     this.setState({ message: newMessage });
   }
+
 
   render() {
     return (

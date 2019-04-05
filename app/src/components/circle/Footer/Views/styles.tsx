@@ -18,14 +18,16 @@ export default StyleSheet.create({
     paddingVertical: inputAndArrowPadding,
   },
   messageInput: {
-    height: arrowDiameter,
     width: '95%',
+    maxHeight: Scaled.screen.height * 0.13,
     paddingHorizontal: inputAndArrowPadding,
+    paddingVertical: inputAndArrowPadding / 2,
     fontFamily: Fonts.book,
     fontSize: Scaled.fontSize.h10,
     borderColor: Colors.gray,
     borderWidth: 1,
     borderRadius: 8,
+    lineHeight: Scaled.screen.width * 0.042,
   },
   arrowContainer: {
     justifyContent: 'center',
