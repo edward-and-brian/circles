@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import CircleNavbarView from './Views';
+import NavbarView from './Views';
 import { StyleProp, ViewStyle } from 'react-native';
 
 export interface Props {
@@ -7,10 +7,10 @@ export interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
-class CircleNavbar extends PureComponent<Props> {
+class Navbar extends PureComponent<Props> {
   render() {
-    return <CircleNavbarView {...this.props} />;
+    return <NavbarView {...this.props} />;
   }
 }
 
-export default CircleNavbar;
+export default Navbar;

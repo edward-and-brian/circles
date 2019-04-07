@@ -1,4 +1,5 @@
 import { Colors } from '../themes';
+import moment from 'moment';
 
 const getTestMessages = () => [
   {
@@ -124,6 +125,41 @@ const getTestMessages = () => [
   },
 ];
 
+const getChats = () => [
+  {
+    name: 'Claudia Bachoura',
+    recentCircle: 'General',
+    date: moment().subtract(1, 'hours'),
+    circles: [1, 2, 3],
+  },
+  {
+    name: 'Brian Joerger',
+    recentCircle: 'Circles',
+    date: moment().subtract(2.2, 'hours'),
+    circles: [1, 2, 3],
+  },
+  {
+    name: 'The Wild Ones',
+    recentCircle: 'summer oregeon trip',
+    date: moment().subtract(9, 'hours'),
+    circles: [1, 2, 3],
+  },
+  {
+    name: 'Natalya Bachoura',
+    recentCircle: 'General',
+    date: moment().subtract(18, 'hours'),
+    circles: [1, 2, 3],
+  },
+  {
+    name: 'Jimmy Neutron',
+    recentCircle: 'Plasma Weapons',
+    date: moment().subtract(8, 'days'),
+    circles: [1, 2, 3],
+  },
+
+];
+
 export default {
   getTestMessages,
+  getChats,
 };

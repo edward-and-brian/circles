@@ -7,8 +7,8 @@ import {
   ViewStyle,
   StyleProp,
 } from 'react-native';
-import AvatarButton from '../../../Button/AvatarButton';
-import { Images, Scaled } from '../../../../../themes';
+import AvatarButton from '../../../shared/Button/AvatarButton';
+import { Images, Scaled } from '../../../../themes';
 import styles from './styles';
 
 export interface Props {
@@ -16,7 +16,7 @@ export interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
-class CircleNavbarView extends PureComponent<Props> {
+class NavbarView extends PureComponent<Props> {
   render() {
     return (
       <View style={[styles.container, this.props.style]}>
@@ -42,4 +42,4 @@ class CircleNavbarView extends PureComponent<Props> {
   }
 }
 
-export default CircleNavbarView;
+export default NavbarView;
