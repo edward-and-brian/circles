@@ -7,9 +7,6 @@ import styles from './styles';
 
 export interface Props {
   onPressBack(): void;
-  footerHeight: Animated.Value;
-  message: string;
-  onMessageChange(newMessage: string): void;
 }
 
 class CircleScreenView extends PureComponent<Props> {
@@ -21,11 +18,7 @@ class CircleScreenView extends PureComponent<Props> {
           style={styles.headerContainer}
         />
         <CircleMessageWindow />
-        <CircleFooter
-          height={this.props.footerHeight}
-          message={this.props.message}
-          onMessageChange={this.props.onMessageChange}
-        />
+        <CircleFooter />
       </View>
     );
   }

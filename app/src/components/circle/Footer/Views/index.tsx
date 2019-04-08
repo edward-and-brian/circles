@@ -5,12 +5,14 @@ import {
   View,
   TouchableOpacity,
   Image,
+  NativeSyntheticEvent,
+  TextInputContentSizeChangeEventData,
 } from 'react-native';
-import styles from './styles';
 import { Images } from '../../../../themes';
+import styles from './styles';
 
 export interface Props {
-  height: Animated.Value;
+  keyboardPadding: Animated.Value;
   message: string;
   renderSendArrow: boolean;
   onMessageChange(newMessage: string): void;
@@ -22,11 +24,9 @@ class FooterView extends PureComponent<Props> {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.messageInput}
-          onChangeText={this.props.onMessageChange}
           value={this.props.message}
+          onChangeText={this.props.onMessageChange}
           placeholder="Message"
-          enablesReturnKeyAutomatically
-          returnKeyType="send"
           multiline
         />
       </View>
@@ -46,7 +46,12 @@ class FooterView extends PureComponent<Props> {
   }
   render() {
     return (
-      <Animated.View style={[styles.container, { height: this.props.height }]}>
+      <Animated.View
+        style={[
+          styles.container,
+          { paddingBottom: this.props.keyboardPadding },
+        ]}
+      >
         {this.renderMessageInput()}
         {this.props.renderSendArrow && this.renderSendArrow()}
       </Animated.View>
