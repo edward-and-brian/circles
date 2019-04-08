@@ -1,17 +1,28 @@
 import React, { PureComponent } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 
 export interface Props {
   color: string;
   diameter: number;
+  clickable: boolean;
+  onPress(): void;
 }
 
-class CircleAvatarButtonView extends PureComponent<Props> {
+class AvatarButtonView extends PureComponent<Props> {
   render() {
     const { color, diameter } = this.props;
-    return (
+    return this.props.clickable ? (
       <TouchableOpacity
+        style={{
+          backgroundColor: color,
+          width: diameter,
+          height: diameter,
+          borderRadius: diameter / 2,
+        }}
+      />
+    ) : (
+      <View
         style={{
           backgroundColor: color,
           width: diameter,
@@ -23,4 +34,4 @@ class CircleAvatarButtonView extends PureComponent<Props> {
   }
 }
 
-export default CircleAvatarButtonView;
+export default AvatarButtonView;

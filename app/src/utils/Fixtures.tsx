@@ -130,33 +130,32 @@ const getChats = () => [
     name: 'Claudia Bachoura',
     recentCircle: 'General',
     date: moment().subtract(1, 'hours'),
-    circles: [1, 2, 3],
+    circles: [1, 2, 3, 4, 5, 6, 7, 8],
   },
   {
     name: 'Brian Joerger',
     recentCircle: 'Circles',
     date: moment().subtract(2.2, 'hours'),
-    circles: [1, 2, 3],
+    circles: [1, 2, 3, 4, 5, 6, 7, 8],
   },
   {
     name: 'The Wild Ones',
     recentCircle: 'summer oregeon trip',
     date: moment().subtract(9, 'hours'),
-    circles: [1, 2, 3],
+    circles: [1, 2, 3, 4, 5, 6, 7, 8],
   },
   {
     name: 'Natalya Bachoura',
     recentCircle: 'General',
     date: moment().subtract(18, 'hours'),
-    circles: [1, 2, 3],
+    circles: [1, 2, 3, 4, 5, 6, 7, 8],
   },
   {
     name: 'Jimmy Neutron',
     recentCircle: 'Plasma Weapons',
     date: moment().subtract(8, 'days'),
-    circles: [1, 2, 3],
+    circles: [1, 2, 3, 4, 5, 6, 7, 8],
   },
-
 ];
 
 export default {

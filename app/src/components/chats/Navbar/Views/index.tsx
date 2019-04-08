@@ -14,7 +14,7 @@ class NavbarView extends PureComponent<Props> {
           <Text style={styles.title}>Chats</Text>
         </View>
         <View style={styles.avatarContainer}>
-          <AvatarButton diameter={Scaled.screen.height * 0.066} />
+          <AvatarButton diameter={Scaled.screen.height * 0.066} clickable />
         </View>
       </View>
     );

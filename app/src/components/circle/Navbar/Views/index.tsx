@@ -35,7 +35,7 @@ class NavbarView extends PureComponent<Props> {
           <Text style={styles.circleTitle}>Kill the Birds</Text>
         </View>
         <View style={styles.avatarContainer}>
-          <AvatarButton diameter={Scaled.screen.height * 0.055} />
+          <AvatarButton diameter={Scaled.screen.height * 0.055} clickable />
         </View>
       </View>
     );

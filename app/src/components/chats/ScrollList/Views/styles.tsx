@@ -4,6 +4,5 @@ import { Colors } from '../../../../themes';
 export default StyleSheet.create({
   container: {
     flex: 10,
-    backgroundColor: Colors.yellow,
   },
 });
