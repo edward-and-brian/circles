@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/rs/xid"
 )
 
 // GraphQL struct used to fullfil GraphQL requests
@@ -25,7 +26,14 @@ func (h *GraphQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := h.Schema.Exec(context.Background(), params.Query, params.OperationName, params.Variables)
+	rid := r.Header.Get("X-Request-ID")
+	if rid == "" {
+		rid = xid.New().String()
+		r.Header.Set("X-Request-ID", rid)
+	}
+
+	ctx := context.WithValue(context.Background(), "request_id", rid)
+	response := h.Schema.Exec(ctx, params.Query, params.OperationName, params.Variables)
 	responseJSON, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

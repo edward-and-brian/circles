@@ -10,18 +10,33 @@ import (
 	"github.com/rs/xid"
 )
 
-// CreateMessage creates a new Message with the given data and returns it as a MessageModel
-func CreateMessage(ctx context.Context, gs generalStore, circle *types.Message) (*MessageModel, error) {
-	circle.ID = xid.New().String()
-
-	if err := gs.CreateMessage(ctx, circle); err != nil {
-		return nil, err
-
-	} else if circle, err = gs.FindMessage(ctx, circle.ID); err != nil {
+// AllMessages retrieves all messages and returns them as MessageModels
+func AllMessages(ctx context.Context, gs generalStore) ([]*MessageModel, error) {
+	messages, err := gs.AllMessages(ctx)
+	if err != nil {
 		return nil, err
 	}
 
-	return &MessageModel{circle, gs}, nil
+	var messageModels []*MessageModel
+	for _, message := range messages {
+		messageModels = append(messageModels, &MessageModel{message, gs})
+	}
+
+	return messageModels, nil
+}
+
+// CreateMessage creates a new Message with the given data and returns it as a MessageModel
+func CreateMessage(ctx context.Context, gs generalStore, message *types.Message) (*MessageModel, error) {
+	message.ID = xid.New().String()
+
+	if err := gs.CreateMessage(ctx, message); err != nil {
+		return nil, err
+
+	} else if message, err = gs.FindMessage(ctx, message.ID); err != nil {
+		return nil, err
+	}
+
+	return &MessageModel{message, gs}, nil
 }
 
 // DeleteMessage deletes the Message specified by ID and returns it as a MessageModel
