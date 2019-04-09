@@ -18,7 +18,7 @@ var (
 		FROM memberships
 		WHERE chat_id = $1
 	)
-	ORDER BY created_at ASC`
+	ORDER BY datetime(created_at) ASC`
 
 	createUserSQL = `
 	INSERT INTO users (id, name, phone_number, display_name) 
