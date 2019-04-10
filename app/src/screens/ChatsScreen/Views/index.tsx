@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import ChatsNavbar from '../../../components/chats/Navbar';
 import ChatScrollList from '../../../components/chats/ScrollList';
+import ChatSearch from '../../../components/chats/Search';
 import Fixtures from '../../../utils/Fixtures';
 import styles from './styles';
 
@@ -16,7 +17,7 @@ class ChatsScreenView extends PureComponent<Props> {
     return (
       <View style={styles.container}>
         <ChatsNavbar />
-        <View style={styles.searchContainer} />
+        <ChatSearch />
         <ChatScrollList chats={chats} onPressChat={this.props.onPressChat} />
       </View>
     );

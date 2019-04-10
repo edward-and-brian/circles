@@ -6,10 +6,6 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
   },
-  searchContainer: {
-    flex: 1,
-    backgroundColor: Colors.green,
-  },
   chatContainer: {
     height: Scaled.screen.height * 0.1,
     backgroundColor: Colors.white,

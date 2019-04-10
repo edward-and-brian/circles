@@ -13,9 +13,9 @@ export default {
   c_orange: '#f37735',
   c_yellow: '#ffc425',
 
-  sunset1: '#051e3e',
-  sunset2: '#251e3e',
-  sunset3: '#451e3e',
-  sunset4: '#651e3e',
-  sunset5: '#851e3e',
+  sunset1: '#ee4035',
+  sunset2: '#f37736',
+  sunset3: '#fdf498',
+  sunset4: '#7bc043',
+  sunset5: '#0392cf',
 };
