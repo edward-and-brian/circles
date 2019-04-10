@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
-import moment from 'moment';
 import AvatarButton from '../../../shared/Button/AvatarButton';
 import { Scaled, Colors } from '../../../../themes';
 import { Circle } from '../../ScrollList';
@@ -14,6 +13,7 @@ export interface Props {
 class CircleButtonView extends PureComponent<Props> {
   render() {
     const { circle, onPressCircle } = this.props;
+    let { content } = circle.lastMessage;
     return (
       <TouchableOpacity onPress={onPressCircle} style={styles.circleButton}>
         <View style={styles.avatarContainer}>
@@ -25,8 +25,8 @@ class CircleButtonView extends PureComponent<Props> {
         <View style={styles.circleTextContainer}>
           <Text style={styles.circleName}>{circle.name}</Text>
           <View style={styles.recentMessageAndDateContainer}>
-            <Text style={styles.recentMessageText}>
-              {circle.lastMessage.content}
+            <Text style={styles.recentMessageText} numberOfLines={1}>
+              {content}
             </Text>
             <Text style={styles.recentMessageDate}>
               {circle.lastMessage.createdAt.format('h:mm a')}

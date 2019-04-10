@@ -25,15 +25,17 @@ export default StyleSheet.create({
   },
   recentMessageAndDateContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
   recentMessageText: {
+    flex: 8,
     fontSize: Scaled.fontSize.h11,
     fontFamily: Fonts.medium,
     color: Colors.gray,
   },
   recentMessageDate: {
+    flex: 2,
+    textAlign: 'right',
     fontSize: Scaled.fontSize.h11,
     fontFamily: Fonts.medium,
   },

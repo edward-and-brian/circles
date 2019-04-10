@@ -5,8 +5,6 @@ import {
   View,
   TouchableOpacity,
   Image,
-  NativeSyntheticEvent,
-  TextInputContentSizeChangeEventData,
 } from 'react-native';
 import { Images } from '../../../../themes';
 import styles from './styles';
