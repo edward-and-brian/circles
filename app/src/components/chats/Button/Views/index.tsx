@@ -24,20 +24,38 @@ const date = moment().subtract(1, 'day');
 class ButtonView extends PureComponent<Props> {
   renderCircleWindow() {
     return (
-      <Animated.View
+      <Animated.ScrollView
         style={[
           styles.circleContainer,
-          { height: this.props.circleWindowHeight },
+          { maxHeight: this.props.circleWindowHeight },
         ]}
       >
-        <ScrollView>
-          {this.props.chat.circles.map(circle => (
-            <View style={styles.circleButton}>
-              <Text>{circle}</Text>
+        {this.props.chat.circles.map(circle => (
+          <TouchableOpacity
+            onPress={this.props.onPressChat}
+            key={`circle${circle}`}
+            style={styles.circleButton}
+          >
+            <View style={styles.avatarContainer}>
+              <AvatarButton
+                color={Colors.yellow}
+                diameter={Scaled.screen.height * 0.04}
+              />
             </View>
-          ))}
-        </ScrollView>
-      </Animated.View>
+            <View style={styles.circleTextContainer}>
+              <Text style={styles.circleName}>{this.props.chat.name}</Text>
+              <View style={styles.recentMessageAndDateContainer}>
+                <Text style={styles.recentMessageText}>
+                  {this.props.chat.recentCircle}
+                </Text>
+                <Text style={styles.recentMessageDate}>
+                  {date.format('h:mm a')}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </Animated.ScrollView>
     );
   }
 
@@ -61,7 +79,7 @@ class ButtonView extends PureComponent<Props> {
               <Text style={styles.recentCircleName}>
                 {this.props.chat.recentCircle}
               </Text>
-              <Text style={styles.date}>{date.format('HH:MM A')}</Text>
+              <Text style={styles.date}>{date.format('h:mm a')}</Text>
             </View>
           </View>
         </TouchableOpacity>

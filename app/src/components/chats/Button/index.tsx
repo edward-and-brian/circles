@@ -5,8 +5,6 @@ import { Scaled } from '../../../themes';
 import ButtonView from './Views';
 
 const openCircleWindowHeight = Scaled.screen.height * 0.25;
-let showCircleWindow = false;
-let circleWindowHeight = new Animated.Value(0);
 
 export interface Props {
   chat: Chat;
@@ -18,17 +16,21 @@ interface State {}
 class Button extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-
+    this.showCircleWindow = false;
+    this.circleWindowHeight = new Animated.Value(0);
     this.toggleCircleWindow = this.toggleCircleWindow.bind(this);
   }
 
-  toggleCircleWindow() {
-    const prevValue = showCircleWindow;
-    showCircleWindow = !prevValue;
+  showCircleWindow: boolean;
+  circleWindowHeight: Animated.Value;
 
-    const newHeight = prevValue ? 0 : openCircleWindowHeight;
-    Animated.timing(circleWindowHeight, {
+  toggleCircleWindow() {
+    const newHeight = this.showCircleWindow ? 0 : openCircleWindowHeight;
+    this.showCircleWindow = !this.showCircleWindow;
+
+    Animated.timing(this.circleWindowHeight, {
       toValue: newHeight,
+      duration: 300,
     }).start();
   }
 
@@ -36,7 +38,7 @@ class Button extends PureComponent<Props, State> {
     return (
       <ButtonView
         {...this.props}
-        circleWindowHeight={circleWindowHeight}
+        circleWindowHeight={this.circleWindowHeight}
         toggleCircleWindow={this.toggleCircleWindow}
       />
     );

@@ -37,14 +37,36 @@ export default StyleSheet.create({
     fontFamily: Fonts.medium,
   },
   circleContainer: {
-    marginLeft: '16.66%',
+    marginLeft: '10%',
   },
   circleButton: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: Scaled.screen.height * 0.06,
     margin: Scaled.screen.height * 0.006,
     borderRadius: Scaled.screen.height * 0.01,
-    backgroundColor: 'lightpink',
+  },
+  circleTextContainer: {
+    flex: 5,
+    justifyContent: 'center',
+    marginVertical: Scaled.screen.height * 0.008,
+  },
+  circleName: {
+    fontSize: Scaled.fontSize.h9,
+    fontFamily: Fonts.medium,
+  },
+  recentMessageAndDateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  recentMessageText: {
+    fontSize: Scaled.fontSize.h11,
+    fontFamily: Fonts.medium,
+    color: Colors.gray,
+  },
+  recentMessageDate: {
+    fontSize: Scaled.fontSize.h11,
+    fontFamily: Fonts.medium,
   },
 });
