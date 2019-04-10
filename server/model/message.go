@@ -25,7 +25,7 @@ func AllMessages(ctx context.Context, gs generalStore) ([]*MessageModel, error) 
 	return messageModels, nil
 }
 
-// CreateMessage creates a new Message with the given data and returns it as a MessageModel
+// CreateMessage creates a new Message with the given data
 func CreateMessage(ctx context.Context, gs generalStore, message *types.Message) (*MessageModel, error) {
 	message.ID = xid.New().String()
 
@@ -41,7 +41,7 @@ func CreateMessage(ctx context.Context, gs generalStore, message *types.Message)
 
 // DeleteMessage deletes the Message specified by ID and returns it as a MessageModel
 func DeleteMessage(ctx context.Context, gs generalStore, id string) (*MessageModel, error) {
-	Message, err := gs.FindMessage(ctx, id)
+	message, err := gs.FindMessage(ctx, id)
 	if err != nil {
 		return nil, err
 
@@ -49,17 +49,17 @@ func DeleteMessage(ctx context.Context, gs generalStore, id string) (*MessageMod
 		return nil, err
 	}
 
-	return &MessageModel{Message, gs}, nil
+	return &MessageModel{message, gs}, nil
 }
 
 // FindMessage retrieves the Message specified by id
 func FindMessage(ctx context.Context, gs generalStore, id string) (*MessageModel, error) {
-	circle, err := gs.FindMessage(ctx, id)
+	message, err := gs.FindMessage(ctx, id)
 	if err != nil {
 		return nil, err
 	}
 
-	return &MessageModel{circle, gs}, nil
+	return &MessageModel{message, gs}, nil
 }
 
 // UpdateMessageInput ...
@@ -86,19 +86,59 @@ func UpdateMessage(ctx context.Context, gs generalStore, input *UpdateMessageInp
 	return &MessageModel{message, gs}, nil
 }
 
-// CircleMessages retrieves all Messages for a Message
-func CircleMessages(ctx context.Context, gs generalStore, ciid string) ([]*MessageModel, error) {
-	circles, err := gs.AllMessagesByCircleID(ctx, ciid)
+// CircleMessageDatePartitions retrieves all messages, puts them in small groups, and partitions them by date
+func CircleMessageDatePartitions(ctx context.Context, gs generalStore, ciid string) ([]*MessageDatePartitionModel, error) {
+	var (
+		messageGroup         *MessageGroup
+		messageDatePartition *MessageDatePartition
+
+		messageDatePartitionModels = []*MessageDatePartitionModel{}
+		messageGroupModels         = []*MessageGroupModel{}
+		messageModels              = []*MessageModel{}
+	)
+
+	messages, err := gs.AllMessagesByCircleID(ctx, ciid)
 	if err != nil {
 		return nil, err
 	}
 
-	var messageModels []*MessageModel
-	for _, ch := range circles {
-		messageModels = append(messageModels, &MessageModel{ch, gs})
+	for _, m := range messages {
+		messageCreatedAt, err := time.Parse("ANSCI", m.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+
+		if messageDatePartition == nil {
+			messageDatePartition = &MessageDatePartition{m.CircleID, messageCreatedAt, nil}
+
+		} else if !(messageCreatedAt.YearDay() == messageDatePartition.date.YearDay() && messageCreatedAt.Year() == messageDatePartition.date.Year()) {
+			messageDatePartition.MessageGroups = messageGroupModels
+			messageDatePartitionModels = append(messageDatePartitionModels, &MessageDatePartitionModel{messageDatePartition})
+			messageDatePartition = &MessageDatePartition{m.CircleID, messageCreatedAt, nil}
+			messageGroupModels = []*MessageGroupModel{}
+		}
+
+		if messageGroup == nil {
+			messageGroup = &MessageGroup{m.SenderID, messageCreatedAt, messageCreatedAt, nil}
+
+		} else if messageCreatedAt.Sub(messageGroup.LastMessageAt).Minutes() <= 10 {
+			messageGroup.LastMessageAt = messageCreatedAt
+
+		} else {
+			messageGroup.Messages = messageModels
+			messageGroupModels = append(messageGroupModels, &MessageGroupModel{messageGroup})
+			messageGroup = &MessageGroup{m.SenderID, messageCreatedAt, messageCreatedAt, nil}
+		}
+
+		messageModels = append(messageModels, &MessageModel{m, gs})
 	}
 
-	return messageModels, nil
+	messageGroup.Messages = messageModels
+	messageGroupModels = append(messageGroupModels, &MessageGroupModel{messageGroup})
+	messageDatePartition.MessageGroups = messageGroupModels
+	messageDatePartitionModels = append(messageDatePartitionModels, &MessageDatePartitionModel{messageDatePartition})
+
+	return messageDatePartitionModels, nil
 }
 
 // MessageModel is the resolvable struct for the Message struct

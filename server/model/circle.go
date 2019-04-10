@@ -128,7 +128,7 @@ func (c *CircleModel) CreatedAt() (graphql.Time, error) {
 	return graphql.Time{Time: t}, err
 }
 
-// Messages field resolver
-func (c *CircleModel) Messages(ctx context.Context) ([]*MessageModel, error) {
-	return CircleMessages(ctx, c.store, c.Circle.ID)
+// MessageDatePartitions field resolver
+func (c *CircleModel) MessageDatePartitions(ctx context.Context) ([]*MessageDatePartitionModel, error) {
+	return CircleMessageDatePartitions(ctx, c.store, c.Circle.ID)
 }

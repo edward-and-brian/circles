@@ -38,7 +38,7 @@ type circleStore interface {
 // MessageStore is an interface for database interaction by the MessageModel
 type messageStore interface {
 	AllMessages(ctx context.Context) ([]*types.Message, error)
-	AllMessagesByCircleID(ctx context.Context, id string) ([]*types.Message, error)
+	AllMessagesByCircleID(ctx context.Context, ciid string) ([]*types.Message, error)
 	CreateMessage(ctx context.Context, message *types.Message) error
 	DeleteMessage(ctx context.Context, id string) error
 	FindMessage(ctx context.Context, id string) (*types.Message, error)

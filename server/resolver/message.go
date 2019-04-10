@@ -26,6 +26,11 @@ func (r *Resolver) Messages(ctx context.Context) ([]*model.MessageModel, error) 
 	return model.AllMessages(ctx, r.store)
 }
 
+// MessageDatePartitionsByCircle retrieves the DatePartitions for the messages of a given Circle.
+func (r *Resolver) MessageDatePartitionsByCircle(ctx context.Context, args *IDArgs) ([]*model.DatePartitionModel, error) {
+	return model.CircleMessageDatePartitions(ctx, r.store, args.ID)
+}
+
 // UpdateMessage updates the user specified by ID with the given data
 func (r *Resolver) UpdateMessage(ctx context.Context, args *struct{ Message *model.UpdateMessageInput }) (*model.MessageModel, error) {
 	return model.UpdateMessage(ctx, r.store, args.Message)
