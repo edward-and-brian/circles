@@ -135,51 +135,167 @@ const getChats = () => [
         avatar: Colors.sunset1,
         lastMessage: {
           content: 'Brussel sprouts plzz',
-          createdAt: moment().subtract(1, 'hours'),
-        }
+          createdAt: moment().subtract(22, 'minutes'),
+        },
       },
       {
         name: 'Travel',
         avatar: Colors.sunset2,
         lastMessage: {
           content: 'Make sure that you are free February 21!',
-          createdAt: moment().subtract(2, 'days'),
-        }
+          createdAt: moment()
+            .subtract(2, 'days')
+            .subtract(6, 'minutes'),
+        },
       },
       {
         name: 'General',
         avatar: Colors.sunset3,
         lastMessage: {
           content: 'Have you picked up your gown yet?',
-          createdAt: moment().subtract(5, 'days').subtract(9, 'hours'),
-        }
+          createdAt: moment()
+            .subtract(5, 'days')
+            .subtract(9, 'hours')
+            .subtract(26, 'minutes'),
+        },
       },
     ],
   },
-  // {
-  //   name: 'Brian Joerger',
-  //   recentCircle: 'Circles',
-  //   date: moment().subtract(2.2, 'hours'),
-  //   circles: [1, 2, 3, 4, 5, 6, 7, 8],
-  // },
-  // {
-  //   name: 'The Wild Ones',
-  //   recentCircle: 'summer oregeon trip',
-  //   date: moment().subtract(9, 'hours'),
-  //   circles: [1, 2, 3],
-  // },
-  // {
-  //   name: 'Natalya Bachoura',
-  //   recentCircle: 'General',
-  //   date: moment().subtract(18, 'hours'),
-  //   circles: [1, 2, 3, 4, 5, 6, 7, 8],
-  // },
-  // {
-  //   name: 'Jimmy Neutron',
-  //   recentCircle: 'Plasma Weapons',
-  //   date: moment().subtract(8, 'days'),
-  //   circles: [1, 2, 3, 4, 5, 6, 7, 8],
-  // },
+  {
+    name: 'Brian Joerger',
+    avatar: Colors.c_green,
+    circles: [
+      {
+        name: '402',
+        avatar: Colors.sunset1,
+        lastMessage: {
+          content: 'Ready to present?',
+          createdAt: moment()
+            .subtract(2, 'hours')
+            .subtract(22, 'minutes'),
+        },
+      },
+      {
+        name: '402',
+        avatar: Colors.sunset2,
+        lastMessage: {
+          content: 'Battelfy interview went really well :o',
+          createdAt: moment()
+            .subtract(1, 'days')
+            .subtract(18, 'hours')
+            .subtract(13, 'minutes'),
+        },
+      },
+      {
+        name: 'Gamer',
+        avatar: Colors.sunset3,
+        lastMessage: {
+          content: 'Gamer? Gamer and gamer? Gamer.',
+          createdAt: moment()
+            .subtract(2, 'days')
+            .subtract(18, 'hours')
+            .subtract(10, 'minutes'),
+        },
+      },
+      {
+        name: 'General',
+        avatar: Colors.sunset4,
+        lastMessage: {
+          content: "We don't talk anymore :' (",
+          createdAt: moment()
+            .subtract(10, 'days')
+            .subtract(12, 'hours')
+            .subtract(45, 'minutes'),
+        },
+      },
+    ],
+  },
+  {
+    name: 'Natalya Bachoura',
+    avatar: Colors.c_red,
+    circles: [
+      {
+        name: 'Drama',
+        avatar: Colors.sunset1,
+        lastMessage: {
+          content: 'God, Jessica is such a fake friend, just tell your ',
+          createdAt: moment()
+            .subtract(2, 'days')
+            .subtract(14, 'hours')
+            .subtract(48, 'minutes'),
+        },
+      },
+      {
+        name: 'General',
+        avatar: Colors.sunset2,
+        lastMessage: {
+          content: "Yeah, I'm on my way home right now",
+          createdAt: moment()
+            .subtract(5, 'days')
+            .subtract(4, 'hours')
+            .subtract(2, 'minutes'),
+        },
+      },
+    ],
+  },
+  {
+    name: 'The Wild Ones',
+    avatar: Colors.c_orange,
+    circles: [
+      {
+        name: 'summer oregeon trip',
+        avatar: Colors.sunset1,
+        lastMessage: {
+          content: 'Just finished making hotel reservations.',
+          createdAt: moment()
+            .subtract(4, 'days')
+            .subtract(1, 'hours')
+            .subtract(2, 'minutes'),
+        },
+      },
+      {
+        name: 'General',
+        avatar: Colors.sunset2,
+        lastMessage: {
+          content:
+            'BAR CRAWL TIME. PICKING UP ALL YOU MOFOS RIGHT NOW, BETTER BE READY.',
+          createdAt: moment()
+            .subtract(12, 'days')
+            .subtract(4, 'hours')
+            .subtract(34, 'minutes'),
+        },
+      },
+    ],
+  },
+  {
+    name: 'Jimmy Neutron',
+    avatar: Colors.c_yellow,
+    circles: [
+      {
+        name: 'Plasma Weapons',
+        avatar: Colors.sunset1,
+        lastMessage: {
+          content:
+            "CHECK OUT MY LATEST INVENTION. Greatest. Mindblast. EVER. You'll never have to deal with those pesky birds again.",
+          createdAt: moment()
+            .subtract(16, 'days')
+            .subtract(6, 'hours')
+            .subtract(17, 'minutes'),
+        },
+      },
+      {
+        name: 'General',
+        avatar: Colors.sunset2,
+        lastMessage: {
+          content: "Let's be friends.",
+          createdAt: moment()
+            .subtract(62, 'days')
+            .subtract(17, 'hours')
+            .subtract(55, 'minutes'),
+        },
+      },
+    ],
+  },
 ];
 
 export default {
