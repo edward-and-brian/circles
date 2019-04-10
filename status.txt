@@ -62,7 +62,48 @@ Eddie explained Front End file structure to Brian. Brian explained Backend file 
 
 Eddie
 - Stop slacking and actually begin to work on components
-- Find ways around not having endpoints
+- Find ways around not having Apollo set up
+
+----- 3/5/19 -----
+Brian continued to work on Backend architecture and FINALLY finished it, and it's quite dope.
+Eddie finished more important components for the app
+
+Eddie
+- Keep adding components
+
+Brian
+- Add user-chats membership functionality
+
+----- 3/19/19 -----
+Brian completed most of the user-chats functionality, but realized he needed to set up a way to do transactions within architecture. Dependency Injection makes this very hard.
+Eddie added more components and cleaned up the file structure further.
+
+Eddie
+- Keep adding components, look into Apollo GraphQL
+
+Brian
+- Figure out solution for transactions
+
+----- 4/5/19 -----
+Brian finished transaction solution and cleaned up a lot of database manipulation functions, and finished user membership functionality.
+Eddie completed Circle Screen and began messing with Apollo graphQL, decided to finsih major components before hooking up the Backend with Apollo.
+
+Eddie
+- FINISH THE APP ALREADY
+
+Brian 
+- Start working on Message Organization functionality
+
+----- 4/10/19 -----
+Brian completed Message Organization functionality. Also made some other important adjustments and fixes.
+Eddie completed Chat button, Chat Circle Window, and Chat Circle button, the final major components for the app. Added mock data.
+
+Eddie
+- Time to actually hook up the backend and use real fake data and hit endpoints in app.
+
+Brian
+- Add read/unread functionality
+- Add tests
 
 
 
@@ -87,13 +128,16 @@ Front End:
 - Make sure app doesn't look like poop on Android
 
 Backend:
+x Establish architecture and implement basic functionality
+x Implement Chat-Membership functionality
+x Create database transaction solution
 - Add logger & testing
-- Implement message group
+x Implement message group
 - Notifications & front end solution to that
 - Read receipts and unread messages
 - Other necessary functionality at Eddie's discretion
 - Open sockets / Apollo solution to IM
 - Find out what the fuck GraphQL loaders are (cache)
 - Search (two types)
-- Lettuce(Redis) messaging
+- Lettuce (Redis) messaging
 - User authentication platform
