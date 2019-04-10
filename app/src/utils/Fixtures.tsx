@@ -176,7 +176,7 @@ const getChats = () => [
         },
       },
       {
-        name: '402',
+        name: 'da-jub-hoont',
         avatar: Colors.sunset2,
         lastMessage: {
           content: 'Battelfy interview went really well :o',
