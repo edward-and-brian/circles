@@ -1,3 +1,14 @@
+type MessageDatePartition {
+  messageGroups: [MessageGroup]!
+  date: Time!
+}
+
+type MessageGroup {
+  senderID: ID!
+  messages: [Message]!
+  createdAt: Time!
+}
+
 type Message {
   id: ID!
   circleID: ID!

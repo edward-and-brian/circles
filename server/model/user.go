@@ -43,6 +43,7 @@ func ChatUsers(ctx context.Context, gs generalStore, chid string) ([]*UserModel,
 // CreateUser creates a new User with the given data and returns it as a UserModel
 func CreateUser(ctx context.Context, gs generalStore, user *types.User) (*UserModel, error) {
 	user.ID = xid.New().String()
+	user.CreatedAt = time.Now().Format(time.RFC3339)
 
 	if err := gs.CreateUser(ctx, user); err != nil {
 		return nil, err

@@ -4,17 +4,19 @@ schema {
 }
 
 type Query {
-  User(id: ID!): User
-  Users(): [User!]!
+  user(id: ID!): User
+  users(): [User!]!
 
-  Chat(id: ID!): Chat
-  Chats(): [Chat!]!
+  chat(id: ID!): Chat
+  chats(): [Chat!]!
 
-  Circle(id: ID!): Circle
-  Circles(): [Circle!]!
+  circle(id: ID!): Circle
+  circles(): [Circle!]!
 
-  Message(id: ID!): Message
-  Messages(): [Message!]!
+  message(id: ID!): Message
+  messages(): [Message!]!
+
+  messageDatePartitionsByCircle(id: ID!): [MessageDatePartition]!
 }
 
 type Mutation {

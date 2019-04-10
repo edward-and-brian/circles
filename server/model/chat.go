@@ -42,6 +42,7 @@ func AllChats(ctx context.Context, gs generalStore) ([]*ChatModel, error) {
 // CreateChat creates a new Chat with the given data and returns it as a ChatModel
 func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs []string) (*ChatModel, error) {
 	chat.ID = xid.New().String()
+	chat.CreatedAt = time.Now().Format(time.RFC3339)
 
 	gs.BeginTransaction(ctx)
 	defer gs.EndTransaction(ctx)

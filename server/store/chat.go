@@ -18,11 +18,11 @@ var (
 		FROM memberships
 		WHERE user_id = $1
 	)
-	ORDER BY created_at ASC`
+	ORDER BY datetime(created_at) ASC`
 
 	createChatSQL = `
-	INSERT INTO chats (id, name)
-	VALUES (:id, :name)`
+	INSERT INTO chats (id, name, created_at)
+	VALUES (:id, :name, :created_at)`
 
 	updateChatSQL = `UPDATE chats SET name=:name WHERE id=:id`
 )
