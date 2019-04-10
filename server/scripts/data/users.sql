@@ -5,5 +5,5 @@ CREATE TABLE users
     name TEXT NOT NULL,
     phone_number TEXT NOT NULL UNIQUE,
     display_name TEXT NOT NULL UNIQUE,
-    created_at TEXT DEFAULT     CURRENT_TIMESTAMP
+    created_at TEXT NOT NULL
 );
