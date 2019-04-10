@@ -16,6 +16,7 @@ interface State {}
 class Button extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
+
     this.showCircleWindow = false;
     this.circleWindowHeight = new Animated.Value(0);
     this.toggleCircleWindow = this.toggleCircleWindow.bind(this);

@@ -128,34 +128,58 @@ const getTestMessages = () => [
 const getChats = () => [
   {
     name: 'Claudia Bachoura',
-    recentCircle: 'General',
-    date: moment().subtract(1, 'hours'),
-    circles: [1, 2, 3, 4, 5, 6, 7, 8],
+    avatar: Colors.c_blue,
+    circles: [
+      {
+        name: 'Groceries',
+        avatar: Colors.sunset1,
+        lastMessage: {
+          content: 'Brussel sprouts plzz',
+          createdAt: moment().subtract(1, 'hours'),
+        }
+      },
+      {
+        name: 'Travel',
+        avatar: Colors.sunset2,
+        lastMessage: {
+          content: 'Make sure that you are free February 21!',
+          createdAt: moment().subtract(2, 'days'),
+        }
+      },
+      {
+        name: 'General',
+        avatar: Colors.sunset3,
+        lastMessage: {
+          content: 'Have you picked up your gown yet?',
+          createdAt: moment().subtract(5, 'days').subtract(9, 'hours'),
+        }
+      },
+    ],
   },
-  {
-    name: 'Brian Joerger',
-    recentCircle: 'Circles',
-    date: moment().subtract(2.2, 'hours'),
-    circles: [1, 2, 3, 4, 5, 6, 7, 8],
-  },
-  {
-    name: 'The Wild Ones',
-    recentCircle: 'summer oregeon trip',
-    date: moment().subtract(9, 'hours'),
-    circles: [1, 2, 3, 4, 5, 6, 7, 8],
-  },
-  {
-    name: 'Natalya Bachoura',
-    recentCircle: 'General',
-    date: moment().subtract(18, 'hours'),
-    circles: [1, 2, 3, 4, 5, 6, 7, 8],
-  },
-  {
-    name: 'Jimmy Neutron',
-    recentCircle: 'Plasma Weapons',
-    date: moment().subtract(8, 'days'),
-    circles: [1, 2, 3, 4, 5, 6, 7, 8],
-  },
+  // {
+  //   name: 'Brian Joerger',
+  //   recentCircle: 'Circles',
+  //   date: moment().subtract(2.2, 'hours'),
+  //   circles: [1, 2, 3, 4, 5, 6, 7, 8],
+  // },
+  // {
+  //   name: 'The Wild Ones',
+  //   recentCircle: 'summer oregeon trip',
+  //   date: moment().subtract(9, 'hours'),
+  //   circles: [1, 2, 3],
+  // },
+  // {
+  //   name: 'Natalya Bachoura',
+  //   recentCircle: 'General',
+  //   date: moment().subtract(18, 'hours'),
+  //   circles: [1, 2, 3, 4, 5, 6, 7, 8],
+  // },
+  // {
+  //   name: 'Jimmy Neutron',
+  //   recentCircle: 'Plasma Weapons',
+  //   date: moment().subtract(8, 'days'),
+  //   circles: [1, 2, 3, 4, 5, 6, 7, 8],
+  // },
 ];
 
 export default {
