@@ -28,6 +28,7 @@ func AllCircles(ctx context.Context, gs generalStore) ([]*CircleModel, error) {
 // CreateCircle creates a new Circle with the given data and returns it as a CircleModel
 func CreateCircle(ctx context.Context, gs generalStore, circle *types.Circle) (*CircleModel, error) {
 	circle.ID = xid.New().String()
+	circle.CreatedAt = time.Now().Format(time.RFC3339)
 
 	if err := gs.CreateCircle(ctx, circle); err != nil {
 		return nil, err

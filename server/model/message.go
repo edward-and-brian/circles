@@ -28,6 +28,7 @@ func AllMessages(ctx context.Context, gs generalStore) ([]*MessageModel, error) 
 // CreateMessage creates a new Message with the given data
 func CreateMessage(ctx context.Context, gs generalStore, message *types.Message) (*MessageModel, error) {
 	message.ID = xid.New().String()
+	message.CreatedAt = time.Now().Format(time.RFC3339)
 
 	if err := gs.CreateMessage(ctx, message); err != nil {
 		return nil, err
@@ -103,7 +104,7 @@ func CircleMessageDatePartitions(ctx context.Context, gs generalStore, ciid stri
 	}
 
 	for _, m := range messages {
-		messageCreatedAt, err := time.Parse("ANSCI", m.CreatedAt)
+		messageCreatedAt, err := time.Parse(time.RFC3339, m.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -121,22 +122,25 @@ func CircleMessageDatePartitions(ctx context.Context, gs generalStore, ciid stri
 		if messageGroup == nil {
 			messageGroup = &MessageGroup{m.SenderID, messageCreatedAt, messageCreatedAt, nil}
 
-		} else if messageCreatedAt.Sub(messageGroup.LastMessageAt).Minutes() <= 10 {
+		} else if messageCreatedAt.Sub(messageGroup.LastMessageAt).Minutes() <= 30 && messageGroup.SenderID == m.SenderID {
 			messageGroup.LastMessageAt = messageCreatedAt
 
 		} else {
 			messageGroup.Messages = messageModels
 			messageGroupModels = append(messageGroupModels, &MessageGroupModel{messageGroup})
 			messageGroup = &MessageGroup{m.SenderID, messageCreatedAt, messageCreatedAt, nil}
+			messageModels = []*MessageModel{}
 		}
 
 		messageModels = append(messageModels, &MessageModel{m, gs})
 	}
 
-	messageGroup.Messages = messageModels
-	messageGroupModels = append(messageGroupModels, &MessageGroupModel{messageGroup})
-	messageDatePartition.MessageGroups = messageGroupModels
-	messageDatePartitionModels = append(messageDatePartitionModels, &MessageDatePartitionModel{messageDatePartition})
+	if messageDatePartition != nil {
+		messageGroup.Messages = messageModels
+		messageGroupModels = append(messageGroupModels, &MessageGroupModel{messageGroup})
+		messageDatePartition.MessageGroups = messageGroupModels
+		messageDatePartitionModels = append(messageDatePartitionModels, &MessageDatePartitionModel{messageDatePartition})
+	}
 
 	return messageDatePartitionModels, nil
 }

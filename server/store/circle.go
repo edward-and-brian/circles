@@ -13,8 +13,8 @@ var (
 	allCirclesByChatIDSQL = `SELECT * FROM circles WHERE chat_id=$1 ORDER BY id ASC`
 
 	createCircleSQL = `
-	INSERT INTO circles (id, chat_id, name)
-	VALUES (:id, :chat_id, :name)`
+	INSERT INTO circles (id, chat_id, name, created_at)
+	VALUES (:id, :chat_id, :name, :created_at)`
 
 	updateCircleSQL = `UPDATE circles SET name=:name WHERE id=:id`
 )

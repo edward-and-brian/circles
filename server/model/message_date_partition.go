@@ -23,12 +23,12 @@ func (mdp *MessageDatePartitionModel) CircleID() graphql.ID {
 	return graphql.ID(mdp.MessageDatePartition.CircleID)
 }
 
-// Messages field resolver
-func (mdp *MessageDatePartitionModel) Messages() []*MessageGroupModel {
+// MessageGroups field resolver
+func (mdp *MessageDatePartitionModel) MessageGroups() []*MessageGroupModel {
 	return mdp.MessageDatePartition.MessageGroups
 }
 
-// CreatedAt field resolver
-func (mdp *MessageDatePartitionModel) CreatedAt() graphql.Time {
+// Date field resolver
+func (mdp *MessageDatePartitionModel) Date() graphql.Time {
 	return graphql.Time{Time: mdp.MessageDatePartition.date}
 }

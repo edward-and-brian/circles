@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"circles/server/types"
 
@@ -13,8 +14,8 @@ var (
 	membershipTable = table("memberships")
 
 	createMembershipSQL = `
-	INSERT INTO memberships (id, user_id, chat_id)
-	VALUES (:id, :user_id, :chat_id)`
+	INSERT INTO memberships (id, user_id, chat_id, created_at)
+	VALUES (:id, :user_id, :chat_id, :created_at)`
 )
 
 // CreateMembership adds an entry to the memberships table with the given user_id and chat_id
@@ -27,9 +28,10 @@ func (gs *GeneralStore) CreateMembership(ctx context.Context, uid, chid string) 
 	}
 
 	membershipsEntry := map[string]interface{}{
-		"id":      xid.New().String(),
-		"user_id": uid,
-		"chat_id": chid,
+		"id":         xid.New().String(),
+		"user_id":    uid,
+		"chat_id":    chid,
+		"created_at": time.Now().Format(time.RFC3339),
 	}
 
 	if err := gs.createEntity(ctx, membershipsEntry, createMembershipSQL); err != nil {

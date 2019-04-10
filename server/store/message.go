@@ -13,8 +13,8 @@ var (
 	allMessagesByCircleIDSQL = `SELECT * FROM messages WHERE circle_id=$1 ORDER BY datetime(created_at) ASC`
 
 	createMessageSQL = `
-	INSERT INTO messages (id, circle_id, sender_id, content)
-	VALUES (:id, :circle_id, :sender_id, :content)`
+	INSERT INTO messages (id, circle_id, sender_id, content, created_at)
+	VALUES (:id, :circle_id, :sender_id, :content, :created_at)`
 
 	updateMessageSQL = `UPDATE messages SET content=:content WHERE id=:id`
 )

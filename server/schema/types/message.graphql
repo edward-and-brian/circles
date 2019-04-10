@@ -1,15 +1,12 @@
 type MessageDatePartition {
-  id: ID!
   messageGroups: [MessageGroup]!
   date: Time!
 }
 
 type MessageGroup {
-  id: ID!
   senderID: ID!
   messages: [Message]!
   createdAt: Time!
-  lastMessageAt: Time!
 }
 
 type Message {

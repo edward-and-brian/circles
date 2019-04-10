@@ -16,7 +16,7 @@ type Query {
   message(id: ID!): Message
   messages(): [Message!]!
 
-  messageDatePartitionsByCircle(circleID: ID!): [MessageDatePartition]!
+  messageDatePartitionsByCircle(id: ID!): [MessageDatePartition]!
 }
 
 type Mutation {
