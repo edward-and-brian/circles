@@ -31,8 +31,8 @@ class NavbarView extends PureComponent<Props> {
           />
         </TouchableOpacity>
         <View style={styles.titleContainer}>
-          <Text style={styles.chatTitle}>The Come Back Kids</Text>
-          <Text style={styles.circleTitle}>Kill the Birds</Text>
+          <Text style={styles.chatTitle}>Natalya Bachoura</Text>
+          <Text style={styles.circleTitle}>General</Text>
         </View>
         <View style={styles.avatarContainer}>
           <AvatarButton diameter={Scaled.screen.height * 0.055} clickable />

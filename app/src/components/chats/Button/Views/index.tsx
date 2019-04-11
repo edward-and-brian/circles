@@ -3,8 +3,9 @@ import { Animated, TouchableOpacity, Text, View } from 'react-native';
 import moment from 'moment';
 import AvatarButton from '../../../shared/Button/AvatarButton';
 import CircleWindow from '../../CircleWindow';
-import { Colors, Scaled } from '../../../../themes';
+import { Scaled } from '../../../../themes';
 import { Chat } from '../../ScrollList';
+import { Date } from '../../../../utils';
 import styles from './styles';
 
 export interface Props {
@@ -25,7 +26,7 @@ class ButtonView extends PureComponent<Props> {
       circleWindowHeight,
     } = this.props;
     const mostRecentCircle = chat.circles[0];
-    
+
     return (
       <View>
         <TouchableOpacity
@@ -46,7 +47,7 @@ class ButtonView extends PureComponent<Props> {
                 {mostRecentCircle.name}
               </Text>
               <Text style={styles.date}>
-                {mostRecentCircle.lastMessage.createdAt.format('h:mm a')}
+                {Date.toDisplayString(mostRecentCircle.lastMessage.createdAt)}
               </Text>
             </View>
           </View>

@@ -1,5 +1,7 @@
 import Fixtures from './Fixtures';
+import Date from './Date';
 
-export default {
+export {
   Fixtures,
+  Date
 };

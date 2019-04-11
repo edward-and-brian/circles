@@ -308,7 +308,7 @@ const getChats = () => [
         avatar: Colors.sunset1,
         lastMessage: {
           content: 'Brussel sprouts plzz',
-          createdAt: moment().subtract(22, 'minutes'),
+          createdAt: moment().subtract(22, 'minutes').subtract(3, 'months'),
         },
       },
       {
@@ -318,7 +318,7 @@ const getChats = () => [
           content: 'Make sure that you are free February 21!',
           createdAt: moment()
             .subtract(2, 'days')
-            .subtract(6, 'minutes'),
+            .subtract(6, 'minutes').subtract(3, 'months'),
         },
       },
       {
@@ -329,13 +329,13 @@ const getChats = () => [
           createdAt: moment()
             .subtract(5, 'days')
             .subtract(9, 'hours')
-            .subtract(26, 'minutes'),
+            .subtract(26, 'minutes').subtract(3, 'months'),
         },
       },
     ],
   },
   {
-    name: 'Seniors Citizes',
+    name: 'Seniors Citizens',
     avatar: Colors.c_green,
     circles: [
       {
@@ -345,7 +345,7 @@ const getChats = () => [
           content: 'Ready to present?',
           createdAt: moment()
             .subtract(2, 'hours')
-            .subtract(22, 'minutes'),
+            .subtract(22, 'minutes').subtract(3, 'months'),
         },
       },
       {
@@ -356,7 +356,7 @@ const getChats = () => [
           createdAt: moment()
             .subtract(1, 'days')
             .subtract(18, 'hours')
-            .subtract(13, 'minutes'),
+            .subtract(13, 'minutes').subtract(3, 'months'),
         },
       },
       {
@@ -367,7 +367,7 @@ const getChats = () => [
           createdAt: moment()
             .subtract(2, 'days')
             .subtract(18, 'hours')
-            .subtract(10, 'minutes'),
+            .subtract(10, 'minutes').subtract(3, 'months'),
         },
       },
       {
@@ -378,7 +378,7 @@ const getChats = () => [
           createdAt: moment()
             .subtract(10, 'days')
             .subtract(12, 'hours')
-            .subtract(45, 'minutes'),
+            .subtract(45, 'minutes').subtract(3, 'months'),
         },
       },
     ],
@@ -395,7 +395,7 @@ const getChats = () => [
           createdAt: moment()
             .subtract(2, 'days')
             .subtract(14, 'hours')
-            .subtract(48, 'minutes'),
+            .subtract(48, 'minutes').subtract(3, 'months'),
         },
       },
       {
@@ -406,7 +406,7 @@ const getChats = () => [
           createdAt: moment()
             .subtract(5, 'days')
             .subtract(4, 'hours')
-            .subtract(2, 'minutes'),
+            .subtract(2, 'minutes').subtract(3, 'months'),
         },
       },
     ],
@@ -423,7 +423,7 @@ const getChats = () => [
           createdAt: moment()
             .subtract(4, 'days')
             .subtract(1, 'hours')
-            .subtract(2, 'minutes'),
+            .subtract(2, 'minutes').subtract(3, 'months'),
         },
       },
       {
@@ -435,7 +435,7 @@ const getChats = () => [
           createdAt: moment()
             .subtract(12, 'days')
             .subtract(4, 'hours')
-            .subtract(34, 'minutes'),
+            .subtract(34, 'minutes').subtract(3, 'months'),
         },
       },
     ],
@@ -453,7 +453,7 @@ const getChats = () => [
           createdAt: moment()
             .subtract(16, 'days')
             .subtract(6, 'hours')
-            .subtract(17, 'minutes'),
+            .subtract(17, 'minutes').subtract(3, 'months'),
         },
       },
       {
@@ -464,7 +464,7 @@ const getChats = () => [
           createdAt: moment()
             .subtract(62, 'days')
             .subtract(17, 'hours')
-            .subtract(55, 'minutes'),
+            .subtract(55, 'minutes').subtract(3, 'months'),
         },
       },
     ],
