@@ -6,6 +6,7 @@ schema {
 type Query {
   user(id: ID!): User
   users(): [User!]!
+  login(input: loginInput!): User!
 
   chat(id: ID!): Chat
   chats(): [Chat!]!
@@ -15,7 +16,6 @@ type Query {
 
   message(id: ID!): Message
   messages(): [Message!]!
-
   messageDatePartitionsByCircle(id: ID!): [MessageDatePartition]!
 }
 

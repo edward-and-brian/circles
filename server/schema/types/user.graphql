@@ -19,3 +19,8 @@ input updateUserInput {
   phoneNumber: String
   displayName: String
 }
+
+input loginInput {
+  phoneNumber: String!
+  displayName: String!
+}

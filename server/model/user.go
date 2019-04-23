@@ -78,6 +78,22 @@ func FindUser(ctx context.Context, gs generalStore, id string) (*UserModel, erro
 	return &UserModel{user, gs}, nil
 }
 
+// LoginUserInput ...
+type LoginUserInput struct {
+	PhoneNumber string
+	DisplayName string
+}
+
+// LoginUser queries for a user using their PhoneNumber and DisplayName and returns that user as UserModel
+func LoginUser(ctx context.Context, gs generalStore, input *LoginUserInput) (*UserModel, error) {
+	user, err := gs.LoginUser(ctx, input.PhoneNumber, input.DisplayName)
+	if err != nil {
+		return nil, err
+	}
+
+	return &UserModel{user, gs}, nil
+}
+
 // UpdateUserInput ...
 type UpdateUserInput struct {
 	ID          string
