@@ -7,8 +7,8 @@ import {
   ViewStyle,
   StyleProp,
 } from 'react-native';
-import AvatarButton from '../../../Button/AvatarButton';
-import { Images, Scaled } from '../../../../../themes';
+import AvatarButton from '../../../shared/Button/AvatarButton';
+import { Images, Scaled } from '../../../../themes';
 import styles from './styles';
 
 export interface Props {
@@ -16,7 +16,7 @@ export interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
-class CircleNavbarView extends PureComponent<Props> {
+class NavbarView extends PureComponent<Props> {
   render() {
     return (
       <View style={[styles.container, this.props.style]}>
@@ -31,15 +31,15 @@ class CircleNavbarView extends PureComponent<Props> {
           />
         </TouchableOpacity>
         <View style={styles.titleContainer}>
-          <Text style={styles.chatTitle}>The Come Back Kids</Text>
-          <Text style={styles.circleTitle}>Kill the Birds</Text>
+          <Text style={styles.chatTitle}>Natalya Bachoura</Text>
+          <Text style={styles.circleTitle}>General</Text>
         </View>
         <View style={styles.avatarContainer}>
-          <AvatarButton diameter={Scaled.screen.height * 0.055} />
+          <AvatarButton diameter={Scaled.screen.height * 0.055} clickable />
         </View>
       </View>
     );
   }
 }
 
-export default CircleNavbarView;
+export default NavbarView;

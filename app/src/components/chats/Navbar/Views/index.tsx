@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import { View, Text } from 'react-native';
-import { Scaled } from '../../../../../themes';
-import AvatarButton from '../../../Button/AvatarButton';
+import { Scaled } from '../../../../themes';
+import AvatarButton from '../../../shared/Button/AvatarButton';
 import styles from './styles';
 
 export interface Props {}
 
-class ChatsNavbarView extends PureComponent<Props> {
+class NavbarView extends PureComponent<Props> {
   render() {
     return (
       <View style={styles.container}>
@@ -14,11 +14,11 @@ class ChatsNavbarView extends PureComponent<Props> {
           <Text style={styles.title}>Chats</Text>
         </View>
         <View style={styles.avatarContainer}>
-          <AvatarButton diameter={Scaled.screen.height * 0.066} />
+          <AvatarButton diameter={Scaled.screen.height * 0.066} clickable />
         </View>
       </View>
     );
   }
 }
 
-export default ChatsNavbarView;
+export default NavbarView;
