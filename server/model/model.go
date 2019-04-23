@@ -52,5 +52,6 @@ type userStore interface {
 	CreateUser(ctx context.Context, user *types.User) error
 	DeleteUser(ctx context.Context, id string) error
 	FindUser(ctx context.Context, id string) (*types.User, error)
+	LoginUser(ctx context.Context, phoneNumber string, displayName string) (*types.User, error)
 	UpdateUser(ctx context.Context, user *types.User) error
 }

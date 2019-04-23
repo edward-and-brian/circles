@@ -23,6 +23,8 @@ var (
 	createUserSQL = `
 	INSERT INTO users (id, name, phone_number, display_name, created_at) 
 	VALUES (:id, :name, :phone_number, :display_name, :created_at)`
+	
+	loginUserSQL = `SELECT * FROM users WHERE phone_number=$1 AND display_name=$2`
 
 	udpateUserSQL = `
 	UPDATE users 
@@ -75,6 +77,16 @@ func (gs *GeneralStore) FindUser(ctx context.Context, id string) (*types.User, e
 	user := &types.User{}
 	if err := gs.findEntity(ctx, user, usersTable, id); err != nil {
 		return nil, fmt.Errorf("error with FindUser: %v", err.Error())
+	}
+
+	return user, nil
+}
+
+// LoginUser finds a User entry in the db (using their login information)
+func (gs *GeneralStore) LoginUser(ctx context.Context, phoneNumber string, displayName string) (*types.User, error) {
+	user := &types.User{}
+	if err := gs.sqlite.Get(user, loginUserSQL, phoneNumber, displayName); err != nil {
+		return nil, fmt.Errorf("error with LoginUser: %v", err.Error())
 	}
 
 	return user, nil
