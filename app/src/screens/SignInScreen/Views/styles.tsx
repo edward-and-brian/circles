@@ -14,12 +14,18 @@ export default StyleSheet.create({
     fontFamily: Fonts.medium,
     fontSize: Scaled.fontSize.h1,
   },
-  inputContainer: {
+  inputsContainer: {
     flex: 2,
-    backgroundColor: Colors.sunset1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  buttonsContainer: {
+    flex: 3,
+    alignItems: 'center',
   },
   buttonContainer: {
-    flex: 3,
-    backgroundColor: Colors.sunset2,
+    height: Scaled.screen.height / 20,
+    width: '45%',
+    marginBottom: Scaled.screen.height / 100
   },
 });
