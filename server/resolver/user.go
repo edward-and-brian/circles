@@ -16,7 +16,7 @@ func (r *Resolver) DeleteUser(ctx context.Context, args *IDArgs) (*model.UserMod
 	return model.DeleteUser(ctx, r.store, args.ID)
 }
 
-// LoginUser finds the user specified by login information
+// Login finds the user specified by login information
 func (r *Resolver) Login(ctx context.Context, args *struct{ Input *model.LoginUserInput }) (*model.UserModel, error) {
 	return model.LoginUser(ctx, r.store, args.Input)
 }
