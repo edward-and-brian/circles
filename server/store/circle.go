@@ -28,7 +28,7 @@ var (
 func (gs *GeneralStore) AllCircles(ctx context.Context) ([]*types.Circle, error) {
 	var circles []*types.Circle
 	if err := gs.findAllEntity(ctx, &circles, circlesTable); err != nil {
-		return nil, fmt.Errorf("error with AllCircles: %v", err.Error())
+		return nil, fmt.Errorf("AllCircles error: %v", err.Error())
 	}
 
 	return circles, nil
@@ -37,8 +37,8 @@ func (gs *GeneralStore) AllCircles(ctx context.Context) ([]*types.Circle, error)
 // AllCirclesByChatID finds all Circle entries for a given Chat in the db
 func (gs *GeneralStore) AllCirclesByChatID(ctx context.Context, chid string) ([]*types.Circle, error) {
 	var circles []*types.Circle
-	if err := gs.sqlite.Select(&circles, allCirclesByChatIDSQL, chid); err != nil {
-		return nil, fmt.Errorf("error with AllCirclesByChatID: %v", err.Error())
+	if err := gs.getSet(ctx, &circles, allCirclesByChatIDSQL, chid); err != nil {
+		return nil, fmt.Errorf("AllCirclesByChatID error: %v", err.Error())
 	}
 
 	return circles, nil
@@ -51,7 +51,7 @@ func (gs *GeneralStore) CreateCircle(ctx context.Context, circle *types.Circle) 
 	}
 
 	if err := gs.createEntity(ctx, circle, createCircleSQL); err != nil {
-		return fmt.Errorf("error with CreateCircle: %v", err.Error())
+		return fmt.Errorf("CreateCircle error: %v", err.Error())
 	}
 
 	return nil
@@ -60,7 +60,7 @@ func (gs *GeneralStore) CreateCircle(ctx context.Context, circle *types.Circle) 
 // DeleteCircle deletes a Circle entry in the db
 func (gs *GeneralStore) DeleteCircle(ctx context.Context, id string) error {
 	if err := gs.deleteEntity(ctx, circlesTable, id); err != nil {
-		return fmt.Errorf("error with DeleteCircle: %v", err.Error())
+		return fmt.Errorf("DeleteCircle error: %v", err.Error())
 	}
 
 	return nil
@@ -70,7 +70,7 @@ func (gs *GeneralStore) DeleteCircle(ctx context.Context, id string) error {
 func (gs *GeneralStore) FindCircle(ctx context.Context, id string) (*types.Circle, error) {
 	circle := &types.Circle{}
 	if err := gs.findEntity(ctx, circle, circlesTable, id); err != nil {
-		return nil, fmt.Errorf("error with FindCircle: %v", err.Error())
+		return nil, fmt.Errorf("FindCircle error: %v", err.Error())
 	}
 
 	return circle, nil
@@ -79,7 +79,7 @@ func (gs *GeneralStore) FindCircle(ctx context.Context, id string) (*types.Circl
 // UpdateCircle updates a Circle entry in the db
 func (gs *GeneralStore) UpdateCircle(ctx context.Context, circle *types.Circle) error {
 	if err := gs.updateEntity(ctx, circle, updateCircleSQL); err != nil {
-		return fmt.Errorf("error with UpdateCircle: %v", err.Error())
+		return fmt.Errorf("UpdateCircle error: %v", err.Error())
 	}
 
 	return nil

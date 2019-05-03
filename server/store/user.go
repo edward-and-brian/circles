@@ -23,7 +23,7 @@ var (
 	createUserSQL = `
 	INSERT INTO users (id, name, phone_number, display_name, created_at) 
 	VALUES (:id, :name, :phone_number, :display_name, :created_at)`
-	
+
 	loginUserSQL = `SELECT * FROM users WHERE phone_number=$1 AND display_name=$2`
 
 	udpateUserSQL = `
@@ -38,7 +38,7 @@ var (
 func (gs *GeneralStore) AllUsers(ctx context.Context) ([]*types.User, error) {
 	var users []*types.User
 	if err := gs.findAllEntity(ctx, &users, usersTable); err != nil {
-		return nil, fmt.Errorf("error with AllUsers: %v", err.Error())
+		return nil, fmt.Errorf("AllUsers error: %v", err.Error())
 	}
 
 	return users, nil
@@ -47,8 +47,8 @@ func (gs *GeneralStore) AllUsers(ctx context.Context) ([]*types.User, error) {
 // AllUsersByChatMembership finds all User entries for a given Chat in the db
 func (gs *GeneralStore) AllUsersByChatMembership(ctx context.Context, chid string) ([]*types.User, error) {
 	var users []*types.User
-	if err := gs.sqlite.Select(&users, allUsersByChatIDSQL, chid); err != nil {
-		return nil, fmt.Errorf("error with AllUsersByChatMembership: %v", err.Error())
+	if err := gs.getSet(ctx, &users, allUsersByChatIDSQL, chid); err != nil {
+		return nil, fmt.Errorf("AllUsersByChatMembership error: %v", err.Error())
 	}
 
 	return users, nil
@@ -57,7 +57,7 @@ func (gs *GeneralStore) AllUsersByChatMembership(ctx context.Context, chid strin
 // CreateUser creates a User entry in the db
 func (gs *GeneralStore) CreateUser(ctx context.Context, user *types.User) error {
 	if err := gs.createEntity(ctx, user, createUserSQL); err != nil {
-		return fmt.Errorf("error with CreateUser: %v", err.Error())
+		return fmt.Errorf("CreateUser error: %v", err.Error())
 	}
 
 	return nil
@@ -66,7 +66,7 @@ func (gs *GeneralStore) CreateUser(ctx context.Context, user *types.User) error 
 // DeleteUser deletes a User entry in the db
 func (gs *GeneralStore) DeleteUser(ctx context.Context, id string) error {
 	if err := gs.deleteEntity(ctx, usersTable, id); err != nil {
-		return fmt.Errorf("error with DeleteUser: %v", err.Error())
+		return fmt.Errorf("DeleteUser error: %v", err.Error())
 	}
 
 	return nil
@@ -76,7 +76,7 @@ func (gs *GeneralStore) DeleteUser(ctx context.Context, id string) error {
 func (gs *GeneralStore) FindUser(ctx context.Context, id string) (*types.User, error) {
 	user := &types.User{}
 	if err := gs.findEntity(ctx, user, usersTable, id); err != nil {
-		return nil, fmt.Errorf("error with FindUser: %v", err.Error())
+		return nil, fmt.Errorf("FindUser error: %v", err.Error())
 	}
 
 	return user, nil
@@ -85,8 +85,8 @@ func (gs *GeneralStore) FindUser(ctx context.Context, id string) (*types.User, e
 // LoginUser finds a User entry in the db (using their login information)
 func (gs *GeneralStore) LoginUser(ctx context.Context, phoneNumber string, displayName string) (*types.User, error) {
 	user := &types.User{}
-	if err := gs.sqlite.Get(user, loginUserSQL, phoneNumber, displayName); err != nil {
-		return nil, fmt.Errorf("error with LoginUser: %v", err.Error())
+	if err := gs.get(ctx, user, loginUserSQL, phoneNumber, displayName); err != nil {
+		return nil, fmt.Errorf("LoginUser error: %v", err.Error())
 	}
 
 	return user, nil
@@ -95,7 +95,7 @@ func (gs *GeneralStore) LoginUser(ctx context.Context, phoneNumber string, displ
 // UpdateUser updates a User entry in the db
 func (gs *GeneralStore) UpdateUser(ctx context.Context, user *types.User) error {
 	if err := gs.updateEntity(ctx, user, udpateUserSQL); err != nil {
-		return fmt.Errorf("error with UpdateUser: %v", err.Error())
+		return fmt.Errorf("UpdateUser error: %v", err.Error())
 	}
 
 	return nil

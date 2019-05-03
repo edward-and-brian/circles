@@ -23,7 +23,7 @@ var (
 func (gs *GeneralStore) AllMessages(ctx context.Context) ([]*types.Message, error) {
 	var messages []*types.Message
 	if err := gs.findAllEntity(ctx, &messages, messagesTable); err != nil {
-		return nil, fmt.Errorf("error with AllMessages: %v", err.Error())
+		return nil, fmt.Errorf("AllMessages error: %v", err.Error())
 	}
 
 	return messages, nil
@@ -32,8 +32,8 @@ func (gs *GeneralStore) AllMessages(ctx context.Context) ([]*types.Message, erro
 // AllMessagesByCircleID finds all Message entries for a given Circle in the db
 func (gs *GeneralStore) AllMessagesByCircleID(ctx context.Context, ciid string) ([]*types.Message, error) {
 	var messages []*types.Message
-	if err := gs.sqlite.Select(&messages, allMessagesByCircleIDSQL, ciid); err != nil {
-		return nil, fmt.Errorf("error with AllMessagesByCircleID: %v", err.Error())
+	if err := gs.getSet(ctx, &messages, allMessagesByCircleIDSQL, ciid); err != nil {
+		return nil, fmt.Errorf("AllMessagesByCircleID error: %v", err.Error())
 	}
 
 	return messages, nil
@@ -49,7 +49,7 @@ func (gs *GeneralStore) CreateMessage(ctx context.Context, message *types.Messag
 	}
 
 	if err := gs.createEntity(ctx, message, createMessageSQL); err != nil {
-		return fmt.Errorf("error with CreateMessage: %v", err.Error())
+		return fmt.Errorf("CreateMessage error: %v", err.Error())
 	}
 
 	return nil
@@ -58,7 +58,18 @@ func (gs *GeneralStore) CreateMessage(ctx context.Context, message *types.Messag
 // DeleteMessage deletes a Message entry in the db
 func (gs *GeneralStore) DeleteMessage(ctx context.Context, id string) error {
 	if err := gs.deleteEntity(ctx, messagesTable, id); err != nil {
-		return fmt.Errorf("error with DeleteMessage: %v", err.Error())
+		return fmt.Errorf("DeleteMessage error: %v", err.Error())
+	}
+
+	return nil
+}
+
+// DeleteMessagesByCircleID deletes any messages entries with the given circle_id
+func (gs *GeneralStore) DeleteMessagesByCircleID(ctx context.Context, ciid string) error {
+	deleteMessagesByCircleIDSQL := `DELETE FROM messages WHERE circle_id=$1`
+
+	if err := gs.exec(ctx, deleteMessagesByCircleIDSQL, ciid); err != nil {
+		return fmt.Errorf("DeleteMessagesByCircleID error: %v", err)
 	}
 
 	return nil
@@ -68,7 +79,7 @@ func (gs *GeneralStore) DeleteMessage(ctx context.Context, id string) error {
 func (gs *GeneralStore) FindMessage(ctx context.Context, id string) (*types.Message, error) {
 	message := &types.Message{}
 	if err := gs.findEntity(ctx, message, messagesTable, id); err != nil {
-		return nil, fmt.Errorf("error with FindMessage: %v", err.Error())
+		return nil, fmt.Errorf("FindMessage error: %v", err.Error())
 	}
 
 	return message, nil
@@ -77,7 +88,7 @@ func (gs *GeneralStore) FindMessage(ctx context.Context, id string) (*types.Mess
 // UpdateMessage updates a Message entry in the db
 func (gs *GeneralStore) UpdateMessage(ctx context.Context, message *types.Message) error {
 	if err := gs.updateEntity(ctx, message, updateMessageSQL); err != nil {
-		return fmt.Errorf("error with UpdateMessage: %v", err.Error())
+		return fmt.Errorf("UpdateMessage error: %v", err.Error())
 	}
 
 	return nil
