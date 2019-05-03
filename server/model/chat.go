@@ -43,6 +43,12 @@ func AllChats(ctx context.Context, gs generalStore) ([]*ChatModel, error) {
 func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs []string) (*ChatModel, error) {
 	chat.ID = xid.New().String()
 	chat.CreatedAt = time.Now().Format(time.RFC3339)
+	chat.LastMessageAt = chat.CreatedAt
+	chat.LastCircleName = "General"
+	circle := &types.Circle{
+		ChatID: chat.ID,
+		Name:   "General",
+	}
 
 	gs.BeginTransaction(ctx)
 	defer gs.EndTransaction(ctx)
@@ -50,11 +56,7 @@ func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs 
 	if err := gs.CreateChat(ctx, chat, userIDs); err != nil {
 		return nil, err
 
-	} else if chat, err = gs.FindChat(ctx, chat.ID); err != nil {
-		return nil, err
-	}
-
-	if _, err := gs.FindChat(ctx, chat.ID); err != nil {
+	} else if _, err = CreateCircle(ctx, gs, circle); err != nil {
 		return nil, err
 	}
 
@@ -92,8 +94,10 @@ func FindChat(ctx context.Context, gs generalStore, id string) (*ChatModel, erro
 
 // UpdateChatInput ...
 type UpdateChatInput struct {
-	ID   string
-	Name *string
+	ID             string
+	Name           *string
+	LastCircleName *string
+	LastMessageAt  *string
 }
 
 // UpdateChat updates the chat specified by ID with the given data and returns it as a ChatModel
@@ -105,6 +109,14 @@ func UpdateChat(ctx context.Context, gs generalStore, input *UpdateChatInput) (*
 
 	if input.Name != nil {
 		chat.Name = *input.Name
+	}
+
+	if input.LastCircleName != nil {
+		chat.LastCircleName = *input.LastCircleName
+	}
+
+	if input.LastMessageAt != nil {
+		chat.LastMessageAt = *input.LastMessageAt
 	}
 
 	if err = gs.UpdateChat(ctx, chat); err != nil {
@@ -143,6 +155,17 @@ func (r *ChatModel) ID() graphql.ID {
 // Name field resolver
 func (r *ChatModel) Name() string {
 	return r.Chat.Name
+}
+
+// LastCircleName field resolver
+func (r *ChatModel) LastCircleName() string {
+	return r.Chat.LastCircleName
+}
+
+// LastMessageAt field resolver
+func (r *ChatModel) LastMessageAt() (graphql.Time, error) {
+	t, err := time.Parse(time.RFC3339, r.Chat.LastMessageAt)
+	return graphql.Time{Time: t}, err
 }
 
 // CreatedAt field resolver

@@ -21,10 +21,15 @@ var (
 	ORDER BY datetime(created_at) ASC`
 
 	createChatSQL = `
-	INSERT INTO chats (id, name, created_at)
-	VALUES (:id, :name, :created_at)`
+	INSERT INTO chats (id, name, last_circle_name, last_message_at, created_at)
+	VALUES (:id, :name, :last_circle_name, :last_message_at, :created_at)`
 
-	updateChatSQL = `UPDATE chats SET name=:name WHERE id=:id`
+	updateChatSQL = `
+	UPDATE chats 
+	SET name=:name,
+		last_circle_name=:last_circle_name,
+		last_message_at=:last_message_at
+	WHERE id=:id`
 )
 
 // AllChats finds all Chat entries in the db

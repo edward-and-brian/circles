@@ -4,6 +4,8 @@ type Chat {
   createdAt: Time!
   circles: [Circle]!
   users: [User]!
+  lastCircleName: String!
+  lastMessageAt: Time!
 }
 
 input createChatInput {

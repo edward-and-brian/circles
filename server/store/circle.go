@@ -13,10 +13,15 @@ var (
 	allCirclesByChatIDSQL = `SELECT * FROM circles WHERE chat_id=$1 ORDER BY id ASC`
 
 	createCircleSQL = `
-	INSERT INTO circles (id, chat_id, name, created_at)
-	VALUES (:id, :chat_id, :name, :created_at)`
+	INSERT INTO circles (id, chat_id, name, last_message_content, last_message_at, created_at)
+	VALUES (:id, :chat_id, :name, :last_message_content, :last_message_at, :created_at)`
 
-	updateCircleSQL = `UPDATE circles SET name=:name WHERE id=:id`
+	updateCircleSQL = `
+	UPDATE circles 
+	SET name=:name,
+		last_message_content=:last_message_content,
+		last_message_at=:last_message_at
+	WHERE id=:id`
 )
 
 // AllCircles finds all Circle entries in the db

@@ -29,6 +29,8 @@ func AllCircles(ctx context.Context, gs generalStore) ([]*CircleModel, error) {
 func CreateCircle(ctx context.Context, gs generalStore, circle *types.Circle) (*CircleModel, error) {
 	circle.ID = xid.New().String()
 	circle.CreatedAt = time.Now().Format(time.RFC3339)
+	circle.LastMessageAt = circle.CreatedAt
+	circle.LastMessageContent = ""
 
 	if err := gs.CreateCircle(ctx, circle); err != nil {
 		return nil, err
@@ -65,8 +67,10 @@ func FindCircle(ctx context.Context, gs generalStore, id string) (*CircleModel, 
 
 // UpdateCircleInput ...
 type UpdateCircleInput struct {
-	ID   string
-	Name *string
+	ID                 string
+	Name               *string
+	LastMessageContent *string
+	LastMessageAt      *string
 }
 
 // UpdateCircle updates the circle specified by ID with the given data and returns it as a CircleModel
@@ -78,6 +82,14 @@ func UpdateCircle(ctx context.Context, gs generalStore, input *UpdateCircleInput
 
 	if input.Name != nil {
 		circle.Name = *input.Name
+	}
+
+	if input.LastMessageContent != nil {
+		circle.LastMessageContent = *input.LastMessageContent
+	}
+
+	if input.LastMessageAt != nil {
+		circle.LastMessageAt = *input.LastMessageAt
 	}
 
 	if err = gs.UpdateCircle(ctx, circle); err != nil {
@@ -121,6 +133,17 @@ func (c *CircleModel) ChatID() graphql.ID {
 // Name field resolver
 func (c *CircleModel) Name() string {
 	return c.Circle.Name
+}
+
+// LastMessageContent field resolver
+func (c *CircleModel) LastMessageContent() string {
+	return c.Circle.LastMessageContent
+}
+
+// LastMessageAt field resolver
+func (c *CircleModel) LastMessageAt() (graphql.Time, error) {
+	t, err := time.Parse(time.RFC3339, c.Circle.LastMessageAt)
+	return graphql.Time{Time: t}, err
 }
 
 // CreatedAt field resolver

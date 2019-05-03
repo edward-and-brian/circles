@@ -30,10 +30,21 @@ func CreateMessage(ctx context.Context, gs generalStore, message *types.Message)
 	message.ID = xid.New().String()
 	message.CreatedAt = time.Now().Format(time.RFC3339)
 
+	gs.BeginTransaction(ctx)
+	defer gs.EndTransaction(ctx)
+
 	if err := gs.CreateMessage(ctx, message); err != nil {
 		return nil, err
+	}
 
-	} else if message, err = gs.FindMessage(ctx, message.ID); err != nil {
+	updateCircleInput := &UpdateCircleInput{ID: message.CircleID, LastMessageContent: &message.Content, LastMessageAt: &message.CreatedAt}
+	circle, err := UpdateCircle(ctx, gs, updateCircleInput)
+	if err != nil {
+		return nil, err
+	}
+
+	updateChatInput := &UpdateChatInput{ID: circle.Circle.ChatID, LastCircleName: &circle.Circle.Name, LastMessageAt: &message.CreatedAt}
+	if _, err := UpdateChat(ctx, gs, updateChatInput); err != nil {
 		return nil, err
 	}
 
