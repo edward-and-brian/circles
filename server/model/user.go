@@ -162,5 +162,5 @@ func (u *UserModel) CreatedAt() (graphql.Time, error) {
 
 // Chats field resolver
 func (u *UserModel) Chats(ctx context.Context) ([]*ChatModel, error) {
-	return UserChats(ctx, u.store, u.User.ID)
+	return UserChats(context.WithValue(ctx, types.Key("uid"), u.User.ID), u.store, u.User.ID)
 }

@@ -2,6 +2,8 @@ package model
 
 import (
 	"context"
+	"fmt"
+	"strings"
 	"time"
 
 	"circles/server/types"
@@ -141,8 +143,12 @@ func (r *ChatModel) ID() graphql.ID {
 }
 
 // Name field resolver
-func (r *ChatModel) Name() string {
-	return r.Chat.Name
+func (r *ChatModel) Name(ctx context.Context) (string, error) {
+	if r.Chat.Name == "" {
+		return chatUsersAsName(ctx, r.store, r.Chat.ID)
+	}
+
+	return r.Chat.Name, nil
 }
 
 // CreatedAt field resolver
@@ -159,4 +165,33 @@ func (r *ChatModel) Circles(ctx context.Context) ([]*CircleModel, error) {
 // Users field resolver
 func (r *ChatModel) Users(ctx context.Context) ([]*UserModel, error) {
 	return ChatUsers(ctx, r.store, r.Chat.ID)
+}
+
+func chatUsersAsName(ctx context.Context, store generalStore, chid string) (string, error) {
+	var (
+		val   interface{}
+		uid   string
+		users []*UserModel
+		ok    bool
+		err   error
+	)
+
+	if val = ctx.Value("uid"); val == nil {
+		return "", fmt.Errorf("could not retrieve uid from context in ChatModel.Name")
+	} else if uid, ok = val.(string); !ok {
+		return "", fmt.Errorf("could not convert val to string in ChatModel.Name")
+	}
+
+	if users, err = ChatUsers(ctx, store, chid); err != nil {
+		return "", err
+	}
+
+	chatUserNames := []string{}
+	for _, user := range users {
+		if user.User.ID != uid {
+			chatUserNames = append(chatUserNames, user.User.Name)
+		}
+	}
+
+	return strings.Join(chatUserNames, ", "), nil
 }
