@@ -21,6 +21,7 @@ type chatStore interface {
 	CreateChat(ctx context.Context, chat *types.Chat, uids []string) error
 	CreateMembership(ctx context.Context, uid string, chid string) error
 	DeleteChat(ctx context.Context, id string) error
+	DeleteMembershipsByChatID(ctx context.Context, chid string) error
 	FindChat(ctx context.Context, id string) (*types.Chat, error)
 	UpdateChat(ctx context.Context, chat *types.Chat) error
 }
@@ -31,6 +32,7 @@ type circleStore interface {
 	AllCirclesByChatID(ctx context.Context, chid string) ([]*types.Circle, error)
 	CreateCircle(ctx context.Context, circle *types.Circle) error
 	DeleteCircle(ctx context.Context, id string) error
+	DeleteMessagesByCircleID(ctx context.Context, ciid string) error
 	FindCircle(ctx context.Context, id string) (*types.Circle, error)
 	UpdateCircle(ctx context.Context, circle *types.Circle) error
 }
@@ -51,6 +53,7 @@ type userStore interface {
 	AllUsersByChatMembership(ctx context.Context, chid string) ([]*types.User, error)
 	CreateUser(ctx context.Context, user *types.User) error
 	DeleteUser(ctx context.Context, id string) error
+	DeleteMembershipsByUserID(ctx context.Context, uid string) error
 	FindUser(ctx context.Context, id string) (*types.User, error)
 	LoginUser(ctx context.Context, phoneNumber string, displayName string) (*types.User, error)
 	UpdateUser(ctx context.Context, user *types.User) error

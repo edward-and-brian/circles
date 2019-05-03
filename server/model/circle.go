@@ -44,11 +44,17 @@ func CreateCircle(ctx context.Context, gs generalStore, circle *types.Circle) (*
 
 // DeleteCircle deletes the Circle specified by ID and returns it as a CircleModel
 func DeleteCircle(ctx context.Context, gs generalStore, id string) (*CircleModel, error) {
+	gs.BeginTransaction(ctx)
+	defer gs.EndTransaction(ctx)
+
 	circle, err := gs.FindCircle(ctx, id)
 	if err != nil {
 		return nil, err
 
 	} else if err = gs.DeleteCircle(ctx, id); err != nil {
+		return nil, err
+
+	} else if err := gs.DeleteMessagesByCircleID(ctx, id); err != nil {
 		return nil, err
 	}
 

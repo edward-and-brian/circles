@@ -2,7 +2,6 @@ package model
 
 import (
 	"context"
-	"fmt"
 	"strings"
 	"time"
 
@@ -47,7 +46,7 @@ func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs 
 	chat.CreatedAt = time.Now().Format(time.RFC3339)
 	chat.LastMessageAt = chat.CreatedAt
 	chat.LastCircleName = "General"
-	circle := &types.Circle{
+	generalCircle := &types.Circle{
 		ChatID: chat.ID,
 		Name:   "General",
 	}
@@ -58,7 +57,7 @@ func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs 
 	if err := gs.CreateChat(ctx, chat, userIDs); err != nil {
 		return nil, err
 
-	} else if _, err = CreateCircle(ctx, gs, circle); err != nil {
+	} else if _, err = CreateCircle(ctx, gs, generalCircle); err != nil {
 		return nil, err
 	}
 
@@ -73,12 +72,31 @@ func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs 
 
 // DeleteChat deletes the Chat specified by ID and returns it as a ChatModel
 func DeleteChat(ctx context.Context, gs generalStore, id string) (*ChatModel, error) {
+	gs.BeginTransaction(ctx)
+	defer gs.EndTransaction(ctx)
+
 	chat, err := gs.FindChat(ctx, id)
 	if err != nil {
 		return nil, err
 
 	} else if err := gs.DeleteChat(ctx, id); err != nil {
 		return nil, err
+
+	} else if err := gs.DeleteMembershipsByChatID(ctx, id); err != nil {
+		return nil, err
+
+	} else if circles, err := gs.AllCirclesByChatID(ctx, id); err != nil {
+		return nil, err
+
+	} else {
+		for _, circle := range circles {
+			if err = gs.DeleteCircle(ctx, circle.ID); err != nil {
+				return nil, err
+
+			} else if err := gs.DeleteMessagesByCircleID(ctx, circle.ID); err != nil {
+				return nil, err
+			}
+		}
 	}
 
 	return &ChatModel{chat, gs}, nil
@@ -137,6 +155,11 @@ func UserChats(ctx context.Context, gs generalStore, uid string) ([]*ChatModel, 
 
 	var chatModels []*ChatModel
 	for _, ch := range chats {
+		if ch.Name == "" {
+			if ch.Name, err = chatUsersAsName(ctx, gs, ch.ID, uid); err != nil {
+				return nil, err
+			}
+		}
 		chatModels = append(chatModels, &ChatModel{ch, gs})
 	}
 
@@ -156,10 +179,6 @@ func (r *ChatModel) ID() graphql.ID {
 
 // Name field resolver
 func (r *ChatModel) Name(ctx context.Context) (string, error) {
-	if r.Chat.Name == "" {
-		return chatUsersAsName(ctx, r.store, r.Chat.ID)
-	}
-
 	return r.Chat.Name, nil
 }
 
@@ -190,29 +209,16 @@ func (r *ChatModel) Users(ctx context.Context) ([]*UserModel, error) {
 	return ChatUsers(ctx, r.store, r.Chat.ID)
 }
 
-func chatUsersAsName(ctx context.Context, store generalStore, chid string) (string, error) {
-	var (
-		val   interface{}
-		uid   string
-		users []*UserModel
-		ok    bool
-		err   error
-	)
-
-	if val = ctx.Value("uid"); val == nil {
-		return "", fmt.Errorf("could not retrieve uid from context in ChatModel.Name")
-	} else if uid, ok = val.(string); !ok {
-		return "", fmt.Errorf("could not convert val to string in ChatModel.Name")
-	}
-
-	if users, err = ChatUsers(ctx, store, chid); err != nil {
+func chatUsersAsName(ctx context.Context, store generalStore, chid string, uid string) (string, error) {
+	users, err := store.AllUsersByChatMembership(ctx, chid)
+	if err != nil {
 		return "", err
 	}
 
 	chatUserNames := []string{}
 	for _, user := range users {
-		if user.User.ID != uid {
-			chatUserNames = append(chatUserNames, user.User.Name)
+		if user.ID != uid {
+			chatUserNames = append(chatUserNames, user.Name)
 		}
 	}
 

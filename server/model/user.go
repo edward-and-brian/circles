@@ -57,11 +57,17 @@ func CreateUser(ctx context.Context, gs generalStore, user *types.User) (*UserMo
 
 // DeleteUser deletes the user specified by ID and returns it as a UserModel
 func DeleteUser(ctx context.Context, gs generalStore, id string) (*UserModel, error) {
+	gs.BeginTransaction(ctx)
+	defer gs.EndTransaction(ctx)
+
 	user, err := gs.FindUser(ctx, id)
 	if err != nil {
 		return nil, err
 
 	} else if err := gs.DeleteUser(ctx, id); err != nil {
+		return nil, err
+
+	} else if err := gs.DeleteMembershipsByUserID(ctx, id); err != nil {
 		return nil, err
 	}
 
@@ -162,5 +168,6 @@ func (u *UserModel) CreatedAt() (graphql.Time, error) {
 
 // Chats field resolver
 func (u *UserModel) Chats(ctx context.Context) ([]*ChatModel, error) {
-	return UserChats(context.WithValue(ctx, types.Key("uid"), u.User.ID), u.store, u.User.ID)
+	ctx = context.WithValue(ctx, types.Key("user_id"), u.User.ID)
+	return UserChats(ctx, u.store, u.User.ID)
 }
