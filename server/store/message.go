@@ -10,7 +10,7 @@ import (
 var (
 	messagesTable = table("messages")
 
-	allMessagesByCircleIDSQL = `SELECT * FROM messages WHERE circle_id=$1 ORDER BY datetime(created_at) ASC`
+	allMessagesByCircleIDSQL = `SELECT * FROM messages WHERE circle_id=$1 ORDER BY datetime(created_at) DESC`
 
 	createMessageSQL = `
 	INSERT INTO messages (id, circle_id, sender_id, content, created_at)

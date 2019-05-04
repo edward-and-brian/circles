@@ -10,7 +10,7 @@ import (
 var (
 	circlesTable = table("circles")
 
-	allCirclesByChatIDSQL = `SELECT * FROM circles WHERE chat_id=$1 ORDER BY id ASC`
+	allCirclesByChatIDSQL = `SELECT * FROM circles WHERE chat_id=$1 ORDER BY last_message_at DESC`
 
 	createCircleSQL = `
 	INSERT INTO circles (id, chat_id, name, last_message_content, last_message_at, created_at)
