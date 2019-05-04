@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"circles/server/types"
 	"context"
 	"encoding/json"
 	"net/http"
@@ -32,7 +33,7 @@ func (h *GraphQL) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		r.Header.Set("X-Request-ID", rid)
 	}
 
-	ctx := context.WithValue(context.Background(), "request_id", rid)
+	ctx := context.WithValue(context.Background(), types.Key("request_id"), rid)
 	response := h.Schema.Exec(ctx, params.Query, params.OperationName, params.Variables)
 	responseJSON, err := json.Marshal(response)
 	if err != nil {

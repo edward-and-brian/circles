@@ -35,7 +35,29 @@ func (gs *GeneralStore) CreateMembership(ctx context.Context, uid, chid string) 
 	}
 
 	if err := gs.createEntity(ctx, membershipsEntry, createMembershipSQL); err != nil {
-		return fmt.Errorf("error with CreateMembership: %v", err.Error())
+		return fmt.Errorf("CreateMembership error: %v", err.Error())
+	}
+
+	return nil
+}
+
+// DeleteMembershipsByChatID deletes any membership entries with the given chat_id
+func (gs *GeneralStore) DeleteMembershipsByChatID(ctx context.Context, chid string) error {
+	deleteMembershipsByChatIDSQL := `DELETE FROM memberships WHERE chat_id=$1`
+
+	if err := gs.exec(ctx, deleteMembershipsByChatIDSQL, chid); err != nil {
+		return fmt.Errorf("DeleteMembershipsByChatID error: %v", err.Error())
+	}
+
+	return nil
+}
+
+// DeleteMembershipsByUserID deletes any membership entries with the given user_id
+func (gs *GeneralStore) DeleteMembershipsByUserID(ctx context.Context, uid string) error {
+	deleteMembershipsByUserIDSQL := `DELETE FROM memberships WHERE chat_id=$1`
+
+	if err := gs.exec(ctx, deleteMembershipsByUserIDSQL, uid); err != nil {
+		return fmt.Errorf("DeleteMembershipsByUserID error: %v", err.Error())
 	}
 
 	return nil

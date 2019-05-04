@@ -2,6 +2,8 @@ type Circle {
   id: ID!
   chatID: ID!
   name: String!
+  lastMessageContent: String!
+  lastMessageAt: Time!
   createdAt: Time!
   messageDatePartitions: [MessageDatePartition]!
 }

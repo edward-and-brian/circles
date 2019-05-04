@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"circles/server/types"
@@ -43,6 +44,12 @@ func AllChats(ctx context.Context, gs generalStore) ([]*ChatModel, error) {
 func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs []string) (*ChatModel, error) {
 	chat.ID = xid.New().String()
 	chat.CreatedAt = time.Now().Format(time.RFC3339)
+	chat.LastMessageAt = chat.CreatedAt
+	chat.LastCircleName = "General"
+	generalCircle := &types.Circle{
+		ChatID: chat.ID,
+		Name:   "General",
+	}
 
 	gs.BeginTransaction(ctx)
 	defer gs.EndTransaction(ctx)
@@ -50,11 +57,7 @@ func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs 
 	if err := gs.CreateChat(ctx, chat, userIDs); err != nil {
 		return nil, err
 
-	} else if chat, err = gs.FindChat(ctx, chat.ID); err != nil {
-		return nil, err
-	}
-
-	if _, err := gs.FindChat(ctx, chat.ID); err != nil {
+	} else if _, err = CreateCircle(ctx, gs, generalCircle); err != nil {
 		return nil, err
 	}
 
@@ -69,12 +72,31 @@ func CreateChat(ctx context.Context, gs generalStore, chat *types.Chat, userIDs 
 
 // DeleteChat deletes the Chat specified by ID and returns it as a ChatModel
 func DeleteChat(ctx context.Context, gs generalStore, id string) (*ChatModel, error) {
+	gs.BeginTransaction(ctx)
+	defer gs.EndTransaction(ctx)
+
 	chat, err := gs.FindChat(ctx, id)
 	if err != nil {
 		return nil, err
 
 	} else if err := gs.DeleteChat(ctx, id); err != nil {
 		return nil, err
+
+	} else if err := gs.DeleteMembershipsByChatID(ctx, id); err != nil {
+		return nil, err
+
+	} else if circles, err := gs.AllCirclesByChatID(ctx, id); err != nil {
+		return nil, err
+
+	} else {
+		for _, circle := range circles {
+			if err = gs.DeleteCircle(ctx, circle.ID); err != nil {
+				return nil, err
+
+			} else if err := gs.DeleteMessagesByCircleID(ctx, circle.ID); err != nil {
+				return nil, err
+			}
+		}
 	}
 
 	return &ChatModel{chat, gs}, nil
@@ -92,8 +114,10 @@ func FindChat(ctx context.Context, gs generalStore, id string) (*ChatModel, erro
 
 // UpdateChatInput ...
 type UpdateChatInput struct {
-	ID   string
-	Name *string
+	ID             string
+	Name           *string
+	LastCircleName *string
+	LastMessageAt  *string
 }
 
 // UpdateChat updates the chat specified by ID with the given data and returns it as a ChatModel
@@ -105,6 +129,14 @@ func UpdateChat(ctx context.Context, gs generalStore, input *UpdateChatInput) (*
 
 	if input.Name != nil {
 		chat.Name = *input.Name
+	}
+
+	if input.LastCircleName != nil {
+		chat.LastCircleName = *input.LastCircleName
+	}
+
+	if input.LastMessageAt != nil {
+		chat.LastMessageAt = *input.LastMessageAt
 	}
 
 	if err = gs.UpdateChat(ctx, chat); err != nil {
@@ -123,6 +155,11 @@ func UserChats(ctx context.Context, gs generalStore, uid string) ([]*ChatModel, 
 
 	var chatModels []*ChatModel
 	for _, ch := range chats {
+		if ch.Name == "" {
+			if ch.Name, err = chatUsersAsName(ctx, gs, ch.ID, uid); err != nil {
+				return nil, err
+			}
+		}
 		chatModels = append(chatModels, &ChatModel{ch, gs})
 	}
 
@@ -141,8 +178,19 @@ func (r *ChatModel) ID() graphql.ID {
 }
 
 // Name field resolver
-func (r *ChatModel) Name() string {
-	return r.Chat.Name
+func (r *ChatModel) Name(ctx context.Context) (string, error) {
+	return r.Chat.Name, nil
+}
+
+// LastCircleName field resolver
+func (r *ChatModel) LastCircleName() string {
+	return r.Chat.LastCircleName
+}
+
+// LastMessageAt field resolver
+func (r *ChatModel) LastMessageAt() (graphql.Time, error) {
+	t, err := time.Parse(time.RFC3339, r.Chat.LastMessageAt)
+	return graphql.Time{Time: t}, err
 }
 
 // CreatedAt field resolver
@@ -159,4 +207,20 @@ func (r *ChatModel) Circles(ctx context.Context) ([]*CircleModel, error) {
 // Users field resolver
 func (r *ChatModel) Users(ctx context.Context) ([]*UserModel, error) {
 	return ChatUsers(ctx, r.store, r.Chat.ID)
+}
+
+func chatUsersAsName(ctx context.Context, store generalStore, chid string, uid string) (string, error) {
+	users, err := store.AllUsersByChatMembership(ctx, chid)
+	if err != nil {
+		return "", err
+	}
+
+	chatUserNames := []string{}
+	for _, user := range users {
+		if user.ID != uid {
+			chatUserNames = append(chatUserNames, user.Name)
+		}
+	}
+
+	return strings.Join(chatUserNames, ", "), nil
 }
